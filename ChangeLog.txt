@@ -7,6 +7,25 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-10-14 19:15 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! fix missing call to hb_vmRequestRestore() after hb_vmRequestReenter()
+      on callback abort
+  ; origin: https://github.com/vszakats/hb/commit/f2fe520678c06ba58dde7b8a5b8c1b5c86c649aa
+2014-01-29 02:15 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+    % use HB_IT_EVALITEM instead of ( HB_IT_BLOCK | HB_IT_SYMBOL )
+  ; origin: https://github.com/vszakats/hb/commit/46cecee12d615b43fc187a504e39b3cb58701c16
+2013-08-17 21:14 UTC+0200 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+  * contrib/hbcurl/hbcurl.ch
+    + use new in CURLOPT_XFERINFOFUNCTION for progress callback
+      when compiled against libcurl 7.32.0 or newer.
+      New callback supports large file offset.
+    + added new HB_CURLOPT_XFERINFOBLOCK constant.
+      existing HB_CURLOPT_PROGRESSBLOCK is now compatibility macro.
+  ; origin: https://github.com/vszakats/hb/commit/07d0357ea2cb866ade0d8b9a0b9aca3b3687012b
+
 2017-06-25 16:56 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! implement HB_CURLINFO_CERTINFO

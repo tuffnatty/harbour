@@ -255,7 +255,7 @@
 #define HB_CURLOPT_MAIL_AUTH                  207
 #define HB_CURLOPT_MAXLIFETIME_CONN           287
 #define HB_CURLOPT_DOWNLOAD                   1001  /* Harbour special ones */
-#define HB_CURLOPT_PROGRESSBLOCK              1002
+#define HB_CURLOPT_XFERINFOBLOCK              1002
 #define HB_CURLOPT_UL_FILE_SETUP              1003
 #define HB_CURLOPT_UL_FILE_CLOSE              1004
 #define HB_CURLOPT_DL_FILE_SETUP              1005
@@ -267,6 +267,7 @@
 #define HB_CURLOPT_UL_FHANDLE_SETUP           1011
 #define HB_CURLOPT_DL_FHANDLE_SETUP           1012
 #define HB_CURLOPT_DEBUGBLOCK                 1013
+#define HB_CURLOPT_PROGRESSBLOCK              HB_CURLOPT_XFERINFOBLOCK
 /* Compatibility ones. Please don't use these. */
 #define HB_CURLOPT_SETUPLOADFILE              HB_CURLOPT_UL_FILE_SETUP
 #define HB_CURLOPT_CLOSEUPLOADFILE            HB_CURLOPT_UL_FILE_CLOSE
