@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2013-10-29 04:15 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+  * contrib/hbcurl/hbcurl.ch
+    + updated for libcurl 7.33.0
+  ; origin: https://github.com/vszakats/hb/commit/cc065062918340f5d2f166cadfe8a5cca520cb42
+
 2015-10-14 19:15 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! fix missing call to hb_vmRequestRestore() after hb_vmRequestReenter()
@@ -11838,6 +11844,17 @@
 2013-12-20 00:24 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   * include/hbexpra.c
     ! fixed silly copy and paste typo
+
+2013-12-19 23:24 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+  * contrib/hbcurl/hbcurl.ch
+    + added support for new 7.34.0 features
+    ! fixed name of new 7.33.0 option to match actual
+      curl.h header instead of the documentation.
+      reported upstream: https://sourceforge.net/p/curl/bugs/1313/
+
+  * src/rtl/hbzlibc.c
+    * http -> https
 
 2013-12-19 09:31 UTC+0100 Przemyslaw Czerpak (druzus/at/poczta.onet.pl)
   + src/rtl/hbzlibc.c
