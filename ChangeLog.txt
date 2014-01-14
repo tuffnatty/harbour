@@ -7,6 +7,128 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-08-29 11:41 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    + add an example for curl_global_sslset()
+  ; origin: https://github.com/vszakats/hb/commit/0a2606728bf7eb9bce5088b1395b0def24a13979
+2017-08-26 14:29 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    * cleanups
+  ; origin: https://github.com/vszakats/hb/commit/d66de635a7760f3f1c2933c1e31f273b499d2b2c
+2017-08-26 08:15 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    + use the CA bundle distributed with the Windows distro package
+  ; origin: https://github.com/vszakats/hb/commit/fd28b2266a70b85905e89086998440f1116f5c5c
+2017-07-19 01:20 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    * example.com -> example.org
+  ; origin: https://github.com/vszakats/hb/commit/1f561f64cd849adc3dd1e04e6c919ca025441fe6
+2017-06-26 18:43 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    ! use ISO date format
+    + use more readable, JSON format for CERTINFO dump
+  ; origin: https://github.com/vszakats/hb/commit/a9eb5c5117533e7149851ed97a92628b603ccd68
+2017-06-25 16:56 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    + added HB_CURLINFO_CERTINFO example
+  ; origin: https://github.com/vszakats/hb/commit/f960710df09e48faad8fb1d187e3513c789a1cf5
+2017-02-13 19:54 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    % minor cleanup
+  ; No original ChangeLog entry
+  ; origin: https://github.com/vszakats/hb/commit/4ecb3f9f3cc238f9941f35b08a44ccbfec2cc3d7
+2017-02-12 11:50 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    % improve file timestamp example
+  ; No original ChangeLog entry
+  ; origin: https://github.com/vszakats/hb/commit/b4dac21abcd202f3c2f19fb9de12a278db9f2e56
+2017-02-12 11:36 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    + add example to retrieve file with timestamp
+    ! update download URL to a new one that works
+    ! remove public FTP example, because the server doesn't work anymore
+      (it's good riddance anyway)
+    ! download CA bundle on darwin
+  ; origin: https://github.com/vszakats/hb/commit/f4670b88c66c86bf974f2671f6e0a3b646090577
+2017-01-11 23:50 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    ! enable CURLOPT_FAILONERROR with HTTP[S] protocols
+  ; origin: https://github.com/vszakats/hb/commit/658d7aed7746c3138d02b2257ea9d7a6b89459da
+2016-02-04 15:27 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    + add HB_CURLOPT_DEBUGBLOCK usage example
+  ; origin: https://github.com/vszakats/hb/commit/81259361e76bcd8447284553346dea1320609e70
+2016-01-30 02:14 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    * use https URL to download CA list
+    * minor opt
+  ; origin: https://github.com/vszakats/hb/commit/56a8fd1c423bc8871fdfddad23ae1b7bd1dbb9e7
+2015-07-31 01:18 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    ! fix to use hb_BLen()
+  ; origin: https://github.com/vszakats/hb/commit/9ef3885a2466f54b2e1eb1579354605d29ff6c21
+2015-07-24 12:08 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    % use hb_vfSize() instead of hb_FSize()
+  ; origin: https://github.com/vszakats/hb/commit/f294c26acb1af0276cebbcd6750b737bb33872d8
+2015-07-20 19:06 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    * use VF IO
+  ; origin: https://github.com/vszakats/hb/commit/eba38dc5dae43780b3d509b534bbec957128e7af
+2015-05-13 21:07 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    * internal cleanup to HB_CURLOPT_[UL|DL]_FILE_SETUP
+      handling
+  ; origin: https://github.com/vszakats/hb/commit/ca9f75850cf65ffc93b483d1a6b355fd1be2d203
+2015-05-13 14:20 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    + add tests for FILE IO and FS IO handles
+  ; origin: https://github.com/vszakats/hb/commit/e3dc81f4aa788d77ab7425f523cd72e03f1df630
+2015-05-13 02:14 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    ! download CA bundle to make https test downloads work
+      on non-*nix systems
+  ; origin: https://github.com/vszakats/hb/commit/460f45eb4d12b1698b9ac2b2d07f8c07af3af082
+2015-04-05 20:51 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    * minor cleanups
+  ; origin: https://github.com/vszakats/hb/commit/4c9e75b29b5b819d2a047999183e0fa6feb8f47a
+2014-03-17 22:37 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    + use a less-commercial company's servers for demoing purposes
+  ; origin: https://github.com/vszakats/hb/commit/d5d726627da65b3c8768c2b49b52caae5cd7178c
+2014-02-24 13:13 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    * cleanups
+  ; origin: https://github.com/vszakats/hb/commit/44d65f1fbf017d1045b6d757836fa32e4b0155cb
+2015-02-24 01:32 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    + use HB_CURLVERINFO_* constants
+  ; origin: https://github.com/vszakats/hb/commit/47cf617ccb90e05da55e4e9fadddf15675380c65
+2014-02-23 22:18 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    % use hb_MemoWrit()
+  ; origin: https://github.com/vszakats/hb/commit/45c7d3fe02771a13fbc8fb33748d01377417de32
+2014-02-09 19:38 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    % minor optimizations
+  ; origin: https://github.com/vszakats/hb/commit/8ad3b2e57d0ae94aa04f5ec9b76d0877d4c8b2df
+2014-02-02 15:38 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    % use WAIT
+  ; origin: https://github.com/vszakats/hb/commit/d5094c9be5e6c76cc80004d50d051236e01fb6b1
+2014-01-30 02:16 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    * updated
+    % deleted unnecessary code
+  ; origin: https://github.com/vszakats/hb/commit/874563ef6b8b15f27b67c10554a45af305a0ec22
+2014-01-14 14:28 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    % use FOR EACH, hb_defaultValue(), Left()
+    % output, string and other minor optimizations
+    ! minor fixes
+  ; origin: https://github.com/vszakats/hb/commit/52198fdac14555aab7112b0ef249e7b27f766c00
+
 2017-09-01 17:28 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/global.c
     * always check hb_itemParamStoreRelease() calls for failure and
