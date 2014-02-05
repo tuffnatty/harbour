@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-02-05 23:08 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+    ! fixed compile error with libcurl older than 7.10.8
+      (regression from some years ago)
+    ; TOFIX: GPF when calling this function sequence:
+             CURL_EASY_INIT(); CURL_GLOBAL_CLEANUP(); CURL_GLOBAL_INIT()
+  ; origin: https://github.com/vszakats/hb/commit/2a47e8a07302a5602b600cd5617e96df27a5c13d
+
 2023-11-30 22:36 UTC+0100 Phil Krylov (phil a t krylov.eu)
   * src/3rd/Makefile
   - src/3rd/tiff/
