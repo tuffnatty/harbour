@@ -7,6 +7,37 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-09-11 08:29 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbc
+    ! fix typo in latest change
+      Closes https://github.com/vszakats/harbour-core/issues/233
+  ; No original ChangeLog entry
+  ; origin: https://github.com/vszakats/hb/commit/333ab96f6eed94ffc02c71d0c315a3704afd5cd6
+2016-09-09 10:06 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbc
+    ! fix HB_STATIC_CURL envvar to be ignored
+      unless targeting Windows. Other platforms either don't support
+      it or don't require it.
+  ; origin: https://github.com/vszakats/hb/commit/8a20fa1bfd41912c13b48654b160cd33a5ed6953
+2015-12-23 04:22 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbc
+    + link nghttp2 lib in win/mingw static mode
+      Ref: https://bintray.com/vszakats/generic/nghttp2
+  ; origin: https://github.com/vszakats/hb/commit/62a401e1e6d3e0206f08de72c41c38a7a08a23d1
+2015-12-23 01:25 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbc
+    * comment update
+  ; origin: https://github.com/vszakats/hb/commit/a660481497517b74c9615fa666854a9473885886
+2015-01-08 23:27 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbc
+    + link wldap32 library on win/wce
+      to support default static curl builds
+  ; origin: https://github.com/vszakats/hb/commit/c73c598684112478a1af25a76318fa6974f42faa
+2014-02-10 02:06 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbc
+    * more precise description of additional libcurl static linking requirements
+  ; origin: https://github.com/vszakats/hb/commit/e761a17e5fb240364722e3f10fbb5df2f51586ae
+
 2015-11-02 13:59 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! add necessary casts for CURLFORM_* parameters
