@@ -7,6 +7,16 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-03-27 22:49 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+    ! typos in curl 7.36.0 branch
+  ; origin: https://github.com/vszakats/hb/commit/4c8c774d8e66fa28bb694edc5943da97003674cf
+2014-02-22 02:37 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+  * contrib/hbcurl/hbcurl.ch
+    + added some upcoming 7.36.0 features
+  ; origin: https://github.com/vszakats/hb/commit/a58ea16b2da3a45bfaf99c729f863ec6faafad3a
+
 2013-10-29 04:15 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
   * contrib/hbcurl/core.c
   * contrib/hbcurl/hbcurl.ch
