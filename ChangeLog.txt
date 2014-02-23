@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-02-23 23:01 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+    ! adjusted all version guards which were based on guesses
+      (only two of them were slightly off)
+      based on file <curl>/docs/libcurl/symbols-in-versions
+      and internet search
+  ; origin: https://github.com/vszakats/hb/commit/84661b124b0301e9af695cf4356df86f0021507d
+
 2014-02-05 23:08 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
   * contrib/hbcurl/core.c
     ! fixed compile error with libcurl older than 7.10.8
