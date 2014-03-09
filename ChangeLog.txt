@@ -7,6 +7,42 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-06-20 23:54 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/*
+    * converted internal PP directive indenting to external
+      (f.e. '#  define' -> '   #define')
+      Harbour uses two styles, and internal indenting is not
+      friendly with formatter tools.
+  ; origin: https://github.com/vszakats/hb/commit/5f623988ad0be8606d1d9a3d1159db9d7bcd4dbc
+2014-06-03 20:37 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    * eliminated decorations from comments
+  ; origin: https://github.com/vszakats/hb/commit/a009fa06bd394495f67fe1c87af21920673096f4
+2014-05-29 10:53 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/global.c
+    * comment cleanups
+  ; origin: https://github.com/vszakats/hb/commit/29d53180e59edf535ac945d5de19e44a10959308
+2014-05-29 10:49 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbm
+  * contrib/hbcurl/date.c
+  * contrib/hbcurl/escold.c
+  * contrib/hbcurl/ver.c
+  + contrib/hbcurl/global.c
+  * contrib/hbcurl/core.c -> contrib/hbcurl/easy.c
+    * source rearrangement in hbcurl
+    ! fixed descriptions in copyright headers
+  ; origin: https://github.com/vszakats/hb/commit/bdb38cb285e7e350e9fe0390b55e129a1ba041ce
+2014-03-10 00:17 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+  + contrib/hbcurl/date.c
+  + contrib/hbcurl/escold.c
+  + contrib/hbcurl/ver.c
+  * contrib/hbcurl/hbcurl.hbm
+    % split off some wrappers to separate sources
+  ; origin: https://github.com/vszakats/hb/commit/44d65f1fbf017d1045b6d757836fa32e4b0155cb
+
 2014-03-27 22:49 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/core.c
     ! typos in curl 7.36.0 branch

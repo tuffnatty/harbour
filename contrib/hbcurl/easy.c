@@ -48,10 +48,10 @@
 
 #include <curl/curl.h>
 #if LIBCURL_VERSION_NUM < 0x070A03
-#  include <curl/easy.h>
+   #include <curl/easy.h>
 #endif
 #if LIBCURL_VERSION_NUM < 0x070C00
-#  include <curl/types.h>
+   #include <curl/types.h>
 #endif
 
 #include "hbapi.h"
@@ -75,9 +75,9 @@
          [vszakats] */
 
 #if LIBCURL_VERSION_NUM < 0x071100
-#  ifndef HB_CURL_HASH_STRINGS
-#     define HB_CURL_HASH_STRINGS
-#  endif
+   #ifndef HB_CURL_HASH_STRINGS
+   #define HB_CURL_HASH_STRINGS
+   #endif
 #endif
 
 /* Fall back to return simple error if special abort signal is not available. */
@@ -187,69 +187,15 @@ static const char * hb_curl_StrHashNew( PHB_CURL hb_curl, const char * szValue )
       return NULL;
 }
 
-#  define hb_curl_StrHash( c, s )  hb_curl_StrHashNew( ( c ), ( s ) )
+   #define hb_curl_StrHash( c, s )  hb_curl_StrHashNew( ( c ), ( s ) )
 
 #else
 
-#  define hb_curl_StrHash( c, s )  ( s )
+   #define hb_curl_StrHash( c, s )  ( s )
 
-#endif /* HB_CURL_HASH_STRINGS */
-
-/* Global initialization/deinitialization */
-/* -------------------------------------- */
-
-static void * hb_curl_xgrab( size_t size )
-{
-   return size > 0 ? hb_xgrab( size ) : NULL;
-}
-
-static void hb_curl_xfree( void * p )
-{
-   if( p )
-      hb_xfree( p );
-}
-
-static void * hb_curl_xrealloc( void * p, size_t size )
-{
-   return size > 0 ? ( p ? hb_xrealloc( p, size ) : hb_xgrab( size ) ) : NULL;
-}
-
-static char * hb_curl_strdup( const char * s )
-{
-   return hb_strdup( s );
-}
-
-static void * hb_curl_calloc( size_t nelem, size_t elsize )
-{
-   size_t size = nelem * elsize;
-   void * ptr  = hb_xgrab( size );
-
-   memset( ptr, 0, size );
-
-   return ptr;
-}
-
-HB_FUNC( CURL_GLOBAL_INIT )
-{
-#if LIBCURL_VERSION_NUM >= 0x070C00
-   hb_retnl( ( long ) curl_global_init_mem( hb_parnldef( 1, CURL_GLOBAL_ALL ),
-                                            hb_curl_xgrab,
-                                            hb_curl_xfree,
-                                            hb_curl_xrealloc,
-                                            hb_curl_strdup,
-                                            hb_curl_calloc ) );
-#else
-   hb_retnl( ( long ) curl_global_init( hb_parnldef( 1, CURL_GLOBAL_ALL ) ) );
-#endif
-}
-
-HB_FUNC( CURL_GLOBAL_CLEANUP )
-{
-   curl_global_cleanup();
-}
+#endif  /* HB_CURL_HASH_STRINGS */
 
 /* Callbacks */
-/* --------- */
 
 static size_t hb_curl_read_dummy_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
 {
@@ -467,7 +413,6 @@ static int hb_curl_debug_callback( CURL * handle, curl_infotype type, char * dat
 }
 
 /* Helpers */
-/* ------- */
 
 static void hb_curl_form_free( struct curl_httppost ** ptr )
 {
@@ -544,7 +489,6 @@ static void hb_curl_buff_dl_free( PHB_CURL hb_curl )
 }
 
 /* Constructor/Destructor */
-/* ---------------------- */
 
 static void PHB_CURL_free( PHB_CURL hb_curl, HB_BOOL bFree )
 {
@@ -697,7 +641,6 @@ static PHB_CURL PHB_CURL_par( int iParam )
 }
 
 /* Harbour interface */
-/* ----------------- */
 
 HB_FUNC( CURL_EASY_INIT )
 {
@@ -2295,72 +2238,6 @@ HB_FUNC( CURL_EASY_UNESCAPE )
       hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
-/* Harbour interface (session independent) */
-/* --------------------------------------- */
-
-HB_FUNC( CURL_VERSION )
-{
-   hb_retc( curl_version() );
-}
-
-HB_FUNC( CURL_VERSION_INFO )
-{
-   curl_version_info_data * data = curl_version_info( CURLVERSION_NOW );
-
-   if( data )
-   {
-      PHB_ITEM pArray = hb_itemArrayNew( 13 );
-
-      hb_arraySetC(  pArray, 1, data->version );                      /* LIBCURL_VERSION */
-      hb_arraySetNI( pArray, 2, data->version_num );                  /* LIBCURL_VERSION_NUM */
-      hb_arraySetC(  pArray, 3, data->host );                         /* OS/host/cpu/machine when configured */
-      hb_arraySetNI( pArray, 4, data->features );                     /* bitmask, see defines below */
-      hb_arraySetC(  pArray, 5, data->ssl_version );                  /* human readable string */
-      hb_arraySetNI( pArray, 6, data->ssl_version_num );              /* not used anymore, always 0 */
-      hb_arraySetC(  pArray, 7, data->libz_version );                 /* human readable string */
-#if defined( CURLVERSION_SECOND )
-      hb_arraySetC(  pArray, 9, data->age >= CURLVERSION_SECOND ? data->ares : NULL );
-      hb_arraySetNI( pArray, 10, data->age >= CURLVERSION_SECOND ? data->ares_num : 0 );
-#else
-      hb_arraySetC(  pArray, 9, NULL );
-      hb_arraySetNI( pArray, 10, 0 );
-#endif
-#if defined( CURLVERSION_THIRD )
-      hb_arraySetC(  pArray, 11, data->age >= CURLVERSION_THIRD ? data->libidn : NULL );
-#else
-      hb_arraySetC(  pArray, 11, NULL );
-#endif
-#if defined( CURLVERSION_FOURTH )
-      hb_arraySetNI( pArray, 12, data->age >= CURLVERSION_FOURTH ? data->iconv_ver_num : 0 ); /* Same as '_libiconv_version' if built with HAVE_ICONV */
-#else
-      hb_arraySetNI( pArray, 12, 0 );
-#endif
-#if defined( CURLVERSION_FOURTH ) && LIBCURL_VERSION_NUM >= 0x071001
-      hb_arraySetC(  pArray, 13, data->age >= CURLVERSION_FOURTH ? data->libssh_version : NULL ); /* human readable string */
-#else
-      hb_arraySetC(  pArray, 13, NULL );
-#endif
-      {
-         PHB_ITEM pProtocols;
-         int      nCount = 0;
-         const char * const * prot = data->protocols;
-
-         while( *( prot++ ) )
-            nCount++;
-
-         pProtocols = hb_arrayGetItemPtr( pArray, 8 );
-         hb_arrayNew( pProtocols, nCount );
-
-         for( prot = data->protocols, nCount = 1; *prot; prot++ )
-            hb_arraySetC( pProtocols, nCount++, *prot );
-      }
-
-      hb_itemReturnRelease( pArray );
-   }
-   else
-      hb_reta( 0 );
-}
-
 HB_FUNC( CURL_EASY_STRERROR )
 {
    if( HB_ISNUM( 1 ) )
@@ -2369,43 +2246,6 @@ HB_FUNC( CURL_EASY_STRERROR )
 #else
       hb_retc_null();
 #endif
-   else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-}
-
-/* NOTE: This returns the number of seconds since January 1st 1970 in the UTC time zone. */
-HB_FUNC( CURL_GETDATE )
-{
-   if( HB_ISCHAR( 1 ) )
-      hb_retnint( ( HB_MAXINT ) curl_getdate( hb_parc( 1 ), NULL ) );
-   else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-}
-
-/* Harbour interface (session independent) */
-
-/* NOTE: Obsolete, superceded by curl_easy_escape() */
-HB_FUNC( CURL_ESCAPE )
-{
-   if( HB_ISCHAR( 1 ) )
-   {
-      char * buffer = curl_escape( hb_parc( 1 ), ( int ) hb_parclen( 1 ) );
-      hb_retc( buffer );
-      curl_free( buffer );
-   }
-   else
-      hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-}
-
-/* NOTE: Obsolete, superceded by curl_easy_unescape() */
-HB_FUNC( CURL_UNESCAPE )
-{
-   if( HB_ISCHAR( 1 ) )
-   {
-      char * buffer = curl_unescape( hb_parc( 1 ), ( int ) hb_parclen( 1 ) );
-      hb_retc( buffer );
-      curl_free( buffer );
-   }
    else
       hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }

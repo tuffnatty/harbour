@@ -15,4 +15,8 @@
 
 hbcurl.hbx
 
-core.c
+date.c
+easy.c
+escold.c
+global.c
+ver.c
