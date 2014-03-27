@@ -7,6 +7,139 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-10-03 08:08 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * XHTML <br /> -> HTML5 <br>
+  ; origin: https://github.com/vszakats/hb/commit/6776e098add62177b1d295fc3751dd87be0d4154
+2017-09-06 08:41 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * minor cleanup
+  ; No original ChangeLog entry
+  ; origin: https://github.com/vszakats/hb/commit/816e3b2e7ad2aac03c2520b0c5398cb45628e2ea
+2017-09-06 08:00 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * minor cleanups
+  ; No original ChangeLog entry
+  ; origin: https://github.com/vszakats/hb/commit/a6603deddd821d2a361c3e9fae441b452f006ab9
+2017-09-05 23:13 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * cleanups, formatting
+    + add binary attachment to hbtip example
+  ; origin: https://github.com/vszakats/hb/commit/ac09dd5e131b18c431011c19effbd2de8628b37a
+2017-09-05 20:33 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + libcurl MIME encoder support was just committed: start using
+      it in the example.
+  ; origin: https://github.com/vszakats/hb/commit/1e2fff716da8f91f67c04cfc2777f5bfa5fcc684
+2017-09-05 18:13 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + add test binary attachment with libcurl MIME
+  ; origin: https://github.com/vszakats/hb/commit/b5fa5f9d42d2e2ced185d30a9c15218ddfb8c110
+2017-08-26 14:29 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + upgrade gmx.net to use proper TLS/SSL
+  ; origin: https://github.com/vszakats/hb/commit/d66de635a7760f3f1c2933c1e31f273b499d2b2c
+2017-08-26 08:15 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + use the CA bundle distributed with the Windows distro package
+  ; origin: https://github.com/vszakats/hb/commit/fd28b2266a70b85905e89086998440f1116f5c5c
+2017-07-19 01:20 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * example.com -> example.org
+  ; origin: https://github.com/vszakats/hb/commit/1f561f64cd849adc3dd1e04e6c919ca025441fe6
+2017-05-31 17:11 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + add `email.prg` as an attachment to the test email message
+  ; origin: https://github.com/vszakats/hb/commit/1519d731f4a5aad43ce4b73c4fb3b85e65630661
+2017-02-12 11:36 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    ! download CA bundle on darwin
+  ; origin: https://github.com/vszakats/hb/commit/f4670b88c66c86bf974f2671f6e0a3b646090577
+2017-01-11 23:50 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    ! enable CURLOPT_FAILONERROR with HTTP[S] protocols
+  ; origin: https://github.com/vszakats/hb/commit/658d7aed7746c3138d02b2257ea9d7a6b89459da
+2016-07-29 14:37 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * update hostnames
+  ; origin: https://github.com/vszakats/hb/commit/bc2d4bceeacb26d28b560c2afd4925453b24f90a
+2016-01-30 02:14 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * use https URL to download CA list
+    * minor opt
+  ; origin: https://github.com/vszakats/hb/commit/56a8fd1c423bc8871fdfddad23ae1b7bd1dbb9e7
+2015-07-27 23:40 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * use VF IO API
+  ; origin: https://github.com/vszakats/hb/commit/4d91baae75dcfabc805b1dbba737f499218b2fcf
+2015-03-25 01:19 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * limit protocols to SMTPS and SMTP
+  ; origin: https://github.com/vszakats/hb/commit/58e8d3662a05fc4e8157d9858f426ad0ecfec51a
+2015-03-20 23:56 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + allow custom hosts
+    * clarify some terminology
+    + merge (and revise) an upstream comment
+  ; origin: https://github.com/vszakats/hb/commit/bed03d8bd5eb46ce09fdf75fa2564eaffd406413
+2015-02-24 01:32 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + use HB_CURLVERINFO_* constants
+  ; origin: https://github.com/vszakats/hb/commit/47cf617ccb90e05da55e4e9fadddf15675380c65
+2014-12-29 02:13 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + added more SMTP provider examples
+      (gmx.net, mail.ru, netease/163, office365, sina, UOL)
+  ; origin: https://github.com/vszakats/hb/commit/6da2688b984342a12ff1362cc81d61dbba45a607
+2014-12-28 23:26 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + recognize another sender domain
+  ; origin: https://github.com/vszakats/hb/commit/23eab3a7dcada36efad866889b703c9fcf95ef65
+2014-12-28 12:17 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + added support for apple and gmx mail
+    ! fixed accessing servers that use STARTTLS
+    % deleted default port 465
+  ; origin: https://github.com/vszakats/hb/commit/139d5cf2222eaffebcab36ab1427cf9164daf4ce
+2014-12-27 15:35 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/gmail.prg -> contrib/hbcurl/tests/email.prg
+    * renamed to be provider agnostic
+    + added alternate SMTP providers
+  ; origin: https://github.com/vszakats/hb/commit/aed74122be680042bab568e2e64bb32257ba1316
+2014-08-06 02:32 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/gmail.prg
+    * cleanups
+  ; origin: https://github.com/vszakats/hb/commit/d59561d1d8d4be051523508b00ea5d5e28d417a0
+2014-04-08 10:59 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/hbmk.hbm
+    + link with hbtip
+  ; origin: https://github.com/vszakats/hb/commit/2722beaab5e95418fe18b7878a12c2b5fd183539
+2014-03-29 15:15 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/gmail.prg
+    % minor simplification
+  ; origin: https://github.com/vszakats/hb/commit/62e311a42543f604fd4f382c5ce7e29fc4ca119b
+2014-03-28 19:05 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/gmail.prg
+    ! avoid AScan() with SET EXACT dependent search parameter
+  ; origin: https://github.com/vszakats/hb/commit/bbc03746f70e14082f6079dc188de79249271117
+2014-03-27 20:28 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/gmail.prg
+    * cleanups
+  ; origin: https://github.com/vszakats/hb/commit/679501b0a5f25993726377a7226c1c3e6701ad3f
+2014-03-27 17:03 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/gmail.prg
+    + download cacert.pem automatically
+  ; origin: https://github.com/vszakats/hb/commit/fec810aaa1de02c19bcc88192acdb183a9343102
+2014-03-27 02:57 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  + contrib/hbcurl/tests/gmail.prg
+    + added example for sending e-mail via SMTPS using libcurl
+  ; origin: https://github.com/vszakats/hb/commit/24b89607c47b4f0700b1dc2b9257932bc2b77a7e
+
+2017-09-05 17:10 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    * minor cleanups
+  ; origin: https://github.com/vszakats/hb/commit/63cf240669bc3bc64e8c7389328c5b3a2714c245
+
 2017-09-05 17:10 UTC Viktor Szakats (vszakats users.noreply.github.com)
   + contrib/hbcurl/misc.prg
   * contrib/hbcurl/hbcurl.hbm
@@ -14,6 +147,15 @@
     + add hb_curl_mail_address_to_email( <cAddress> ) -> <cEmail>
       (same as tip_GetRawEmail() in hbtip)
   ; origin: https://github.com/vszakats/hb/commit/63cf240669bc3bc64e8c7389328c5b3a2714c245
+
+2017-09-05 10:29 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+    + add support for https://mailtrap.io/ SMTP server for
+      development/staging
+    + add support for using curl's upcoming new MIME API to
+      assemble the email payload, instead of using tip_MailAssembly()
+  ; origin: https://github.com/vszakats/hb/commit/0c012c726a0f9016917bfd22aa3465476d30470b
+  ;         2017-09-05 10:29 UTC Viktor Szakats (vszakats users.noreply.github.com)
 
 2017-09-05 10:29 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
