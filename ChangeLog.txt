@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-05-26 10:40 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+    ! some missing safety cleanups in PHB_CURL_free()
+  ; origin: https://github.com/vszakats/hb/commit/1b3691e149a034e4198e24cfb9db7269cd30074f
+
 2014-02-23 23:01 UTC+0100 Viktor Szakáts (vszakats users.noreply.github.com)
   * contrib/hbcurl/core.c
     ! adjusted all version guards which were based on guesses
