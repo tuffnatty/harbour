@@ -7,6 +7,36 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-10-04 03:34 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbp
+    + pick 64-bit libcurl.dll with a -x64 suffix
+  ; origin: https://github.com/vszakats/hb/commit/0782b039993d6dd0f9575b1c67f95b41841214a8
+2017-10-04 01:57 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbp
+    + pick implib when named as '../lib/libcurl.dll.a'
+    * generalize -depimplibd= value
+  ; origin: https://github.com/vszakats/hb/commit/2b39c0277ffba162f68c5f5add343313f9baf09e
+2017-09-29 17:31 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbp
+    + update mingw-specific filters to also apply to clang
+    + update msys2 filters to apply to both mingw and clang
+  ; origin: https://github.com/vszakats/hb/commit/9d783a33dced55fc0b2b9fbb8b80d59ac6977d3b
+2016-02-24 00:40 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbp
+    ! try to convince hbmk2 to pick the ready-made libcurl implib,
+      instead of falling back to making a copy of libcurl.dll.
+      It was tested with my curl binaries.
+         https://bintray.com/vszakats/generic/curl/
+  ; origin: https://github.com/vszakats/hb/commit/a65a048d586e0066f26ffd072beb701397489b51
+2014-07-02 16:40 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbp
+    + added new location of dll dependencies on win
+  ; origin: https://github.com/vszakats/hb/commit/e81a1de55b76bb66a8e31f8206ff6f95447bcdc7
+2014-05-26 18:54 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbp
+    + added an implib source dir
+  ; origin: https://github.com/vszakats/hb/commit/d39e00ed5a23db2cd6d41d264e4f3c6a6b501353
+
 2017-09-22 12:51 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     * adapt to upstream (unreleased yet) API tweak

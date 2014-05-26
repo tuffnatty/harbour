@@ -2,12 +2,21 @@ hbcurl.hbm
 
 -depimplibs=curl:../libcurl.dll
 -depimplibs=curl:../bin/libcurl.dll
+-depimplibs=curl:../dlls/libcurl.dll
+-depimplibs=curl:../lib/libcurl.dll{!(mingw|clang)}
+-depimplibs=curl:../lib/libcurl.nodef{mingw|clang}
+-depimplibs=curl:../lib/libcurldll.a{allmingw}
+-depimplibs=curl:../lib/libcurl.dll.a{allmingw}
 -depimplibs=curl:../libcurl-4.dll
 -depimplibs=curl:../bin/libcurl-4.dll
+-depimplibd=curl:curl
 -depfinish=curl
 
 -iflag={bcc}-a
 
-{hbdyn&win}-instfile=depimplibsrc:${HBMK_DIR_CURL}/../bin/*.dll
+-instfile=depimplibsrc:${HBMK_DIR_CURL}/../dlls/libcurl.dll{hbdyn&win}
+-instfile=depimplibsrc:${HBMK_DIR_CURL}/../lib/libcurl.dll{hbdyn&win}
+-instfile=depimplibsrc:${HBMK_DIR_CURL}/../bin/libcurl.dll{hbdyn&win&(mingw|clang)}
+-instfile=depimplibsrc:${HBMK_DIR_CURL}/../bin/libcurl-x64.dll{hbdyn&win&(mingw64|clang64)}
 
 hbcurls.hbp
