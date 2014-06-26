@@ -7,6 +7,15 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-06-26 11:39 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + added HB_CURLOPT_HTTPPOST_CONTENT to allow passing in-memory
+      buffers (strings) as POST values. Based on this pull request:
+       https://github.com/harbour/core/pull/73
+       by emazv72
+  ; origin: https://github.com/vszakats/hb/commit/6986322f84764510b913f61ff0fa3af08f7aad68
+
 2014-05-26 09:59 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/core.c
     ! added missing bits for libcurl 7.37.0

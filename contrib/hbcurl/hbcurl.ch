@@ -272,7 +272,8 @@
 #define HB_CURLOPT_UL_NULL_SETUP              1010
 #define HB_CURLOPT_UL_FHANDLE_SETUP           1011
 #define HB_CURLOPT_DL_FHANDLE_SETUP           1012
-#define HB_CURLOPT_DEBUGBLOCK                 1013
+#define HB_CURLOPT_HTTPPOST_CONTENT           1013
+#define HB_CURLOPT_DEBUGBLOCK                 1014
 #define HB_CURLOPT_PROGRESSBLOCK              HB_CURLOPT_XFERINFOBLOCK
 /* Compatibility ones. Please don't use these. */
 #define HB_CURLOPT_SETUPLOADFILE              HB_CURLOPT_UL_FILE_SETUP
