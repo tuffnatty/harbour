@@ -74,11 +74,8 @@ static char * hb_curl_strdup( const char * s )
 static void * hb_curl_calloc( size_t nelem, size_t elsize )
 {
    size_t size = nelem * elsize;
-   void * ptr  = hb_xgrab( size );
 
-   memset( ptr, 0, size );
-
-   return ptr;
+   return size > 0 ? hb_xgrabz( size ) : NULL;
 }
 
 HB_FUNC( CURL_GLOBAL_INIT )

@@ -7,6 +7,21 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-07-03 02:45 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/global.c
+    * use hb_xgrabz() macro to replace hb_xgrab()/hb_memset() pairs
+    * few hb_xmemset() calls eliminated where memset() was enough
+  ; origin: https://github.com/vszakats/hb/commit/83d96f8a918b8e7016fd68b6c41672f97e342abc
+2014-07-02 20:56 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/global.c
+    ! memory allocation wrappers updated to better mimic behavior
+      of standard malloc()/realloc()/free()/calloc()
+      It is particularly important to let free() silently accept NULL
+      argument. [I chose zero size allocations to return NULL.]
+    ; Critical update for anyone using libcurl 7.36.0 or newer
+  ; origin: https://github.com/vszakats/hb/commit/35ffdc113f348fbf10203757073bbee564e4339f
+
 2014-06-26 15:35 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     % deleted commented code that is no longer valid
