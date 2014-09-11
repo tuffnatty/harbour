@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-09-11 16:37 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + added defines for libcurl 7.38.0: HB_CURLAUTH_NEGOTIATE, HB_CURLE_HTTP2
+  ; No original ChangeLog entry
+  ; origin: https://github.com/vszakats/hb/commit/bbaa61e699a4fd89837bd88cb2c31fd0156700c1
+
 2014-07-03 02:45 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/global.c
