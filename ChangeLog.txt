@@ -7,6 +7,17 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-12-29 02:13 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + added new error codes
+  ; origin: https://github.com/vszakats/hb/commit/6da2688b984342a12ff1362cc81d61dbba45a607
+
+2014-10-12 18:45 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + added upcoming libcurl feature HB_CURLOPT_PINNEDPUBLICKEY
+  ; origin: https://github.com/vszakats/hb/commit/2bc4c1c89dd4b6a31886e27d7092d81a5ac8f009
+
 2014-09-11 16:37 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.ch
     + added defines for libcurl 7.38.0: HB_CURLAUTH_NEGOTIATE, HB_CURLE_HTTP2
