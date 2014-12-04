@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-12-05 00:29 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + added support for upcoming libcurl 7.40.0 feature
+      CURLOPT_UNIX_SOCKET_PATH
+  ; origin: https://github.com/vszakats/hb/commit/7f371b85778ae9975c0480db5355a6685eb555ab
+
 2014-12-29 02:13 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.ch
     + added new error codes

@@ -260,6 +260,7 @@
 #define HB_CURLOPT_HEADEROPT                  213
 #define HB_CURLOPT_PROXYHEADER                214
 #define HB_CURLOPT_PINNEDPUBLICKEY            215
+#define HB_CURLOPT_UNIX_SOCKET_PATH           216
 #define HB_CURLOPT_MAXLIFETIME_CONN           287
 #define HB_CURLOPT_DOWNLOAD                   1001  /* Harbour special ones */
 #define HB_CURLOPT_XFERINFOBLOCK              1002
