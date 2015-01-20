@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-01-20 12:22 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add CURLOPT_SSL_VERIFYSTATUS option of upcoming libcurl 7.41.0
+  ; origin: https://github.com/vszakats/hb/commit/c6cac13cdc5a3afda154f8cdeed4eeae69a0555a
+
 2014-12-05 00:29 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
