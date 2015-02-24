@@ -7,6 +7,17 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-03-02 23:56 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+  * contrib/hbcurl/ver.c
+    + add HB_CURLVERINFO_LEN constant
+    * use recently added constants in wrapper code
+  ; origin: https://github.com/vszakats/hb/commit/22d7fbb5c58b7a32d60ad6e50a8c39fc0cea1f43
+2015-02-24 01:32 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + add HB_CURLVERINFO_* constants (Harbour-only)
+  ; origin: https://github.com/vszakats/hb/commit/47cf617ccb90e05da55e4e9fadddf15675380c65
+
 2015-01-20 12:22 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
