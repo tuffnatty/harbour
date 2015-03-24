@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-03-24 18:06 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add upcoming libcurl 7.42.0 features
+  ; origin: https://github.com/vszakats/hb/commit/67aee09b0e745a7508fcaf353a8b9b710e60baab
+
 2015-03-02 23:56 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.ch
   * contrib/hbcurl/ver.c
