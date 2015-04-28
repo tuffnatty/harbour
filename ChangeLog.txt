@@ -7,6 +7,18 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-04-10 10:34 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    * follow https://github.com/curl/curl/commit/ccf7a826050fe33aace329b86d77895bdb7dd4c3
+  ; origin: https://github.com/vszakats/hb/commit/487b3d3312dd6aa90086bef45173c2586e49c7c8
+2015-04-28 14:37 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for upcoming libcurl 7.43.0 features:
+      CURLOPT_PROXY_SERVICE_NAME
+      CURLOPT_SERVICE_NAME
+  ; origin: https://github.com/vszakats/hb/commit/0d7228475d1f6f592e4e8cbf8ec16c987c9d27c8
+
 2015-03-24 18:06 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
