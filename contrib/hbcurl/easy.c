@@ -85,6 +85,10 @@
    #define CURL_READFUNC_ABORT  ( ( size_t ) -1 )
 #endif
 
+#define HB_CURL_ONFREE_NOOP     0
+#define HB_CURL_ONFREE_CLOSE    1
+#define HB_CURL_ONFREE_DETACH   2
+
 typedef struct _HB_CURL
 {
    CURL * curl;
@@ -101,13 +105,13 @@ typedef struct _HB_CURL
    struct curl_slist *    pRESOLVE;
    struct curl_slist *    pPROXYHEADER;
 
-   char *     ul_name;
-   HB_FHANDLE ul_handle;
-   HB_BOOL    ul_close;
+   char *   ul_name;
+   PHB_FILE ul_file;
+   int      ul_onfree;
 
-   char *     dl_name;
-   HB_FHANDLE dl_handle;
-   HB_BOOL    dl_close;
+   char *   dl_name;
+   PHB_FILE dl_file;
+   int      dl_onfree;
 
    unsigned char * ul_ptr;
    size_t          ul_len;
@@ -216,36 +220,20 @@ static size_t hb_curl_read_file_callback( void * buffer, size_t size, size_t nme
    {
       size_t ret;
 
-      if( hb_curl->ul_handle == FS_ERROR )
+      if( hb_curl->ul_file == NULL && hb_curl->ul_name )
       {
-         hb_curl->ul_handle = hb_fsOpen( hb_curl->ul_name, FO_READ );
+         hb_curl->ul_file = hb_fileExtOpen( hb_curl->ul_name, NULL,
+                                            FO_READ | FO_SHARED | FO_PRIVATE |
+                                            FXO_SHARELOCK | FXO_NOSEEKPOS,
+                                            NULL, NULL );
 
-         if( hb_curl->ul_handle == FS_ERROR )
+         if( hb_curl->ul_file == NULL )
             return ( size_t ) -1;
 
-         hb_curl->ul_close = HB_TRUE;
+         hb_curl->ul_onfree = HB_CURL_ONFREE_CLOSE;
       }
 
-      ret = ( size_t ) hb_fsReadLarge( hb_curl->ul_handle, buffer, size * nmemb );
-
-      return hb_fsError() ? CURL_READFUNC_ABORT : ret;
-   }
-
-   return ( size_t ) -1;
-}
-
-static size_t hb_curl_read_fhandle_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
-{
-   PHB_CURL hb_curl = ( PHB_CURL ) Cargo;
-
-   if( hb_curl )
-   {
-      size_t ret;
-
-      if( hb_curl->ul_handle == FS_ERROR )
-         return ( size_t ) -1;
-
-      ret = ( size_t ) hb_fsReadLarge( hb_curl->ul_handle, buffer, size * nmemb );
+      ret = ( size_t ) hb_fileRead( hb_curl->ul_file, buffer, size * nmemb, -1 );
 
       return hb_fsError() ? CURL_READFUNC_ABORT : ret;
    }
@@ -281,32 +269,20 @@ static size_t hb_curl_write_file_callback( void * buffer, size_t size, size_t nm
 
    if( hb_curl )
    {
-      if( hb_curl->dl_handle == FS_ERROR )
+      if( hb_curl->dl_file == NULL && hb_curl->dl_name )
       {
-         hb_curl->dl_handle = hb_fsCreate( hb_curl->dl_name, FC_NORMAL );
+         hb_curl->dl_file = hb_fileExtOpen( hb_curl->dl_name, NULL,
+                                            FO_WRITE | FO_EXCLUSIVE | FO_PRIVATE |
+                                            FXO_TRUNCATE | FXO_SHARELOCK | FXO_NOSEEKPOS,
+                                            NULL, NULL );
 
-         if( hb_curl->dl_handle == FS_ERROR )
+         if( hb_curl->dl_file == NULL )
             return ( size_t ) -1;
 
-         hb_curl->dl_close = HB_TRUE;
+         hb_curl->dl_onfree = HB_CURL_ONFREE_CLOSE;
       }
 
-      return hb_fsWriteLarge( hb_curl->dl_handle, buffer, size * nmemb );
-   }
-
-   return ( size_t ) -1;
-}
-
-static size_t hb_curl_write_fhandle_callback( void * buffer, size_t size, size_t nmemb, void * Cargo )
-{
-   PHB_CURL hb_curl = ( PHB_CURL ) Cargo;
-
-   if( hb_curl )
-   {
-      if( hb_curl->dl_handle == FS_ERROR )
-         return ( size_t ) -1;
-
-      return hb_fsWriteLarge( hb_curl->dl_handle, buffer, size * nmemb );
+      return hb_fileWrite( hb_curl->dl_file, buffer, size * nmemb, -1 );
    }
 
    return ( size_t ) -1;
@@ -433,59 +409,67 @@ static void hb_curl_slist_free( struct curl_slist ** ptr )
    }
 }
 
-static void hb_curl_file_ul_free( PHB_CURL hb_curl )
+static void hb_curl_ul_free( PHB_CURL hb_curl )
 {
-   if( hb_curl && hb_curl->ul_name )
+   if( hb_curl )
    {
-      hb_xfree( hb_curl->ul_name );
-      hb_curl->ul_name = NULL;
-
-      if( hb_curl->ul_handle != FS_ERROR )
+      if( hb_curl->ul_name )
       {
-         if( hb_curl->ul_close )
-            hb_fsClose( hb_curl->ul_handle );
-         hb_curl->ul_handle = FS_ERROR;
-         hb_curl->ul_close = HB_FALSE;
+         hb_xfree( hb_curl->ul_name );
+         hb_curl->ul_name = NULL;
+      }
+
+      if( hb_curl->ul_file )
+      {
+         if( hb_curl->ul_onfree == HB_CURL_ONFREE_CLOSE )
+            hb_fileClose( hb_curl->ul_file );
+         else if( hb_curl->ul_onfree == HB_CURL_ONFREE_DETACH )
+            hb_fileDetach( hb_curl->ul_file );
+
+         hb_curl->ul_file = NULL;
+      }
+
+      hb_curl->ul_onfree = HB_CURL_ONFREE_NOOP;
+
+      if( hb_curl->ul_ptr )
+      {
+         hb_xfree( hb_curl->ul_ptr );
+         hb_curl->ul_ptr = NULL;
+         hb_curl->ul_len = 0;
+         hb_curl->ul_pos = 0;
       }
    }
 }
 
-static void hb_curl_file_dl_free( PHB_CURL hb_curl )
+static void hb_curl_dl_free( PHB_CURL hb_curl )
 {
-   if( hb_curl && hb_curl->dl_name )
+   if( hb_curl )
    {
-      hb_xfree( hb_curl->dl_name );
-      hb_curl->dl_name = NULL;
-
-      if( hb_curl->dl_handle != FS_ERROR )
+      if( hb_curl->dl_name )
       {
-         if( hb_curl->dl_close )
-            hb_fsClose( hb_curl->dl_handle );
-         hb_curl->dl_handle = FS_ERROR;
-         hb_curl->dl_close = HB_FALSE;
+         hb_xfree( hb_curl->dl_name );
+         hb_curl->dl_name = NULL;
       }
-   }
-}
 
-static void hb_curl_buff_ul_free( PHB_CURL hb_curl )
-{
-   if( hb_curl && hb_curl->ul_ptr )
-   {
-      hb_xfree( hb_curl->ul_ptr );
-      hb_curl->ul_ptr = NULL;
-      hb_curl->ul_len = 0;
-      hb_curl->ul_pos = 0;
-   }
-}
+      if( hb_curl->dl_file )
+      {
+         if( hb_curl->dl_onfree == HB_CURL_ONFREE_CLOSE )
+            hb_fileClose( hb_curl->dl_file );
+         else if( hb_curl->dl_onfree == HB_CURL_ONFREE_DETACH )
+            hb_fileDetach( hb_curl->dl_file );
 
-static void hb_curl_buff_dl_free( PHB_CURL hb_curl )
-{
-   if( hb_curl && hb_curl->dl_ptr )
-   {
-      hb_xfree( hb_curl->dl_ptr );
-      hb_curl->dl_ptr = NULL;
-      hb_curl->dl_len = 0;
-      hb_curl->dl_pos = 0;
+         hb_curl->dl_file = NULL;
+      }
+
+      hb_curl->dl_onfree = HB_CURL_ONFREE_NOOP;
+
+      if( hb_curl->dl_ptr )
+      {
+         hb_xfree( hb_curl->dl_ptr );
+         hb_curl->dl_ptr = NULL;
+         hb_curl->dl_len = 0;
+         hb_curl->dl_pos = 0;
+      }
    }
 }
 
@@ -530,11 +514,8 @@ static void PHB_CURL_free( PHB_CURL hb_curl, HB_BOOL bFree )
    hb_curl_slist_free( &hb_curl->pRESOLVE );
    hb_curl_slist_free( &hb_curl->pPROXYHEADER );
 
-   hb_curl_file_ul_free( hb_curl );
-   hb_curl_file_dl_free( hb_curl );
-
-   hb_curl_buff_ul_free( hb_curl );
-   hb_curl_buff_dl_free( hb_curl );
+   hb_curl_ul_free( hb_curl );
+   hb_curl_dl_free( hb_curl );
 
    if( hb_curl->pXferInfoCallback )
    {
@@ -1793,71 +1774,67 @@ HB_FUNC( CURL_EASY_SETOPT )
             }
 
             case HB_CURLOPT_UL_FILE_SETUP:
-               hb_curl_file_ul_free( hb_curl );
+            {
+               HB_BOOL lSuccess = HB_TRUE;
+
+               hb_curl_ul_free( hb_curl );
 
                if( HB_ISCHAR( 3 ) )
+                  hb_curl->ul_name = hb_strdup( hb_parc( 3 ) );
+               else if( hb_fileParamGet( 3 ) )
+                  hb_curl->ul_file = hb_fileParamGet( 3 );
+               else if( HB_ISNUM( 3 ) )
                {
-                  hb_curl->ul_name   = hb_strdup( hb_parc( 3 ) );
-                  hb_curl->ul_handle = FS_ERROR;
-                  hb_curl->ul_close = HB_FALSE;
+                  hb_curl->ul_file   = hb_fileFromHandle( hb_numToHandle( hb_parnint( 3 ) ) );
+                  hb_curl->ul_onfree = HB_CURL_ONFREE_DETACH;
+               }
+               else
+                  lSuccess = HB_FALSE;
 
+               if( lSuccess )
+               {
                   curl_easy_setopt( hb_curl->curl, CURLOPT_READFUNCTION, hb_curl_read_file_callback );
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_READDATA, hb_curl );
                }
                break;
-
-            case HB_CURLOPT_UL_FHANDLE_SETUP:
-               hb_curl_file_ul_free( hb_curl );
-
-               if( HB_ISNUM( 3 ) )
-               {
-                  hb_curl->ul_name   = NULL;
-                  hb_curl->ul_handle = hb_numToHandle( hb_parnint( 3 ) );
-
-                  curl_easy_setopt( hb_curl->curl, CURLOPT_READFUNCTION, hb_curl_read_fhandle_callback );
-                  res = curl_easy_setopt( hb_curl->curl, CURLOPT_READDATA, hb_curl );
-               }
-               break;
-
+            }
             case HB_CURLOPT_UL_FILE_CLOSE:
-               hb_curl_file_ul_free( hb_curl );
+               hb_curl_ul_free( hb_curl );
                res = CURLE_OK;
                break;
 
             case HB_CURLOPT_DL_FILE_SETUP:
-               hb_curl_file_dl_free( hb_curl );
+            {
+               HB_BOOL lSuccess = HB_TRUE;
+
+               hb_curl_dl_free( hb_curl );
 
                if( HB_ISCHAR( 3 ) )
+                  hb_curl->dl_name = hb_strdup( hb_parc( 3 ) );
+               else if( hb_fileParamGet( 3 ) )
+                  hb_curl->dl_file = hb_fileParamGet( 3 );
+               else if( HB_ISNUM( 3 ) )
                {
-                  hb_curl->dl_name   = hb_strdup( hb_parc( 3 ) );
-                  hb_curl->dl_handle = FS_ERROR;
-                  hb_curl->dl_close = HB_FALSE;
+                  hb_curl->dl_file   = hb_fileFromHandle( hb_numToHandle( hb_parnint( 3 ) ) );
+                  hb_curl->dl_onfree = HB_CURL_ONFREE_DETACH;
+               }
+               else
+                  lSuccess = HB_FALSE;
 
+               if( lSuccess )
+               {
                   curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEFUNCTION, hb_curl_write_file_callback );
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEDATA, hb_curl );
                }
                break;
-
-            case HB_CURLOPT_DL_FHANDLE_SETUP:
-               hb_curl_file_dl_free( hb_curl );
-
-               if( HB_ISNUM( 3 ) )
-               {
-                  hb_curl->dl_name   = NULL;
-                  hb_curl->dl_handle = hb_numToHandle( hb_parnint( 3 ) );
-
-                  curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEFUNCTION, hb_curl_write_fhandle_callback );
-                  res = curl_easy_setopt( hb_curl->curl, CURLOPT_WRITEDATA, hb_curl );
-               }
-               break;
-
+            }
             case HB_CURLOPT_DL_FILE_CLOSE:
-               hb_curl_file_dl_free( hb_curl );
+               hb_curl_dl_free( hb_curl );
                res = CURLE_OK;
                break;
 
             case HB_CURLOPT_UL_BUFF_SETUP:
-               hb_curl_buff_ul_free( hb_curl );
+               hb_curl_ul_free( hb_curl );
 
                if( HB_ISCHAR( 3 ) )
                {
@@ -1873,7 +1850,7 @@ HB_FUNC( CURL_EASY_SETOPT )
                break;
 
             case HB_CURLOPT_DL_BUFF_SETUP:
-               hb_curl_buff_dl_free( hb_curl );
+               hb_curl_dl_free( hb_curl );
 
                hb_curl->dl_pos = 0;
                hb_curl->dl_len = hb_parnldef( 3, HB_CURL_DL_BUFF_SIZE_INIT );
@@ -1890,8 +1867,7 @@ HB_FUNC( CURL_EASY_SETOPT )
                break;
 
             case HB_CURLOPT_UL_NULL_SETUP:
-               hb_curl_file_ul_free( hb_curl );
-               hb_curl_buff_ul_free( hb_curl );
+               hb_curl_ul_free( hb_curl );
 
                curl_easy_setopt( hb_curl->curl, CURLOPT_READFUNCTION, hb_curl_read_dummy_callback );
                res = curl_easy_setopt( hb_curl->curl, CURLOPT_READDATA, hb_curl );

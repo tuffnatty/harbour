@@ -7,6 +7,35 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-05-13 21:07 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    * internal cleanup to HB_CURLOPT_[UL|DL]_FILE_SETUP
+      handling
+  * contrib/hbcurl/easy.c
+    % internal cleanup of logic accepting both FILE and FS handles
+  ; origin: https://github.com/vszakats/hb/commit/ca9f75850cf65ffc93b483d1a6b355fd1be2d203
+2015-05-13 14:20 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for passing FILE IO handles to
+      HB_CURLOPT_[UL|DL]_FILE_SETUP options
+    * accept FS IO handles in
+      HB_CURLOPT_[UL|DL]_FILE_SETUP options
+    * deprecate HB_CURLOPT_[UL|DL]_FHANDLE_SETUP options
+      use ones above for same functionality
+    ! fix some minor quirks after previous patch
+  ; origin: https://github.com/vszakats/hb/commit/e3dc81f4aa788d77ab7425f523cd72e03f1df630
+2015-05-13 02:14 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    + use VF IO API when using HB_CURLOPT_UL_FILE_SETUP or
+      HB_CURLOPT_DL_FILE_SETUP options
+    ! fix a bug where file handle passed via HB_CURLOPT_UL_FHANDLE_SETUP
+      or HB_CURLOPT_DL_FHANDLE_SETUP was closed under certain
+      circumstances, notably when the session was closed. It means this
+      feature was never working reliably since introducing it in
+      5ae08a0e0ea54a0b472233b39222cc2aa45cf761
+  ; origin: https://github.com/vszakats/hb/commit/460f45eb4d12b1698b9ac2b2d07f8c07af3af082
+
 2016-04-10 10:34 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     * follow https://github.com/curl/curl/commit/ccf7a826050fe33aace329b86d77895bdb7dd4c3
