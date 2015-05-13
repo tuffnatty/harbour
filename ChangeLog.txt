@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-05-13 02:14 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! fix a bug where file handle passed via HB_CURLOPT_UL_FHANDLE_SETUP
+      or HB_CURLOPT_DL_FHANDLE_SETUP was closed under certain
+      circumstances, notably when the session was closed. It means this
+      feature was never working reliably since introducing it in
+      5ae08a0e0ea54a0b472233b39222cc2aa45cf761
+
 2014-09-12 03:27 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! fixed to not allocate zero bytes when an empty buffer is passed or
