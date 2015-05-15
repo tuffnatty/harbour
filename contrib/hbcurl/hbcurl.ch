@@ -266,6 +266,7 @@
 #define HB_CURLOPT_PATH_AS_IS                 219
 #define HB_CURLOPT_PROXY_SERVICE_NAME         220
 #define HB_CURLOPT_SERVICE_NAME               221
+#define HB_CURLOPT_PIPEWAIT                   222
 #define HB_CURLOPT_MAXLIFETIME_CONN           287
 #define HB_CURLOPT_DOWNLOAD                   1001  /* Harbour special ones */
 #define HB_CURLOPT_XFERINFOBLOCK              1002
@@ -324,6 +325,7 @@
 #define HB_CURL_HTTP_VERSION_1_0              1  /* please use HTTP 1.0 in the request */
 #define HB_CURL_HTTP_VERSION_1_1              2  /* please use HTTP 1.1 in the request */
 #define HB_CURL_HTTP_VERSION_2_0              3  /* please use HTTP 2.0 in the request */
+#define HB_CURL_HTTP_VERSION_2                HB_CURL_HTTP_VERSION_2_0
 
 /* HB_CURLOPT_USE_SSL option */
 #define HB_CURLUSESSL_NONE                    0  /* do not attempt to use SSL */

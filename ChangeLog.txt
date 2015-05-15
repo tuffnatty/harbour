@@ -7,6 +7,16 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-06-06 15:39 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + add an upcoming 7.43.0 curl constant
+  ; origin: https://github.com/vszakats/hb/commit/bc8f6b6df60a2672f5d8475c70a7ddff4dde4eb7
+2015-05-15 12:38 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add upcoming libcurl option HB_CURLOPT_PIPEWAIT
+  ; origin: https://github.com/vszakats/hb/commit/d338bfe449577791abc382db3ea24fe1b750185a
+
 2015-05-13 21:07 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     * internal cleanup to HB_CURLOPT_[UL|DL]_FILE_SETUP
