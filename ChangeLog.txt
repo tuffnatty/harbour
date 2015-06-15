@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-06-15 02:44 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    * minor cleanup of some break statements
+  ; origin: https://github.com/vszakats/hb/commit/d19a69cc94a20489e239353a6ecb16b008af0704
+
 2015-06-06 15:39 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.ch
     + add an upcoming 7.43.0 curl constant
