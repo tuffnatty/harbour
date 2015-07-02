@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-07-02 13:58 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! fix HB_CURLOPT_SSL_SESSIONID_CACHE option to mistakenly
+      set CURLOPT_SSL_VERIFYHOST internally. This could lead
+      to loss of host verification.
+      Issue is present since d9fe9a468879ba5aa6d3e7da6f7e6658e1f9bd2b
+  ; origin: https://github.com/vszakats/hb/commit/b905a28638f656451e2e559fd87d510297d2d1fe
+
 2015-05-13 02:14 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! fix a bug where file handle passed via HB_CURLOPT_UL_FHANDLE_SETUP
