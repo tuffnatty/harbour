@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-08-17 00:38 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! fix two potential NULL ptr dereferences
+      https://scan3.coverity.com/reports.htm#v28157/p10793/fileInstanceId=5966571&defectInstanceId=1369193&mergedDefectId=134567
+      https://scan3.coverity.com/reports.htm#v28157/p10793/fileInstanceId=5966571&defectInstanceId=1369194&mergedDefectId=134568
+  ; origin: https://github.com/vszakats/hb/commit/bf062c1dab951160cfa26781ec7edd47f4c3f6fd
+
 2015-07-17 16:28 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.ch
     + add upcoming curl 7.44.0 value
