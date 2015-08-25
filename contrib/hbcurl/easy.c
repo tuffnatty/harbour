@@ -1940,12 +1940,14 @@ HB_FUNC( CURL_EASY_DL_BUFF_GET )
       hb_errRT_BASE( EG_ARG, 2010, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
 
-#define HB_CURL_INFO_TYPE_INVALID  0
-#define HB_CURL_INFO_TYPE_STR      1
-#define HB_CURL_INFO_TYPE_PTR      2
-#define HB_CURL_INFO_TYPE_LONG     3
-#define HB_CURL_INFO_TYPE_DOUBLE   4
-#define HB_CURL_INFO_TYPE_SLIST    5
+#define HB_CURL_INFO_TYPE_INVALID    0
+#define HB_CURL_INFO_TYPE_STR        1
+#define HB_CURL_INFO_TYPE_PTR        2
+#define HB_CURL_INFO_TYPE_PTR_SLIST  3
+#define HB_CURL_INFO_TYPE_LONG       4
+#define HB_CURL_INFO_TYPE_DOUBLE     5
+#define HB_CURL_INFO_TYPE_SLIST      6
+#define HB_CURL_INFO_TYPE_SOCKET     7
 #define HB_CURL_INFO_TYPE_CERTINFO   8
 
 #define HB_CURL_EASY_GETINFO( hb_curl, n, p )  ( hb_curl ? curl_easy_getinfo( hb_curl->curl, n, p ) : ( CURLcode ) HB_CURLE_ERROR )
@@ -1965,6 +1967,7 @@ HB_FUNC( CURL_EASY_GETINFO )
       long   ret_long   = 0;
       struct curl_slist * ret_slist = NULL;
       double ret_double = 0.0;
+      curl_socket_t ret_socket = CURL_SOCKET_BAD;
       struct curl_certinfo * ret_certinfo = NULL;
 
       switch( hb_parni( 2 ) )
@@ -2111,7 +2114,13 @@ HB_FUNC( CURL_EASY_GETINFO )
 #endif
             type = HB_CURL_INFO_TYPE_SLIST;
             break;
-         case HB_CURLINFO_LASTSOCKET:
+         case HB_CURLINFO_ACTIVESOCKET:
+#if LIBCURL_VERSION_NUM >= 0x072D00
+            res = HB_CURL_EASY_GETINFO( hb_curl, CURLINFO_ACTIVESOCKET, &ret_socket );
+#endif
+            type = HB_CURL_INFO_TYPE_SOCKET;
+            break;
+         case HB_CURLINFO_LASTSOCKET:  /* NOTE: Not compatible with 64-bit Windows builds */
 #if LIBCURL_VERSION_NUM >= 0x070F02
             res = HB_CURL_EASY_GETINFO( hb_curl, CURLINFO_LASTSOCKET, &ret_long );
 #endif
@@ -2199,6 +2208,9 @@ HB_FUNC( CURL_EASY_GETINFO )
          case HB_CURL_INFO_TYPE_PTR:
             hb_retptr( ret_ptr );
             break;
+         case HB_CURL_INFO_TYPE_PTR_SLIST:
+            hb_retptr( ret_slist );
+            break;
          case HB_CURL_INFO_TYPE_LONG:
             hb_retnl( ret_long );
             break;
@@ -2229,6 +2241,9 @@ HB_FUNC( CURL_EASY_GETINFO )
             }
             else
                hb_reta( 0 );
+            break;
+         case HB_CURL_INFO_TYPE_SOCKET:
+            hb_retnint( ret_socket );
             break;
          case HB_CURL_INFO_TYPE_CERTINFO:
          {

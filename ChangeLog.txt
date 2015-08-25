@@ -7,6 +7,26 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-06-25 16:56 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! implement HB_CURLINFO_ACTIVESOCKET
+      correctly. The problem appeared as a warning when build against
+      the latest libcurl release.
+  ; origin: https://github.com/vszakats/hb/commit/f960710df09e48faad8fb1d187e3513c789a1cf5
+2015-10-15 12:16 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! fix gcc warning when compiled against curl 7.45.0 or newer
+  ; origin: https://github.com/vszakats/hb/commit/249a8094bf1f5800285f5a162ea368ca26ce4d84
+2015-08-25 15:30 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for upcoming libcurl 7.45.0 feature:
+      HB_CURLINFO_ACTIVESOCKET. This option replaces HB_CURLINFO_LASTSOCKET,
+      and makes it work on 64-bit Windows. HB_CURLINFO_LASTSOCKET is now
+      deprecated.
+      https://github.com/bagder/curl/commit/62f306ff34f569020ce54451da7c841d162710ac
+  ; origin: https://github.com/vszakats/hb/commit/f9b3b425aea8006ce90c7f0e77500835cbb9ea3d
+
 2015-08-24 00:57 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
