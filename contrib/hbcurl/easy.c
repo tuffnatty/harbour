@@ -235,7 +235,7 @@ static size_t hb_curl_read_file_callback( void * buffer, size_t size, size_t nme
       {
          size_t ret = ( size_t ) hb_fileRead( hb_curl->ul_file, buffer, size * nmemb, -1 );
 
-         return hb_fsError() ? CURL_READFUNC_ABORT : ret;
+         return ( ret == ( size_t ) FS_ERROR || hb_fsError() ) ? CURL_READFUNC_ABORT : ret;
       }
    }
 
@@ -284,7 +284,11 @@ static size_t hb_curl_write_file_callback( void * buffer, size_t size, size_t nm
       }
 
       if( hb_curl->dl_file )
-         return hb_fileWrite( hb_curl->dl_file, buffer, size * nmemb, -1 );
+      {
+         HB_SIZE nDone;
+         if( ( nDone = hb_fileWrite( hb_curl->dl_file, buffer, size * nmemb, -1 ) ) != ( HB_SIZE ) FS_ERROR )
+            return ( size_t ) nDone;
+      }
    }
 
    return ( size_t ) -1;

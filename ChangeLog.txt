@@ -7,6 +7,25 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-09-01 22:40 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! fix to not rely on FS_ERROR being defined as -1
+  ; origin: https://github.com/vszakats/hb/commit/31fb998b7e64271a049e37acaeff2593faf869c9
+
+2015-08-31 17:11 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    * use better method to check for hb_fileRead() -1 return value
+  ; origin: https://github.com/vszakats/hb/commit/45eb7d93855ccc24d2c1f4061e46ff3f5912e562
+
+2015-08-31 17:02 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! handle the case when hb_fileRead()/hb_fileWrite() returns -1 (FS_ERROR)
+    ! handle the case when hb_fileReadAt()/hb_fileWriteAt() returns -1 (FS_ERROR)
+      Not sure if these may actually return -1, but there were checks for
+      this case already in existing RDD code.
+    ; Przemek, if you read this, it'd be nice to hear a thumbs up/down on this.
+  ; origin: https://github.com/vszakats/hb/commit/81439b6f88f29b7f44462bd277f03da174278007
+
 2017-06-25 16:56 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! implement HB_CURLINFO_ACTIVESOCKET
