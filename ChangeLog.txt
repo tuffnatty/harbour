@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-09-02 20:38 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! add subarray validation to curl_easy_setopt() / HB_CURLOPT_HTTPPOST*
+      parameters
+  ; origin: https://github.com/vszakats/hb/commit/d8bc91de520defcb9305782cfef145b749f24ffe
+
 2015-09-01 14:50 UTC+0200 emazv72 (emanuele.zavallone gmail.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
