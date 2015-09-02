@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-09-01 14:50 UTC+0200 emazv72 (emanuele.zavallone gmail.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + Added support for mixed content multipart forms (HB_CURLOPT_HTTPPOST_FORM)
+    ; Source: https://github.com/emazv72/core/commit/70121cd754cb02bed18cd9078cbc5e7011505d4a
+  ; origin: https://github.com/vszakats/hb/commit/6efc5f99e88ac701a44fd9b291b508cd344e16a4
+
 2015-09-01 22:40 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! fix to not rely on FS_ERROR being defined as -1
