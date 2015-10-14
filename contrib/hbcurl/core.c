@@ -394,6 +394,8 @@ static size_t hb_curl_write_buff_callback( void * buffer, size_t size, size_t nm
 
 static int hb_curl_progress_callback( void * Cargo, double dltotal, double dlnow, double ultotal, double ulnow )
 {
+   int result = 0;
+
    if( Cargo )
    {
       if( hb_vmRequestReenter() )
@@ -405,13 +407,13 @@ static int hb_curl_progress_callback( void * Cargo, double dltotal, double dlnow
          hb_vmSend( 2 );
 
          if( hb_parl( -1 ) )
-            return 1;  /* Abort */
+            result = 1;  /* Abort */
 
          hb_vmRequestRestore();
       }
    }
 
-   return 0;
+   return result;
 }
 
 static int hb_curl_debug_callback( CURL * handle, curl_infotype type, char * data, size_t size, void * Cargo )

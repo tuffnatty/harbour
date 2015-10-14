@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-10-14 19:15 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! fix missing call to hb_vmRequestRestore() after hb_vmRequestReenter()
+      on callback abort
+
 2015-07-02 13:58 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! fix HB_CURLOPT_SSL_SESSIONID_CACHE option to mistakenly
