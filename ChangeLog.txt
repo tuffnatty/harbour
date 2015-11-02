@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2015-11-02 13:59 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! add necessary casts for CURLFORM_* parameters
+    + allow >2GB CURLFORM content on Windows, when built agains
+      upcoming libcurl 7.46.0
+  ; origin: https://github.com/vszakats/hb/commit/be86d730d35944d0ecf6098153690a44684f8931
+
 2015-09-02 20:38 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! add subarray validation to curl_easy_setopt() / HB_CURLOPT_HTTPPOST*
