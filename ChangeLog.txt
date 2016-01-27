@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-01-27 12:21 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + add new curl 7.47.0 constant HB_CURL_HTTP_VERSION_2TLS
+  ; origin: https://github.com/vszakats/hb/commit/9d67d3dbcd1a16a923d54372f30d9c574ac8a7b5
+
 2016-09-11 08:29 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.hbc
     ! fix typo in latest change
