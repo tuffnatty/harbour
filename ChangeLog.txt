@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-02-04 15:27 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add version guards and other minor changes to Antonino Perricone's HB_CURLOPT_DEBUGBLOCK implementation
+      via a custom codeblock/symbol
+  ; origin: https://github.com/vszakats/hb/commit/81259361e76bcd8447284553346dea1320609e70
+
 2016-01-27 12:21 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.ch
     + add new curl 7.47.0 constant HB_CURL_HTTP_VERSION_2TLS

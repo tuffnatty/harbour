@@ -347,7 +347,6 @@ static int hb_curl_xferinfo_callback( void * Cargo, curl_off_t dltotal, curl_off
    return result;
 }
 #else
-
 static int hb_curl_progress_callback( void * Cargo, double dltotal, double dlnow, double ultotal, double ulnow )
 {
    int result = 0;
@@ -373,6 +372,7 @@ static int hb_curl_progress_callback( void * Cargo, double dltotal, double dlnow
 }
 #endif
 
+#if LIBCURL_VERSION_NUM >= 0x070906
 static int hb_curl_debug_callback( CURL * handle, curl_infotype type, char * data, size_t size, void * Cargo )
 {
    HB_SYMBOL_UNUSED( handle );
@@ -394,6 +394,7 @@ static int hb_curl_debug_callback( CURL * handle, curl_infotype type, char * dat
 
    return 0;
 }
+#endif
 
 /* Helpers */
 
@@ -813,8 +814,10 @@ HB_FUNC( CURL_EASY_SETOPT )
             /* HB_CURLOPT_PROGRESSDATA */
             /* HB_CURLOPT_HEADERFUNCTION */
             /* HB_CURLOPT_HEADERDATA / CURLOPT_WRITEHEADER */
+#if LIBCURL_VERSION_NUM >= 0x070906
             /* HB_CURLOPT_DEBUGFUNCTION */
             /* HB_CURLOPT_DEBUGDATA */
+#endif
 #if LIBCURL_VERSION_NUM >= 0x070B00
             /* HB_CURLOPT_SSL_CTX_FUNCTION */
             /* HB_CURLOPT_SSL_CTX_DATA */
@@ -1821,7 +1824,7 @@ HB_FUNC( CURL_EASY_SETOPT )
 
             case HB_CURLOPT_XFERINFOBLOCK:
             {
-               PHB_ITEM pXferInfoCallback = hb_param( 3, HB_IT_EVALITEM );
+               PHB_ITEM pCallback = hb_param( 3, HB_IT_EVALITEM );
 
                if( hb_curl->pXferInfoCallback )
                {
@@ -1837,9 +1840,9 @@ HB_FUNC( CURL_EASY_SETOPT )
                   hb_curl->pXferInfoCallback = NULL;
                }
 
-               if( pXferInfoCallback )
+               if( pCallback )
                {
-                  hb_curl->pXferInfoCallback = hb_itemNew( pXferInfoCallback );
+                  hb_curl->pXferInfoCallback = hb_itemNew( pCallback );
                   /* unlock the item so GC will not mark them as used */
                   hb_gcUnlock( hb_curl->pXferInfoCallback );
 
@@ -1956,7 +1959,8 @@ HB_FUNC( CURL_EASY_SETOPT )
 
             case HB_CURLOPT_DEBUGBLOCK:
             {
-               PHB_ITEM pDebugCallback = hb_param( 3, HB_IT_BLOCK | HB_IT_SYMBOL );
+#if LIBCURL_VERSION_NUM >= 0x070906
+               PHB_ITEM pDebugCallback = hb_param( 3, HB_IT_EVALITEM );
 
                if( hb_curl->pDebugCallback )
                {
@@ -1977,6 +1981,7 @@ HB_FUNC( CURL_EASY_SETOPT )
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_DEBUGDATA, hb_curl);
                }
             }
+#endif
             break;
 
 #if LIBCURL_VERSION_NUM >= 0x075000
