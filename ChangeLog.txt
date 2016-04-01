@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-04-01 09:39 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + add upcoming curl 7.49.0 option CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE
+  ; origin: https://github.com/vszakats/hb/commit/97686889dcede843705d9cc1d7869d042a2d00c5
+
 2016-02-04 15:27 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
