@@ -7,6 +7,15 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-04-18 12:22 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for new libcurl 7.49.0 feature:
+      curl_easy_setopt( curl, HB_CURLOPT_CONNECT_TO[, { <list-of-host:port-pairs } ] )
+      Ref: https://curl.haxx.se/libcurl/c/CURLOPT_CONNECT_TO.html
+      Ref: https://github.com/curl/curl/commit/cd8d23624594e21c37a0453459229a90a38ad471
+  ; origin: https://github.com/vszakats/hb/commit/6e668f8f445e46a86055e586c1edde03eff3f01c
+
 2016-04-01 09:39 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.ch
     + add upcoming curl 7.49.0 option CURL_HTTP_VERSION_2_PRIOR_KNOWLEDGE
