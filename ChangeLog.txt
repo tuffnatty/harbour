@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-05-31 00:41 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for upcoming libcurl 7.50.0 feature: CURLINFO_HTTP_VERSION
+      Ref: https://github.com/curl/curl/commit/071c56139463137a4e32a8d841a70c16f3682bb7
+  ; origin: https://github.com/vszakats/hb/commit/e3562c213d0fddb42827ac4b0ebdb719656acdd2
+
 2016-04-19 13:14 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
