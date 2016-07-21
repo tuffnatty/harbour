@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-07-21 17:14 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! CURL_EASY_DUPLICATE() fix bad bug shown as a warning
+  ; origin: https://github.com/vszakats/hb/commit/bf611cae71637cd53a47eaaa9bee4b54d412b226
+
 2015-10-14 19:15 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! fix missing call to hb_vmRequestRestore() after hb_vmRequestReenter()
