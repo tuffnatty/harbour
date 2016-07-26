@@ -7,6 +7,28 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-07-29 12:39 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    % reduce code required to support hashes in HB_CURLOPT_HTTPPOST_CONTENT
+    + add support for hash parameters in HB_CURLOPT_HTTPPOST
+  ; origin: https://github.com/vszakats/hb/commit/3a34770ab848d8bedf2d40acf8fb6d2815481bce
+
+2016-07-27 02:02 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    * rename variables to prepare for more hash support
+  ; origin: https://github.com/vszakats/hb/commit/b9762135b4b10870ec1bb3277cfc196ef3dc4faf
+
+2016-07-27 01:57 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    + add support for hashes as HB_CURLOPT_HTTPPOST_CONTENT parameter
+      ```
+      curl_easy_setopt( curl, HB_CURLOPT_HTTPPOST_CONTENT, { ;
+         "key1" => "value1", ;
+         "key2" => "value2", ;
+         "key3" => "value3" } )
+      ```
+  ; origin: https://github.com/vszakats/hb/commit/18313b484e4e2fdd45b16ee064f4d25c1ccaf07f
+
 2016-05-31 00:41 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
