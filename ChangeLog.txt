@@ -7,6 +7,20 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-08-10 10:50 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbm
+    * define `CURL_NO_OLDIES` to disable obsolete libcurl stuff
+  * contrib/hbcurl/easy.c
+    ! remove a reference to obsolete symbol to compile with
+      `CURL_NO_OLDIES` enabled
+  ; origin: https://github.com/vszakats/hb/commit/c0418b5c769ec70080081ac6fb17911f23845a5a
+2016-08-01 18:35 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbm
+    * enable CURL_STRICTER to avoid bugs like 2016-07-21 17:14 UTC+0200
+      after libcurl project reverted it being the default in
+      https://github.com/curl/curl/commit/d6604524ad24daf4581efbe0020da058d2b3af84
+  ; origin: https://github.com/vszakats/hb/commit/cba3a79f5008345d85b5fdbdb9d1b635c6053d3a
+
 2016-07-29 12:39 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     % reduce code required to support hashes in HB_CURLOPT_HTTPPOST_CONTENT

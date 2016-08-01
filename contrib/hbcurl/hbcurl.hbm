@@ -15,6 +15,9 @@
 
 hbcurl.hbx
 
+-cflag=-DCURL_NO_OLDIES
+-cflag=-DCURL_STRICTER
+
 date.c
 easy.c
 escold.c
