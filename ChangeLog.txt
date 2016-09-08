@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-09-08 09:25 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    * prepare for upcoming rename of a constant in upstream
+  ; origin: https://github.com/vszakats/hb/commit/ef684fe7e90a8e70cf421090c1090f4dd89c8cb2
+
 2016-08-10 10:50 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.hbm
     * define `CURL_NO_OLDIES` to disable obsolete libcurl stuff
