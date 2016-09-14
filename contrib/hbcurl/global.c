@@ -46,6 +46,10 @@
  *
  */
 
+#ifndef CURL_STRICTER
+#define CURL_STRICTER
+#endif
+
 #include <curl/curl.h>
 
 #include "hbapi.h"

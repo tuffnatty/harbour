@@ -7,6 +7,16 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-09-14 14:24 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbm
+  * contrib/hbcurl/date.c
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/escold.c
+  * contrib/hbcurl/global.c
+  * contrib/hbcurl/ver.c
+    * use safe (but more redundant) way to #define a configuration option
+  ; origin: https://github.com/vszakats/hb/commit/95bf2e57c7b67e6d8e76e0654b43baa3cfa1166b
+
 2016-09-08 09:25 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.ch
     * prepare for upcoming rename of a constant in upstream
