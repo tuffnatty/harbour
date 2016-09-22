@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2016-09-23 01:19 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add upcoming libcurl 7.51.0 option HB_CURLOPT_KEEP_SENDING_ON_ERROR
+  ; origin: https://github.com/vszakats/hb/commit/8d5c9ed4a3fa28b8867a6ece09f1e18aa2d9337f
+
 2016-09-14 14:24 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.hbm
   * contrib/hbcurl/date.c
