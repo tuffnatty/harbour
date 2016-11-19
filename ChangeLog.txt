@@ -7,7 +7,49 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
-<<<<<<< HEAD
+2016-12-21 00:33 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for upcoming CURLOPT_PRE_PROXY libcurl option
+  ; origin: https://github.com/vszakats/hb/commit/d8ec7c56b96d3ce53b330409fce23ae80302b366
+
+2016-12-23 13:20 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! fix duplicate case value when built against libcurl 7.52.0 or upper
+  ; origin: https://github.com/vszakats/hb/commit/da1da45cc10f83e23207656fe80002165bfdd7f5
+
+2016-12-07 19:29 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for features of upcoming libcurl 7.52.0:
+      HB_CURLOPT_PROXY_SSLCERT
+      HB_CURLOPT_PROXY_SSLCERTTYPE
+      HB_CURLOPT_PROXY_SSLKEY
+      HB_CURLOPT_PROXY_SSLKEYTYPE
+      HB_CURLOPT_PROXY_KEYPASSWD
+      HB_CURLOPT_PROXY_SSLVERSION
+      HB_CURLOPT_PROXY_CAINFO
+      HB_CURLOPT_PROXY_CAPATH
+      HB_CURLOPT_PROXY_CRLFILE
+      HB_CURLOPT_PROXY_SSL_VERIFYHOST
+      HB_CURLOPT_PROXY_SSL_VERIFYPEER
+      HB_CURLOPT_PROXY_SSL_CIPHER_LIST
+      HB_CURLOPT_PROXY_SSL_OPTIONS
+      HB_CURLOPT_PROXY_PINNEDPUBLICKEY
+      HB_CURLOPT_PROXY_TLSAUTH_PASSWORD
+      HB_CURLOPT_PROXY_TLSAUTH_TYPE
+      HB_CURLOPT_PROXY_TLSAUTH_USERNAME
+      HB_CURLINFO_PROTOCOL
+      HB_CURLINFO_SCHEME
+      HB_CURLINFO_PROXY_SSL_VERIFYRESULT
+      Ref: https://github.com/curl/curl/commit/cb4e2be7c6d42ca0780f8e0a747cecf9ba45f151
+  ; origin: https://github.com/vszakats/hb/commit/9c3d883c6e4747a01bab653761c7c0cdab84be7f
+
+2016-11-19 19:34 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + add upcoming HB_CURL_SSLVERSION_TLSv1_3 macro
+  ; origin: https://github.com/vszakats/hb/commit/7d7578a1d79aef563de2f25ce00e401f93d966f5
+
 2016-11-24 18:55 UTC+0100 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     % minor optimization to prev commit

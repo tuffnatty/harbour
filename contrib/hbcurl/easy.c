@@ -1823,6 +1823,65 @@ HB_FUNC( CURL_EASY_SETOPT )
                break;
 #endif
 
+            /* SSL proxy */
+
+#if LIBCURL_VERSION_NUM >= 0x073400
+            case HB_CURLOPT_PROXY_SSLCERT:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_SSLCERT, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               break;
+            case HB_CURLOPT_PROXY_SSLCERTTYPE:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_SSLCERTTYPE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               break;
+            case HB_CURLOPT_PROXY_SSLKEY:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_SSLKEY, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               break;
+            case HB_CURLOPT_PROXY_SSLKEYTYPE:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_SSLKEYTYPE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               break;
+            case HB_CURLOPT_PROXY_KEYPASSWD:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_KEYPASSWD, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               break;
+            case HB_CURLOPT_PROXY_SSLVERSION:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_SSLVERSION, hb_parnl( 3 ) );
+               break;
+            case HB_CURLOPT_PROXY_SSL_VERIFYPEER:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_SSL_VERIFYPEER, HB_CURL_OPT_BOOL( 3 ) );
+               break;
+            case HB_CURLOPT_PROXY_CAINFO:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_CAINFO, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               break;
+            case HB_CURLOPT_PROXY_CAPATH:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_CAPATH, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               break;
+            case HB_CURLOPT_PROXY_SSL_VERIFYHOST:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_SSL_VERIFYHOST, hb_parnl( 3 ) );
+               break;
+            case HB_CURLOPT_PROXY_SSL_CIPHER_LIST:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_SSL_CIPHER_LIST, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
+               break;
+            case HB_CURLOPT_PROXY_CRLFILE:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_CRLFILE, hb_parc( 3 ) );
+               break;
+            case HB_CURLOPT_PROXY_SSL_OPTIONS:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_SSL_OPTIONS, hb_parnl( 3 ) );
+               break;
+            case HB_CURLOPT_PROXY_PINNEDPUBLICKEY:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_PINNEDPUBLICKEY, hb_parc( 3 ) );
+               break;
+            case HB_CURLOPT_PROXY_TLSAUTH_PASSWORD:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_TLSAUTH_PASSWORD, hb_parc( 3 ) );
+               break;
+            case HB_CURLOPT_PROXY_TLSAUTH_TYPE:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_TLSAUTH_TYPE, hb_parc( 3 ) );
+               break;
+            case HB_CURLOPT_PROXY_TLSAUTH_USERNAME:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXY_TLSAUTH_USERNAME, hb_parc( 3 ) );
+               break;
+            case HB_CURLOPT_PRE_PROXY:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_PRE_PROXY, hb_parc( 3 ) );
+               break;
+#endif
+
                /* SSH options */
 
 #if LIBCURL_VERSION_NUM >= 0x071001
@@ -2208,6 +2267,12 @@ HB_FUNC( CURL_EASY_GETINFO )
             res  = HB_CURL_EASY_GETINFO( hb_curl, CURLINFO_SSL_VERIFYRESULT, &ret_long );
             type = HB_CURL_INFO_TYPE_LONG;
             break;
+         case HB_CURLINFO_PROXY_SSL_VERIFYRESULT:
+#if LIBCURL_VERSION_NUM >= 0x073400
+            res  = HB_CURL_EASY_GETINFO( hb_curl, CURLINFO_PROXY_SSL_VERIFYRESULT, &ret_long );
+#endif
+            type = HB_CURL_INFO_TYPE_LONG;
+            break;
          case HB_CURLINFO_SSL_ENGINES:
 #if LIBCURL_VERSION_NUM >= 0x071203
             res = HB_CURL_EASY_GETINFO( hb_curl, CURLINFO_SSL_ENGINES, &ret_slist );
@@ -2351,6 +2416,18 @@ HB_FUNC( CURL_EASY_GETINFO )
             res = HB_CURL_EASY_GETINFO( hb_curl, CURLINFO_HTTP_VERSION, &ret_long );
 #endif
             type = HB_CURL_INFO_TYPE_LONG;
+            break;
+         case HB_CURLINFO_PROTOCOL:
+#if LIBCURL_VERSION_NUM >= 0x073400
+            res = HB_CURL_EASY_GETINFO( hb_curl, CURLINFO_PROTOCOL, &ret_long );
+#endif
+            type = HB_CURL_INFO_TYPE_LONG;
+            break;
+         case HB_CURLINFO_SCHEME:
+#if LIBCURL_VERSION_NUM >= 0x073400
+            res = HB_CURL_EASY_GETINFO( hb_curl, CURLINFO_SCHEME, &ret_string );
+#endif
+            type = HB_CURL_INFO_TYPE_STR;
             break;
       }
 
