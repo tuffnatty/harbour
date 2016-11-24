@@ -1,7 +1,7 @@
 /*
  * libcurl 'easy' API - Harbour interface.
  *
- * Copyright 2008-2010 Viktor Szakats (vszakats.net/harbour)
+ * Copyright 2008-2016 Viktor Szakats (vszakats.net/harbour)
  * originally based on:
  * Copyright 2005 Luiz Rafael Culik Guimaraes <luiz at xharbour.com.br>
  *
@@ -2446,10 +2446,11 @@ HB_FUNC( CURL_EASY_ESCAPE )
    {
 #if LIBCURL_VERSION_NUM >= 0x070F04
       PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      int nSrcLen;
 
-      if( hb_curl )
+      if( hb_curl && ( nSrcLen = ( int ) hb_parclen( 2 ) ) > 0 )
       {
-         char * buffer = curl_easy_escape( hb_curl->curl, hb_parcx( 2 ), ( int ) hb_parclen( 2 ) );
+         char * buffer = curl_easy_escape( hb_curl->curl, hb_parcx( 2 ), nSrcLen );
          hb_retc( buffer );
          curl_free( buffer );
       }
@@ -2467,11 +2468,12 @@ HB_FUNC( CURL_EASY_UNESCAPE )
    {
 #if LIBCURL_VERSION_NUM >= 0x070F04
       PHB_CURL hb_curl = PHB_CURL_par( 1 );
+      int nSrcLen;
 
-      if( hb_curl )
+      if( hb_curl && ( nSrcLen = ( int ) hb_parclen( 2 ) ) > 0 )
       {
          int    nLen   = 0;
-         char * buffer = curl_easy_unescape( hb_curl->curl, hb_parcx( 2 ), ( int ) hb_parclen( 2 ), &nLen );
+         char * buffer = curl_easy_unescape( hb_curl->curl, hb_parcx( 2 ), nSrcLen, &nLen );
          hb_retclen( buffer, nLen );
          curl_free( buffer );
       }
