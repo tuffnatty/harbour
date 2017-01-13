@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-01-13 19:04 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for upcoming option CURLOPT_ABSTRACT_UNIX_SOCKET
+  ; origin: https://github.com/vszakats/hb/commit/ad6d7f072c5fd6e2a41b13f750c5ffd0ae185dd2
+
 2016-12-21 00:33 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
