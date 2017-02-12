@@ -7,6 +7,16 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-02-12 01:00 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! also accept a logical value for the HB_CURLOPT_FILETIME option.
+      It also means that calling this option without parameter like this:
+         curl_easy_setopt( hbcurl, HB_CURLOPT_FILETIME )
+      Will from now on _enable_ this option by default to the value
+      of 1, while previously it disabled it by defaulting to .F.
+      [INCOMPATIBLE]
+  ; origin: https://github.com/vszakats/hb/commit/dc7261aed422942a2a982c5ba5e2b1c2ad0ee6de
+
 2017-01-13 19:04 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
