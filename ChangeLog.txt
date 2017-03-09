@@ -7,6 +7,19 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-03-12 11:27 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add upcoming libcurl option HB_CURLOPT_SUPPRESS_CONNECT_HEADERS
+      Ref: https://github.com/curl/curl/commit/d2bcf1e3e247d116dc96bd3ea32056e3f089449c
+  ; origin: https://github.com/vszakats/hb/commit/97353bd3861dace0b251bb8f7e91b19e0953e978
+2017-03-09 19:37 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + add new constants from upcoming libcurl 7.54.0
+      HB_CURL_SSLVERSION_MAX_*
+      Ref: https://github.com/curl/curl/commit/6448f98c1857de521fb2dd3f9d4e5659845b5474
+  ; origin: https://github.com/vszakats/hb/commit/4992187e78f886b6db7f59075df1aca13261e772
+
 2017-02-12 01:00 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! also accept a logical value for the HB_CURLOPT_FILETIME option.

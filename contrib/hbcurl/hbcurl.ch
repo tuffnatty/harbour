@@ -290,6 +290,7 @@
 #define HB_CURLOPT_PROXY_TLSAUTH_USERNAME     243
 #define HB_CURLOPT_PRE_PROXY                  244
 #define HB_CURLOPT_ABSTRACT_UNIX_SOCKET       245
+#define HB_CURLOPT_SUPPRESS_CONNECT_HEADERS   246
 #define HB_CURLOPT_MAXLIFETIME_CONN           287
 #define HB_CURLOPT_DOWNLOAD                   1001  /* Harbour special ones */
 #define HB_CURLOPT_XFERINFOBLOCK              1002
@@ -420,6 +421,12 @@
 #define HB_CURL_SSLVERSION_TLSv1_1            5
 #define HB_CURL_SSLVERSION_TLSv1_2            6
 #define HB_CURL_SSLVERSION_TLSv1_3            7
+#define HB_CURL_SSLVERSION_MAX_NONE           0
+#define HB_CURL_SSLVERSION_MAX_DEFAULT        hb_bitShift( HB_CURL_SSLVERSION_TLSv1  , 16 )
+#define HB_CURL_SSLVERSION_MAX_TLSv1_0        hb_bitShift( HB_CURL_SSLVERSION_TLSv1_0, 16 )
+#define HB_CURL_SSLVERSION_MAX_TLSv1_1        hb_bitShift( HB_CURL_SSLVERSION_TLSv1_1, 16 )
+#define HB_CURL_SSLVERSION_MAX_TLSv1_2        hb_bitShift( HB_CURL_SSLVERSION_TLSv1_2, 16 )
+#define HB_CURL_SSLVERSION_MAX_TLSv1_3        hb_bitShift( HB_CURL_SSLVERSION_TLSv1_3, 16 )
 
 /* HB_CURLOPT_SSH_AUTH_TYPES option */
 #define HB_CURL_CURLSSH_AUTH_ANY              hb_bitNot( 0 )      /* all types supported by the server */
