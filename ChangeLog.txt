@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-06-08 10:44 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    * use `-->` as the result marker, in-sync with hbdoc docs
+  ; origin: https://github.com/vszakats/hb/commit/1103812ee66a4a064a349c0b1334c5266289f5eb
+
 2017-03-12 11:27 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
