@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-06-25 17:07 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for upcoming HB_CURLOPT_REQUEST_TARGET option
+      Ref: https://github.com/curl/curl/commit/9b167fd090f596eac828817d48c247eeae53407f
+  ; origin: https://github.com/vszakats/hb/commit/5cf16c528762dd7d2149897d363b4f83ef79cd61
+
 2017-06-08 10:44 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     * use `-->` as the result marker, in-sync with hbdoc docs
