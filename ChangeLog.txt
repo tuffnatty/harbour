@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-06-25 16:56 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! implement HB_CURLINFO_CERTINFO
+      correctly. The problem appeared as a warning when build against
+      the latest libcurl release.
+  ; origin: https://github.com/vszakats/hb/commit/f960710df09e48faad8fb1d187e3513c789a1cf5
+
 2016-07-21 17:14 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     ! CURL_EASY_DUPLICATE() fix bad bug shown as a warning
