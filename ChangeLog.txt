@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-06-26 22:19 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    + add support for upcoming new file offset types for CURL_EASY_GETINFO()
+      data. New large integer type will automatically be used instead of
+      current double values when built against libcurl 7.55.0 or upper.
+      Ref: https://github.com/curl/curl/commit/3b80d3ca46b12e52342199f4a8452624bb6e33e2
+  ; origin: https://github.com/vszakats/hb/commit/e05447534affad261a2f8b54c610e0b0eb24fd28
+
 2017-06-25 17:07 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
