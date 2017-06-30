@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-06-30 23:41 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for upcoming 7.55.0 option HB_CURLOPT_SOCKS5_AUTH:
+      https://github.com/curl/curl/commit/8924f58c370afa756fc4fd13916dfdea91d21b21
+  ; origin: https://github.com/vszakats/hb/commit/70e2590a37ad71dd2c53b9a93349eb1e4e5b72da
+
 2017-06-26 22:19 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     + add support for upcoming new file offset types for CURL_EASY_GETINFO()
