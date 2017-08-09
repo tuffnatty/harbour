@@ -7,6 +7,19 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-08-09 12:17 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    ! remove temporary hack to allow a feature for dev build
+  ; No original ChangeLog entry
+  ; origin: https://github.com/vszakats/hb/commit/7bad54414d8d6a3ccb1e246982a00d22d4e17430
+2017-08-09 09:23 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add tentative support for CURLOPT_SSH_COMPRESSION when built
+      against upper than libcurl 7.55.0
+      https://github.com/curl/curl/pull/1735
+  ; origin: https://github.com/vszakats/hb/commit/d272d324ec9f84493ace62f5a1d1bf52a3cc90b4
+
 2017-06-30 23:41 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
