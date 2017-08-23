@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-08-23 16:56 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/escold.c
+    % #include "hbdefs.h" instead of "hbapi.h" where possible
+  ; origin: https://github.com/vszakats/hb/commit/81699760badea2464c865797740b0923bf58ea65
+
 2017-08-14 17:14 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/*
     ! typos in comments
