@@ -2,7 +2,7 @@
  * Harbour Project source code:
  * curl_global_*() - Global initialization/de-initialization
  *
- * Copyright 2008-2010 Viktor Szakats (vszakats.net/harbour)
+ * Copyright 2008-2017 Viktor Szakats (vszakats.net/harbour)
  * www - http://harbour-project.org
  *
  * This program is free software; you can redistribute it and/or modify
@@ -53,6 +53,9 @@
 #include <curl/curl.h>
 
 #include "hbapi.h"
+#include "hbapiitm.h"
+
+#include "hbcurl.ch"
 
 static void * hb_curl_xgrab( size_t size )
 {
@@ -80,6 +83,44 @@ static void * hb_curl_calloc( size_t nelem, size_t elsize )
    size_t size = nelem * elsize;
 
    return size > 0 ? hb_xgrabz( size ) : NULL;
+}
+
+HB_FUNC( CURL_GLOBAL_SSLSET )
+{
+#if LIBCURL_VERSION_NUM >= 0x073800
+   const curl_ssl_backend ** avail = NULL;
+   int tmp;
+   hb_retni( tmp = curl_global_sslset(
+      ( curl_sslbackend ) hb_parni( 1 ),
+      hb_parc( 2 ),
+      &avail ) );
+   if( HB_ISBYREF( 3 ) )
+   {
+      PHB_ITEM pAvail = hb_hashNew( NULL );
+      if( avail )
+      {
+         PHB_ITEM pKey = hb_itemNew( NULL );
+         PHB_ITEM pVal = hb_itemNew( NULL );
+         HB_SIZE nLen = 0;
+         for( nLen = 0; avail[ nLen ]; ++nLen )
+            hb_hashAdd( pAvail,
+               hb_itemPutNI( pKey, ( int ) avail[ nLen ]->id ),
+               hb_itemPutCConst( pVal, avail[ nLen ]->name ) );
+         hb_itemRelease( pVal );
+         hb_itemRelease( pKey );
+      }
+      if( ! hb_itemParamStoreRelease( 3, pAvail ) )
+         hb_itemRelease( pAvail );
+   }
+#else
+   hb_retni( HB_CURLSSLSET_NOT_IMPLEMENTED );
+   if( HB_ISBYREF( 3 ) )
+   {
+      PHB_ITEM pAvail = hb_hashNew( NULL );
+      if( ! hb_itemParamStoreRelease( 3, pAvail ) )
+         hb_itemRelease( pAvail );
+   }
+#endif
 }
 
 HB_FUNC( CURL_GLOBAL_INIT )

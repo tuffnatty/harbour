@@ -7,6 +7,46 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-09-01 17:28 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/global.c
+    * always check hb_itemParamStoreRelease() calls for failure and
+      release the item in that case. Do this even if the caller made
+      sure that the parameter was pass by reference.
+  ; origin: https://github.com/vszakats/hb/commit/eb2e05fca1b1a2890adf4511349aaaf0b5374934
+2017-08-30 23:54 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    % minor cleanup following upstream
+  ; No original ChangeLog entry
+  ; origin: https://github.com/vszakats/hb/commit/eb403f19d351c1d8de8a6ddaa4807b0dc381bd26
+2017-08-30 15:27 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + add compatibility HB_CURLSSLBACKEND_* macros
+  ; origin: https://github.com/vszakats/hb/commit/137d5c966bf42f5824db33e9f7f455402844de28
+2017-08-29 14:20 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbc
+    + link crypt32 to static mingw builds to support WinSSL back end
+      with upcoming MultiSSL libcurl builds.
+  ; origin: https://github.com/vszakats/hb/commit/c47aa9c8481927efbcac1e6e7d192d2c8b31fac5
+2017-08-29 12:17 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/global.c
+    ! fix build error when built against libcurl <7.56.0
+  ; origin: https://github.com/vszakats/hb/commit/a2c184d435ff5c68311ba2a496abe7918cc5bf12
+2017-08-29 11:41 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/global.c
+  * contrib/hbcurl/hbcurl.ch
+  * contrib/hbcurl/hbcurl.hbx
+    + add wrapper for runtime SSL backend selection:
+      curl_global_sslset( ;
+         <nSSLBackendID|-1>, ;  /* HB_CURLSSLBACKEND_* */
+         <cSSLBackendName|NIL>, ;
+         [@<hSSLBackends>] ) --> nResult (HB_CURLSSLSET_*)
+      upcoming 7.56.0 feature
+    + add macros:
+      HB_CURL_VERSION_*
+      HB_CURLSSLSET_*
+      HB_CURLSSLBACKEND_*
+  ; origin: https://github.com/vszakats/hb/commit/0a2606728bf7eb9bce5088b1395b0def24a13979
+
 2017-08-23 16:56 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/escold.c
     % #include "hbdefs.h" instead of "hbapi.h" where possible
