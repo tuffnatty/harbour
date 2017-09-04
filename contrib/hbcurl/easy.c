@@ -147,16 +147,16 @@ typedef struct _HB_CURL
 /* returns a hash key */
 static HB_HASH_FUNC( hb_curl_HashKey )    /* HB_SIZE func( const void * Value, const void * Cargo ) */
 {
-   HB_SIZE      ulSum  = 0;
+   HB_SIZE      nSum   = 0;
    const char * szName = ( const char * ) Value;
 
    while( *szName )
-      ulSum += *szName++;
+      nSum += *szName++;
 
    HB_SYMBOL_UNUSED( HashPtr );
    HB_SYMBOL_UNUSED( Cargo );
 
-   return ulSum % HB_CURL_HASH_TABLE_SIZE;
+   return nSum % HB_CURL_HASH_TABLE_SIZE;
 }
 
 /* deletes a string */
@@ -1153,20 +1153,20 @@ HB_FUNC( CURL_EASY_SETOPT )
                if( pList )
                {
                   HB_BOOL fHash = HB_IS_HASH( pList );
-                  HB_SIZE ulPos, ulLen = fHash ? hb_hashLen( pList ) : hb_arrayLen( pList );
+                  HB_SIZE nPos, nLen = fHash ? hb_hashLen( pList ) : hb_arrayLen( pList );
 
-                  for( ulPos = 0; ulPos < ulLen; ++ulPos )
+                  for( nPos = 0; nPos < nLen; ++nPos )
                   {
                      PHB_ITEM pKey, pVal;
 
                      if( fHash )
                      {
-                        pKey = hb_hashGetKeyAt( pList, ulPos + 1 );
-                        pVal = hb_hashGetValueAt( pList, ulPos + 1 );
+                        pKey = hb_hashGetKeyAt( pList, nPos + 1 );
+                        pVal = hb_hashGetValueAt( pList, nPos + 1 );
                      }
                      else
                      {
-                        PHB_ITEM pSubArray = hb_arrayGetItemPtr( pList, ulPos + 1 );
+                        PHB_ITEM pSubArray = hb_arrayGetItemPtr( pList, nPos + 1 );
 
                         if( pSubArray )
                         {
@@ -1207,11 +1207,11 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                if( pList )
                {
-                  HB_SIZE ulPos, ulLen = hb_arrayLen( pList );
+                  HB_SIZE nPos, nLen = hb_arrayLen( pList );
 
-                  for( ulPos = 0; ulPos < ulLen; ++ulPos )
+                  for( nPos = 0; nPos < nLen; ++nPos )
                   {
-                     PHB_ITEM pSubArray = hb_arrayGetItemPtr( pList, ulPos + 1 );
+                     PHB_ITEM pSubArray = hb_arrayGetItemPtr( pList, nPos + 1 );
 
                      if( pSubArray && HB_IS_ARRAY( pSubArray ) && hb_arrayLen( pSubArray ) >= 3 )
                      {
@@ -1291,10 +1291,10 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                if( pArray )
                {
-                  HB_SIZE ulPos, ulLen = hb_arrayLen( pArray );
+                  HB_SIZE nPos, nLen = hb_arrayLen( pArray );
 
-                  for( ulPos = 0; ulPos < ulLen; ++ulPos )
-                     hb_curl->pPROXYHEADER = curl_slist_append( hb_curl->pPROXYHEADER, hb_arrayGetCPtr( pArray, ulPos + 1 ) );
+                  for( nPos = 0; nPos < nLen; ++nPos )
+                     hb_curl->pPROXYHEADER = curl_slist_append( hb_curl->pPROXYHEADER, hb_arrayGetCPtr( pArray, nPos + 1 ) );
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYHEADER, hb_curl->pPROXYHEADER );
                }
@@ -1311,10 +1311,10 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                if( pArray )
                {
-                  HB_SIZE ulPos, ulLen = hb_arrayLen( pArray );
+                  HB_SIZE nPos, nLen = hb_arrayLen( pArray );
 
-                  for( ulPos = 0; ulPos < ulLen; ++ulPos )
-                     hb_curl->pCONNECT_TO = curl_slist_append( hb_curl->pCONNECT_TO, hb_arrayGetCPtr( pArray, ulPos + 1 ) );
+                  for( nPos = 0; nPos < nLen; ++nPos )
+                     hb_curl->pCONNECT_TO = curl_slist_append( hb_curl->pCONNECT_TO, hb_arrayGetCPtr( pArray, nPos + 1 ) );
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_CONNECT_TO, hb_curl->pCONNECT_TO );
                }

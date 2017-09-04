@@ -7,6 +7,16 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-09-07 08:33 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    * update HB_SIZE variable name prefixes to use `n` instead of `ul`
+  ; origin: https://github.com/vszakats/hb/commit/e8991587c798d00272d6a8c5dcd99577d33f7490
+2017-09-04 15:53 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    % rename loop variables
+  ; No original ChangeLog entry
+  ; origin: https://github.com/vszakats/hb/commit/3645c4c8203f8ef5aab2c276db59e280bf96b3ca
+
 2017-08-29 11:41 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/tests/ftp_uldl.prg
     + add an example for curl_global_sslset()
