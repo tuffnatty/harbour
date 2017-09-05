@@ -7,6 +7,35 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-09-05 10:29 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+  * contrib/hbcurl/hbcurl.ch
+    + add support for upcoming curl 7.56.0 feature: CURLOPT_MIMEPOST
+      this makes it possible to pass a MIME structure as arrays
+      of hashes. Arrays can be nested, see example in tests/email.prg
+    * follow libcurl and deprecate HB_CURLOPT_HTTPPOST,
+      HB_CURLOPT_HTTPPOST_CONTENT, HB_CURLOPT_HTTPPOST_FORM in favour
+      of HB_CURLOPT_MIMEPOST
+    + make HB_CURLOPT_POSTFIELDSIZE, HB_CURLOPT_INFILESIZE,
+      HB_CURLOPT_RESUME_FROM, HB_CURLOPT_MAXFILESIZE automatically
+      fall back to the legacy non-large libcurl options when built with
+      older libcurl versions.
+    * make HB_CURLOPT_POSTFIELDSIZE, HB_CURLOPT_INFILESIZE,
+      HB_CURLOPT_RESUME_FROM, HB_CURLOPT_MAXFILESIZE a compatibility
+      synonym of their '_LARGE' counterparts. Requires app rebuilt due
+      to hbcurl.ch changes. It means apps will automatically use the
+      large API, if its available.
+  * contrib/hbcurl/hbcurl.hbm
+  + contrib/hbcurl/miscc.c
+    + add hb_curl_date() to return timestamp in email header format.
+      Similar to tip_TimeStamp(), but drops 2nd legacy, time, parameter
+      and expects an optional timezone offset instead. It comes with all
+      the fixes tip_TimeStamp() received in this commit.
+  ; origin: https://github.com/vszakats/hb/commit/0c012c726a0f9016917bfd22aa3465476d30470b
+  ;         2017-09-05 10:29 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  ; origin: https://github.com/vszakats/hb/commit/ddd6f8442aaccf99a8a3c13610257d275f269067
+  ;         2017-09-07 08:08 UTC Viktor Szakats (vszakats users.noreply.github.com)
+
 2017-09-07 08:33 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
     * update HB_SIZE variable name prefixes to use `n` instead of `ul`
