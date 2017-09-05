@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-09-05 17:10 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  + contrib/hbcurl/misc.prg
+  * contrib/hbcurl/hbcurl.hbm
+  * contrib/hbcurl/hbcurl.hbx
+    + add hb_curl_mail_address_to_email( <cAddress> ) -> <cEmail>
+      (same as tip_GetRawEmail() in hbtip)
+  ; origin: https://github.com/vszakats/hb/commit/63cf240669bc3bc64e8c7389328c5b3a2714c245
+
 2017-09-05 10:29 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/easy.c
   * contrib/hbcurl/hbcurl.ch
