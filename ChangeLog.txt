@@ -7,6 +7,17 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-09-22 12:51 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/easy.c
+    * adapt to upstream (unreleased yet) API tweak
+      Following: https://github.com/curl/curl/commit/ee56fdb6910f6bf215eecede9e2e9bfc83cb5f29
+
+  * contrib/hbcurl/hbcurl.ch
+    + add CURLSSLSET_NO_BACKENDS
+      Following: https://github.com/curl/curl/commit/b8e0fe19ec3bd3b673a14043a4b5e656d9c26d06
+
+  ; origin: https://github.com/vszakats/hb/commit/731d1a9d99d0682f7870d68fd340d07e34ee83d8
+
 2017-10-03 08:08 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/tests/email.prg
     * XHTML <br /> -> HTML5 <br>
