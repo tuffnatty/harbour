@@ -7,7 +7,10 @@
 
 PROCEDURE Main( cFrom, cPassword, cTo, cHost )
 
-   LOCAL cCA := "cacert.pem"
+   LOCAL lSystemCA, cCA := hb_PathJoin( iif( hb_DirBase() == "", hb_cwd(), hb_DirBase() ), "cacert.pem" )
+   #if defined( __PLATFORM__WINDOWS )
+   LOCAL tmp
+   #endif
 
    LOCAL curl
    LOCAL lAPI_curl := curl_version_info()[ HB_CURLVERINFO_VERSION_NUM ] >= 0x073800
@@ -21,7 +24,7 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
    LOCAL lSTARTTLS_force
 
    IF hb_AScan( curl_version_info()[ HB_CURLVERINFO_PROTOCOLS ], "smtps",,, .T. ) == 0
-      ? "Error: Requires libcurl 7.20.0 or newer, built with SSL and smtp protocol support"
+      ? "Error: Requires libcurl 7.20.0 or newer, built with TLS/SSL and SMTP protocol support"
       RETURN
    ENDIF
 
@@ -83,34 +86,47 @@ PROCEDURE Main( cFrom, cPassword, cTo, cHost )
       cUser := StrTran( cUser, "@mailtrap.io" )
    CASE cHost == "localhost"
       cHost := "smtp://localhost:1025"  /* MailHog */
-      cUser := cPass := NIL
+      cUser := cPassword := NIL
    ENDCASE
 
    ? "libcurl:", curl_version_info()[ HB_CURLVERINFO_VERSION ]
    ? "Payload API:", iif( lAPI_curl, "libcurl native", "tip_MailAssemble()" )
    ? "Host:", cHost, iif( lSTARTTLS_force, "(must STARTTLS)", "" )
 
+   #if defined( __PLATFORM__UNIX )
+      lSystemCA := .T.
+   #elif defined( __PLATFORM__WINDOWS )
+      /* Switch to SChannel SSL backend, if available (on Windows).
+         Doing this to use the OS certificate store. */
+      curl_global_sslset( -1,, @tmp )
+      IF ( lSystemCA := ;
+         HB_CURLSSLBACKEND_SCHANNEL $ tmp .AND. ;
+         curl_global_sslset( HB_CURLSSLBACKEND_SCHANNEL ) == HB_CURLSSLSET_OK )
+         cCA := NIL
+      ELSE
+         cCA := hb_DirBase() + hb_DirSepToOS( "../../../bin/" ) + cCA
+      ENDIF
+   #else
+      lSystemCA := .F.
+   #endif
+
    curl_global_init()
 
    IF Empty( curl := curl_easy_init() )
       ? "Failed to init"
    ELSE
-      #if defined( __PLATFORM__WINDOWS )
-         cCA := hb_DirBase() + hb_DirSepToOS( "../../../bin/" ) + cCA
-      #endif
-      #if ! defined( __PLATFORM__UNIX ) .OR. defined( __PLATFORM__DARWIN )
-         IF ! hb_vfExists( cCA )
-            ? "Downloading", cCA
-            curl_easy_setopt( curl, HB_CURLOPT_DOWNLOAD )
-            curl_easy_setopt( curl, HB_CURLOPT_SSL_VERIFYPEER, .F. )  /* we don't have a CA database yet, so skip checking */
-            curl_easy_setopt( curl, HB_CURLOPT_URL, "https://curl.haxx.se/ca/cacert.pem" )
-            curl_easy_setopt( curl, HB_CURLOPT_DL_FILE_SETUP, cCA )
-            curl_easy_setopt( curl, HB_CURLOPT_FAILONERROR, .T. )
-            curl_easy_perform( curl )
-            curl_easy_reset( curl )
+      IF ! lSystemCA
+         IF hb_vfExists( cCA )
+            curl_easy_setopt( curl, HB_CURLOPT_CAINFO, cCA )
+         ELSE
+            ?
+            ? "Error: Trusted Root Certificates missing. Open this URL in your web browser:"
+            ? "  " + "https://curl.haxx.se/ca/cacert.pem"
+            ? "and save the file as:"
+            ? "  " + cCA
+            RETURN
          ENDIF
-         curl_easy_setopt( curl, HB_CURLOPT_CAINFO, cCA )
-      #endif
+      ENDIF
       curl_easy_setopt( curl, HB_CURLOPT_USE_SSL, ;
          iif( lSTARTTLS_force, HB_CURLUSESSL_ALL, HB_CURLUSESSL_TRY ) )
       curl_easy_setopt( curl, HB_CURLOPT_UPLOAD )

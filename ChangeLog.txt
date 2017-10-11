@@ -7,6 +7,24 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-10-13 21:34 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    ! avoid downloading trusted root CAs using unverified HTTPS.
+      Instead show an error message with the URL of the trusted root CA
+      and the filename it needs to be saved using a web browser.
+    ! fix warning when built in non-Windows systems
+  ; origin: 5b1ea89a6ea3ed0001f2295387bc56939ed0cb80
+2017-10-11 10:08 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/tests/email.prg
+  * contrib/hbcurl/tests/ftp_uldl.prg
+    + use SChannel on Windows (requires libcurl 7.56.0 with SChannel
+      enabled, e.g. the harbour-deps binaries), in order to use the
+      certificate store provided by the OS.
+  * contrib/hbcurl/tests/email.prg
+    ! fix typo
+  ; origin: https://github.com/vszakats/hb/commit/bf934557e6dc1a7a7a162bf622a2020a3f9866c2
+
 2017-10-11 15:34 UTC Viktor Szakats (vszakats users.noreply.github.com)
   - contrib/hbcurl/hbcurl.hbm
   - contrib/hbcurl/hbcurls.hbp

@@ -14,7 +14,7 @@
 
 PROCEDURE Main( cDL, cUL )
 
-   LOCAL cCA := "cacert.pem"
+   LOCAL lSystemCA, cCA := hb_PathJoin( iif( hb_DirBase() == "", hb_cwd(), hb_DirBase() ), "cacert.pem" )
 
    LOCAL curl
    LOCAL info
@@ -54,6 +54,23 @@ PROCEDURE Main( cDL, cUL )
    ? "Available SSL backends:", hb_ValToExp( tmp )
 
    WAIT
+
+   #if defined( __PLATFORM__UNIX )
+      lSystemCA := .T.
+   #elif defined( __PLATFORM__WINDOWS )
+      /* Switch to SChannel SSL backend, if available (on Windows).
+         Doing this to use the OS certificate store. */
+      curl_global_sslset( -1,, @tmp )
+      IF ( lSystemCA := ;
+         HB_CURLSSLBACKEND_SCHANNEL $ tmp .AND. ;
+         curl_global_sslset( HB_CURLSSLBACKEND_SCHANNEL ) == HB_CURLSSLSET_OK )
+         cCA := NIL
+      ELSE
+         cCA := hb_DirBase() + hb_DirSepToOS( "../../../bin/" ) + cCA
+      ENDIF
+   #else
+      lSystemCA := .F.
+   #endif
 
    ? "curl_global_init():", curl_global_init()
 
@@ -141,22 +158,18 @@ PROCEDURE Main( cDL, cUL )
 
       WAIT
 
-      #if defined( __PLATFORM__WINDOWS )
-         cCA := hb_DirBase() + hb_DirSepToOS( "../../../bin/" ) + cCA
-      #endif
-      #if ! defined( __PLATFORM__UNIX ) .OR. defined( __PLATFORM__DARWIN )
-         IF ! hb_vfExists( cCA )
-            ? "Downloading", cCA
-            curl_easy_setopt( curl, HB_CURLOPT_DOWNLOAD )
-            curl_easy_setopt( curl, HB_CURLOPT_SSL_VERIFYPEER, .F. )  /* we don't have a CA database yet, so skip checking */
-            curl_easy_setopt( curl, HB_CURLOPT_URL, "https://curl.haxx.se/ca/cacert.pem" )
-            curl_easy_setopt( curl, HB_CURLOPT_DL_FILE_SETUP, cCA )
-            curl_easy_setopt( curl, HB_CURLOPT_FAILONERROR, .T. )
-            curl_easy_perform( curl )
-            curl_easy_reset( curl )
+      IF ! lSystemCA
+         IF hb_vfExists( cCA )
+            curl_easy_setopt( curl, HB_CURLOPT_CAINFO, cCA )
+         ELSE
+            ?
+            ? "Error: Trusted Root Certificates missing. Open this URL in your web browser:"
+            ? "  " + "https://curl.haxx.se/ca/cacert.pem"
+            ? "and save the file as:"
+            ? "  " + cCA
+            RETURN
          ENDIF
-         curl_easy_setopt( curl, HB_CURLOPT_CAINFO, cCA )
-      #endif
+      ENDIF
 
       hb_default( @cDL, "https://www.example.org/index.html" )
 
