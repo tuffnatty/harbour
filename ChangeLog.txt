@@ -7,6 +7,55 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-10-11 15:34 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  - contrib/hbcurl/hbcurl.hbm
+  - contrib/hbcurl/hbcurls.hbp
+  * contrib/hbcurl/hbcurl.hbc
+  * contrib/hbcurl/hbcurl.hbp
+    * link OpenSSL libs to hbcurl in static mode with mingw/clang
+      (this makes adding hbssl.hbc unnecessary for app that only need
+      curl functionality)
+    * rework the way curl/openssl libs are built and linked:
+      - link curl and openssl in static mode by default on mingw/clang
+        targets. HB_STATIC_* options not necessary anymore.
+        This should work with harbour-deps curl/openssl binaries out of
+        the box, and with MSYS2 curl/openssl packages by filling
+        HB_CURL_LIBS_EXTRA envvar with the list of extra lib dependencies
+        as a space delimited list of libnames (perhaps there is a simpler
+        or automated way, but it needs more work.)
+      - drop HB_STATIC_{CURL|OPENSSL} options. These allowed to select
+        between static/shared curl and openssl libs independent from the
+        global -shared/-static build mode. There is only the global flag
+        now. It means that hbcurls and hbssls (not the 's' suffix) are no
+        longer built, and these same binaries are now named hbcurl and
+        hbssl respectively. These are supposed to be linked with static
+        curl/openssl libs. The dynamic builds of hbcurl/hbssl are named
+        hbcurl.dll.a/hbssl.dll.a or hbcurl_dll.lib/hbssl_dll.lib and they
+        link against the dynamic version of curl/openssl.
+      - speaking of mingw/clang, it seems to be a working option to just
+        delete .dll.a files to force linking the static build of those
+        selected libs. In case someone wants to build various shared/static
+        combinations. HB_BUILD_CONTRIB_DYN can of course disable building
+        all contrib .dll.a files, this isn't tested so not recommended.
+    ; This will likely break certain build cases and may cause various
+      suprises in certain combinations, especially with untesed targets
+      like MSVC, where it's an even bigger mess than this.
+    ; After this change the Harbour library generation, use and naming
+      should now be pretty much aligned with the MSYS2/Cygwin standards
+      and there should now be less Harbour-specific quirks.
+    ; Remaining exceptions that'll need to be dealt with:
+      ```
+      hbcurl/hbcurl.hbp:-cflag=-DCURL_STATICLIB{hblib}
+      ```
+
+  ; origin: https://github.com/vszakats/hb/commit/f3fbf977134de12df1935e2fd46627af2d270d3d
+
+2017-10-11 11:56 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbm
+  * contrib/hbcurl/hbcurl.hbp
+    % move some options to .hbm
+  ; origin: https://github.com/vszakats/hb/commit/a498a519ec1f10e59723924442f2101a4960bdfe
+
 2017-10-04 03:34 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.hbp
     + pick 64-bit libcurl.dll with a -x64 suffix
