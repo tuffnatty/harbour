@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-10-26 16:00 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.hbp
+    * improve component auto-detection on bsd systems
+    ! fix some linking issues on bsd systems
+    ; based on FreeBSD tests and report by Mario Lobo
+      Ref: https://groups.google.com/d/msg/harbour-users/ArUPtkV-OvY/ZnmiGyuxBAAJ
+  ; origin: https://github.com/vszakats/hb/commit/f75447614565d83c7eb196060a3155dadcc69bc2
+
 2017-10-24 08:58 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.hbx
   * contrib/hbcurl/misc.prg
