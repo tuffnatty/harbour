@@ -7,6 +7,13 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-11-06 02:11 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+  * contrib/hbcurl/ver.c
+    + add support for upcoming brotli support
+      Ref: https://github.com/curl/curl/commit/11bf1796cd015373a996e6eb26212e2e1aadb066
+  ; origin: https://github.com/vszakats/hb/commit/b47d58b5efa3f2620b5b3d46cccba13f9157f334
+
 2017-10-26 16:00 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.hbp
     * improve component auto-detection on bsd systems
