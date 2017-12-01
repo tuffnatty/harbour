@@ -7,6 +7,12 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2017-12-01 19:04 UTC Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/hbcurl.ch
+    + add existing (HB_CURL_CURLSSH_AUTH_AGENT) and upcoming in
+      next libcurl version (HB_CURL_CURLSSH_AUTH_GSSAPI) constants
+  ; origin: https://github.com/vszakats/hb/commit/47ac90d07c5cd4c72ad078e6e378cdc065bff01b
+
 2017-11-06 02:11 UTC Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/hbcurl.ch
   * contrib/hbcurl/ver.c
