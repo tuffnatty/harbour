@@ -4,10 +4,14 @@
 #if defined(JPEG_DUAL_MODE_8_12)
 
 #  define TIFFInitJPEG TIFFInitJPEG_12
+#  define TIFFJPEGIsFullStripRequired TIFFJPEGIsFullStripRequired_12
+
+int
+TIFFInitJPEG_12(TIFF* tif, int scheme);
 
 #  include LIBJPEG_12_PATH
 
-#  include "jpeg.c"
+#  include "tif_jpeg.c"
 
 int TIFFReInitJPEG_12( TIFF *tif, int scheme, int is_encode )
 

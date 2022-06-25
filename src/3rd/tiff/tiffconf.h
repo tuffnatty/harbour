@@ -55,17 +55,8 @@
 /* Signed size type formatter */
 #define TIFF_SSIZE_FORMAT "%" HB_PFS "d"
 
-/* file handler */
+/* file handle */
 #define TIFF_FILE_HANDLE HB_FHANDLE
-
-/* Define to 1 if the system has the type `int16'. */
-#define HAVE_INT16
-
-/* Define to 1 if the system has the type `int32'. */
-#define HAVE_INT32
-
-/* Define to 1 if the system has the type `int8'. */
-#define HAVE_INT8
 
 /* Compatibility stuff. */
 

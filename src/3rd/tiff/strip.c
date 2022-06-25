@@ -1,5 +1,3 @@
-/* $Id: tif_strip.c,v 1.35 2012-06-06 05:33:55 fwarmerdam Exp $ */
-
 /*
  * Copyright (c) 1991-1997 Sam Leffler
  * Copyright (c) 1991-1997 Silicon Graphics, Inc.
@@ -310,7 +308,14 @@ TIFFScanlineSize64(TIFF* tif)
 		}
 	}
 	else
+        {
 		scanline_size=TIFFhowmany_64(_TIFFMultiply64(tif,td->td_imagewidth,td->td_bitspersample,module),8);
+        }
+        if (scanline_size == 0)
+        {
+                TIFFErrorExt(tif->tif_clientdata,module,"Computed scanline size is zero");
+                return 0;
+        }
 	return(scanline_size);
 }
 tmsize_t
@@ -321,8 +326,7 @@ TIFFScanlineSize(TIFF* tif)
 	tmsize_t n;
 	m=TIFFScanlineSize64(tif);
 	n=(tmsize_t)m;
-	if ((uint64)n!=m)
-	{
+	if ((uint64)n!=m) {
 		TIFFErrorExt(tif->tif_clientdata,module,"Integer arithmetic overflow");
 		n=0;
 	}

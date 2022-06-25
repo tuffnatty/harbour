@@ -38,6 +38,8 @@ C_SOURCES := \
    tile.c \
    version.c \
    warn.c \
+   webp.c \
+   zstd.c \
 
 C_SOURCES += \
    close.c \
@@ -89,8 +91,8 @@ else
 endif
 
 # ORIGIN http://www.remotesensing.org/libtiff/
-# VER    4.0.3
-# URL    http://download.osgeo.org/libtiff/tiff-4.0.3.zip
+# VER    4.0.10
+# URL    http://download.osgeo.org/libtiff/tiff-4.0.10.zip
 # DIFF   tiff.diff
 #
 # MAP    COPYRIGHT                LICENSE
@@ -131,9 +133,11 @@ endif
 # MAP    libtiff/tif_unix.c       unix.c
 # MAP    libtiff/tif_version.c    version.c
 # MAP    libtiff/tif_warning.c    warn.c
+# MAP    libtiff/tif_webp.c       webp.c
 # MAP    libtiff/tif_win32.c      win32.c
 # MAP    libtiff/tif_write.c      write.c
 # MAP    libtiff/tif_zip.c        zip.c
+# MAP    libtiff/tif_zstd.c       zstd.c
 # MAP    libtiff/t4.h             t4.h
 # MAP    libtiff/tiff.h           tiff.h
 # MAP    libtiff/tiffio.h         tiffio.h
