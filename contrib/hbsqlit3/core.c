@@ -1754,60 +1754,68 @@ HB_FUNC( SQLITE3_ENABLE_SHARED_CACHE )
    hb_retni( sqlite3_enable_shared_cache( hb_parl( 1 ) ) );
 }
 
-/* TODO: implement sqlite3_trace_v2(), that replaces both of these deprecated functions */
-
 /**
    Tracing And Profiling Functions
 
-   sqlite3_trace( db, lOnOff )
-   sqlite3_profile( db, lOnOff )
+   sqlite3_trace_v2( db, lOnOff )
  */
-static void SQL3ProfileLog( void * sFile, const char * sProfileMsg, sqlite3_uint64 uint64 )
+static int _sqlite3_trace_v2_log( unsigned uWhy, void * sFile, void * p, void * x )
 {
-   if( sProfileMsg )
+   const char * sFormat = NULL;
+   const char * sConstMessage = NULL;
+   char * sMessage = NULL;
+   sqlite3_uint64 ulValue = 0;
+
+   switch( uWhy )
    {
-      FILE * hFile = hb_fopen( sFile ? ( const char * ) sFile : "hbsq3_pr.log", "a" );
+      case SQLITE_TRACE_STMT:
+         if( strncmp( x, "--", 2 ) )
+         {
+            sMessage = sqlite3_expanded_sql( p );
+         }
+         else
+         {
+            sConstMessage = x;
+         }
+         sFormat = "STMT: %s\n";
+         break;
+      case SQLITE_TRACE_PROFILE:
+         sMessage = sqlite3_expanded_sql( p );
+         sFormat = "PROFILE: %s - %" PFLL "u\n";
+         ulValue = * ( sqlite3_uint64 * ) x;
+         break;
+      case SQLITE_TRACE_ROW:
+         sMessage = sqlite3_expanded_sql( p );
+         sFormat = "ROW: %s\n";
+         break;
+      case SQLITE_TRACE_CLOSE:
+         sFormat = "CLOSE\n";
+         break;
+   }
+   if( sFormat )
+   {
+      FILE * hFile = hb_fopen( sFile ? ( const char * ) sFile : "hbsql3_tr.log", "a" );
 
       if( hFile )
       {
-         fprintf( hFile, "%s - %" PFLL "u\n", sProfileMsg, uint64 );
+         fprintf( hFile, sFormat, sConstMessage ? sConstMessage : sMessage, ulValue );
          fclose( hFile );
       }
-   }
-}
-
-static void SQL3TraceLog( void * sFile, const char * sTraceMsg )
-{
-   if( sTraceMsg )
-   {
-      FILE * hFile = hb_fopen( sFile ? ( const char * ) sFile : "hbsq3_tr.log", "a" );
-
-      if( hFile )
+      if( sMessage )
       {
-         fprintf( hFile, "%s\n", sTraceMsg );
-         fclose( hFile );
+         sqlite3_free( sMessage );
       }
    }
+   return 0;
 }
 
-HB_FUNC( SQLITE3_PROFILE )
+HB_FUNC( SQLITE3_TRACE_V2 )
 {
    HB_SQLITE3 * pHbSqlite3 = ( HB_SQLITE3 * ) hb_sqlite3_param( 1, HB_SQLITE3_DB, HB_TRUE );
 
    if( pHbSqlite3 && pHbSqlite3->db )
-      sqlite3_profile( pHbSqlite3->db, hb_parl( 2 ) ? SQL3ProfileLog : NULL,
-                       HB_ISCHAR( 3 ) ? HB_UNCONST( hb_parcx( 3 ) ) : NULL );
-   else
-      hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
-}
-
-HB_FUNC( SQLITE3_TRACE )
-{
-   HB_SQLITE3 * pHbSqlite3 = ( HB_SQLITE3 * ) hb_sqlite3_param( 1, HB_SQLITE3_DB, HB_TRUE );
-
-   if( pHbSqlite3 && pHbSqlite3->db )
-      sqlite3_trace( pHbSqlite3->db, hb_parl( 2 ) ? SQL3TraceLog : NULL,
-                     HB_ISCHAR( 3 ) ? HB_UNCONST( hb_parcx( 3 ) ) : NULL );
+      sqlite3_trace_v2( pHbSqlite3->db, hb_parni( 2 ), hb_parni( 2 ) ? _sqlite3_trace_v2_log : NULL,
+                        HB_ISCHAR( 3 ) ? HB_UNCONST( hb_parcx( 3 ) ) : NULL );
    else
       hb_errRT_BASE_SubstR( EG_ARG, 0, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS );
 }
