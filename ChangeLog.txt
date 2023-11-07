@@ -20,6 +20,18 @@
   * contrib/hbwin/wapi_winuser_dlg.c
     ! Minor 64-bit Win32 API fixes.
 
+2023-11-07 22:07 UTC+0100 Phil Krylov (phil a t krylov.eu)
+  * config/win/bcc.mk
+  * include/hbpp.c
+  * src/common/hbstr.c
+  * src/common/hbver.c
+  * src/compiler/harbour.yyc
+  * src/rtl/libnamec.c
+  * src/vm/maindllp/dllpcode.c
+  * utils/hbmk2/hbmk2.prg
+    ! Final fixes for bcc64 (Clang-based) and bcc32 builds, tested on compiler
+      version 7.60.
+
 2023-11-07 03:40 UTC+0100 Phil Krylov (phil a t krylov.eu)
   * src/3rd/pcre
     ! Updated pcre to 8.45.
