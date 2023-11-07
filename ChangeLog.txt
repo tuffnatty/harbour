@@ -7,6 +7,10 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2023-11-07 03:30 UTC+0100 Phil Krylov (phil a t krylov.eu)
+  * src/3rd/tiff
+    ! Updated tiff to 4.6.0. Removed C99-isms.
+
 2023-11-07 03:20 UTC+0100 Phil Krylov (phil a t krylov.eu)
   * src/3rd/jpeg
     ! Updated jpeg to 9e.
