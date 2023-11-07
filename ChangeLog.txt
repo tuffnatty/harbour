@@ -7,6 +7,11 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2023-10-07 22:12 UTC+0100 Phil Krylov (phil a t krylov.eu)
+  * contrib/hbwin/win_bmp.c
+    ! Fixed dangling pointer access in WIN_DRAWBITMAP().
+>>>>>>> 2023-10-07 22:12 UTC+0100 Phil Krylov (phil a t krylov.eu)
+
 2023-11-07 22:10 UTC+0100 Phil Krylov (phil a t krylov.eu)
   * contrib/gtwvg/gtwvg.h
   * contrib/gtwvg/wvgcore.c

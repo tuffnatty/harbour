@@ -177,6 +177,7 @@ HB_FUNC( WIN_DRAWBITMAP )
    {
       int iWidth  = hb_parni( 7 );
       int iHeight = hb_parni( 8 );
+      BITMAPINFO bmi;
 
       if( iType == HB_WIN_BITMAP_BMP )
       {
@@ -197,8 +198,6 @@ HB_FUNC( WIN_DRAWBITMAP )
       }
       else if( iWidth && iHeight )
       {
-         BITMAPINFO bmi;
-
          memset( &bmi, 0, sizeof( bmi ) );
          bmi.bmiHeader.biSize        = sizeof( BITMAPINFO );
          bmi.bmiHeader.biWidth       = iWidth;
