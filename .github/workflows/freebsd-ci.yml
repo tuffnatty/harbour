@@ -98,7 +98,7 @@ jobs:
 
             set -ex
             source ~/work/.bashrc
-            make -j$(sysctl -n hw.logicalcpu) \
+            make -j$(nproc) \
               -C contrib \
               HB_COMPILER=${{matrix.compiler}}
 
