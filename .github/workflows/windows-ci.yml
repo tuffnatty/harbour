@@ -35,7 +35,7 @@ jobs:
             HB_USER_LDFLAGS=""
             case ${{matrix.strictness}} in
               normal) ;;
-              strict) case {{matrix.compiler}} in
+              strict) case ${{matrix.compiler}} in
                         (bcc) HB_USER_CFLAGS="$HB_USER_CFLAGS -w!" ;;
                         (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
                       esac ;;
@@ -45,8 +45,10 @@ jobs:
             echo HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
             case ${{matrix.cpu}} in
               (x86)    echo MINGWxx="MINGW32"
+                       echo mingwxx="mingw32"
                        echo "msys_cpu=i686" ;;
               (x86_64) echo MINGWxx="MINGW64"
+                       echo mingwxx="mingw64"
                        echo "msys_cpu=${{matrix.cpu}}" ;;
             esac
           } >> $GITHUB_ENV
@@ -76,14 +78,15 @@ jobs:
       - name: Configure build shell
         shell: msys2 {0}
         run: |
-          PATH=/mingw64/lib/ccache/bin:$PATH
+          PATH=/$mingwxx/lib/ccache/bin:$PATH
 
           case ${{matrix.compiler}} in
             (bcc)
               curl -LO "http://altd.embarcadero.com/download/bcppbuilder/freecommandLinetools.exe"
               ./freecommandLinetools.exe -s -verbose
-              PATH="/c/Borland/BCC55/Bin:$PATH"
               find /c/Borland -type d || exit 1
+              PATH="/c/Borland/BCC55/Bin:$PATH"
+              echo HB_WITH_CURL="/$mingwxx/include"
               ;;
           esac
           echo "export PATH='$PATH'" > ~/.bash_profile
@@ -106,8 +109,6 @@ jobs:
       - name: Compile Harbour
         shell: msys2 {0}
         run: |
-          echo "$PATH"
-          where.exe bcc32.exe
           mingw32-make.exe \
             HB_COMPILER=${{matrix.compiler}} \
             HB_CPU=${{matrix.cpu}} \

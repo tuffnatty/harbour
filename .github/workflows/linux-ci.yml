@@ -28,8 +28,8 @@ jobs:
             HB_USER_LDFLAGS=""
             case ${{matrix.strictness}} in
               normal) ;;
-              strict) case {{matrix.compiler}} in
-                        *)     HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+              strict) case ${{matrix.compiler}} in
+                        (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
                       esac ;;
             esac
             echo HB_BUILD_VERBOSE="yes"
