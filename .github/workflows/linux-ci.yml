@@ -47,6 +47,7 @@ jobs:
             libpq-dev	\
             qtbase5-dev
 
+          # Dependencies for disabled contribs:
           #  libfreeimage-dev	\
 
       - name: Configure build shell
@@ -63,7 +64,7 @@ jobs:
           esac
           tee -a ~/.bashrc <<EOENV
           # These contribs do not build on any platform
-          export HB_BUILD_CONTRIBS="no hbfimage"
+          export HB_BUILD_CONTRIBS="no hbfimage"  # incompatible with freeimage 3.18+
 
           export HB_BUILD_VERBOSE="yes"
           export HB_USER_CFLAGS="$HB_USER_CFLAGS"
