@@ -21,22 +21,6 @@ jobs:
           - "strict"
 
     steps:
-      - name: Configure environment
-        run: |
-          {
-            HB_USER_CFLAGS="-arch arm64 -arch x86_64"
-            HB_USER_LDFLAGS="-arch arm64 -arch x86_64"
-            case ${{matrix.strictness}} in
-              normal) ;;
-              strict) case ${{matrix.compiler}} in
-                        (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
-                      esac ;;
-            esac
-            echo HB_BUILD_VERBOSE="yes"
-            echo HB_USER_CFLAGS="$HB_USER_CFLAGS"
-            echo HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
-            echo HB_BUILD_CONTRIBS="no hbfimage" # incompatible with freeimage 3.18+
-          } >> $GITHUB_ENV
 
       - name: Install packages
         run: |
@@ -51,10 +35,23 @@ jobs:
 
       - name: Configure build shell
         run: |
-          tee -a $GITHUB_PATH <<EOPATH
-          /usr/lib/ccache
-          /usr/local/opt/ccache/libexec
-          EOPATH
+          set -x
+          rm ~/.bashrc
+          HB_USER_CFLAGS="-arch arm64 -arch x86_64"
+          HB_USER_LDFLAGS="-arch arm64 -arch x86_64"
+          case ${{matrix.strictness}} in
+            normal) ;;
+            strict) case ${{matrix.compiler}} in
+                      (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+                    esac ;;
+          esac
+          tee -a ~/.bashrc <<EOENV
+          export HB_BUILD_VERBOSE="yes"
+          export HB_USER_CFLAGS="$HB_USER_CFLAGS"
+          export HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
+          export HB_CCACHE=ccache
+          EOENV
+
 
       - name: Checkout code
         uses: actions/checkout@v3

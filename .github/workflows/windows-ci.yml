@@ -44,8 +44,8 @@ jobs:
         with:
           msystem: ${{ env.MINGWxx }}
           location: d:/
-            #mingw-w64-${{ env.msys_cpu }}-ccache
           install: >
+            mingw-w64-${{ env.msys_cpu }}-ccache
             mingw-w64-${{ env.msys_cpu }}-gcc
             mingw-w64-${{ env.msys_cpu }}-make
             mingw-w64-${{ env.msys_cpu }}-allegro
@@ -75,12 +75,12 @@ jobs:
                       (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
                     esac ;;
           esac
-          tee -a ~/.bashrc <<EOMSYSENV
+          tee -a ~/.bashrc <<EOENV
           export HB_BUILD_VERBOSE="yes"
           export HB_USER_CFLAGS="$HB_USER_CFLAGS"
           export HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
           export mingwxx="$(echo "$MINGWxx" | tr A-Z a-z)"
-          EOMSYSENV
+          EOENV
 
           case ${{matrix.compiler}} in
             (bcc)
@@ -89,14 +89,13 @@ jobs:
               find /c/Borland -type d || exit 1
               tee -a ~/.bashrc <<EOMSYSENV
           export PATH="/c/Borland/BCC55/Bin:\$PATH"
-          export HB_WITH_CURL="/$mingwxx/include"
+          export HB_WITH_CURL="/d/msys64/$mingwxx/include"
           EOMSYSENV
               ;;
             *)
-              tee -a ~/.bashrc <<EOMSYSENV
-          export PATH="/d/msys64/\$mingwxx/lib/ccache/bin:\$PATH"
-          EOMSYSENV
-          ls /d
+              tee -a ~/.bashrc <<EOENV
+          export HB_CCACHE=ccache
+          EOENV
               ;;
           esac
 
@@ -118,7 +117,6 @@ jobs:
       - name: Compile Harbour
         shell: msys2 {0}
         run: |
-          cat ~/.bashrc
           mingw32-make.exe \
             HB_COMPILER=${{matrix.compiler}} \
             HB_CPU=${{matrix.cpu}} \
