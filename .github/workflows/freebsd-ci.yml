@@ -85,7 +85,7 @@ jobs:
               libgd \
               mariadb-connector-c \
               postgresql16-client \
-              qt5
+              qt5-gui
 
             # Dependencies for disabled contribs:
             #  freeimage \
