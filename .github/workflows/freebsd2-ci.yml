@@ -1,0 +1,110 @@
+name: freebsd2-ci
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  freebsd-ci:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - clang
+          - gcc
+        strictness:
+          - "normal"
+          - "strict"
+
+    steps:
+
+      - name: Configure environment
+        shell: bash
+        run: |
+          echo "Nothing to do for FreeBSD"
+
+      - name: Install packages
+        run: |
+          echo "The actual install takes place in the VM in the build step"
+          tee install_freebsd_deps.sh <<EOF
+          pkg install -y \
+            bison ccache gmake \
+            $(case ${{matrix.compiler }} in gcc) echo ${{matrix.compiler}} ;; esac) \
+            libslang2 \
+            cairo \
+            libgd \
+            mariadb-connector-c \
+            postgresql16-client \
+            qt5-gui
+          EOF
+
+          # Dependencies for disabled contribs:
+          #  freeimage \
+
+
+      - name: Configure build shell
+        run: |
+          set -ex
+          rm -f ~/work/.bashrc
+          HB_USER_CFLAGS=""
+          HB_USER_LDFLAGS=""
+          case ${{matrix.strictness}} in
+            normal) ;;
+            strict) case ${{matrix.compiler}} in
+                      (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+                    esac ;;
+          esac
+          tee -a ~/work/.bashrc <<EOENV
+          # These contribs do not build on any platform
+          export HB_BUILD_CONTRIBS="no hbfimage"  # incompatible with freeimage 3.18+
+
+          export HB_BUILD_VERBOSE="yes"
+          export HB_USER_CFLAGS="$HB_USER_CFLAGS"
+          export HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
+          export HB_CCACHE=ccache
+          EOENV
+
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.branch }}
+
+      - run: pwd
+      - run: ls
+
+      - name: Prepare ccache using action
+        uses: hendrikmuhs/ccache-action@v1.2.10
+        with:
+          key: freebsd-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
+          max-size: "32M"
+
+      - name: Build Harbour and contribs
+        uses: vmactions/freebsd-vm@v1
+        with:
+          usesh: true
+          mem: 2048
+          prepare: |
+            echo "::group::Install dependencies"
+            set -ex
+            source ./install_freebsd_deps.sh
+          run: |
+            echo "::group::Build Harbour"
+            set -ex
+            source ~/work/.bashrc
+            gmake -j$(nproc) \
+              HB_BUILD_CONTRIBS=no \
+              HB_COMPILER=${{matrix.compiler}}
+
+            echo "::group::Build contribs"
+            set -ex
+            source ~/work/.bashrc
+            gmake -j$(nproc) \
+              -C contrib \
+              HB_COMPILER=${{matrix.compiler}}
+
+            echo "::group::Run tests"
+            set -ex
+            bin/bsd/${{matrix.compiler}}/hbtest
