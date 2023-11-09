@@ -80,11 +80,11 @@ jobs:
             set -ex
             sudo pkg install -y \
               bison ccache gmake \
-              slang \
+              libslang2 \
               cairo \
               libgd \
-              mysql \
-              postgresql15 \
+              mariadb-connector-c \
+              postgresql16-client \
               qt5
 
             # Dependencies for disabled contribs:
