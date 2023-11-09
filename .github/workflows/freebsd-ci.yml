@@ -27,7 +27,22 @@ jobs:
 
       - name: Install packages
         run: |
-          echo "We need to install once, in VM"
+          echo "The actual install takes place in the VM in the build step"
+          tee install_freebsd_deps.sh <<EOF
+          sudo pkg install -y \
+            bison ccache gmake \
+            $(case ${{matrix.compiler }} in gcc) echo ${{matrix.compiler}} ;; esac) \
+            libslang2 \
+            cairo \
+            libgd \
+            mariadb-connector-c \
+            postgresql16-client \
+            qt5-gui
+          EOF
+
+          # Dependencies for disabled contribs:
+          #  freeimage \
+
 
       - name: Configure build shell
         run: |
@@ -77,31 +92,24 @@ jobs:
           cpu_count: 4
           sync_files: "true"
           run: |
+            echo "::group::Install dependencies"
             set -ex
-            sudo pkg install -y \
-              bison ccache gmake \
-              $(case ${{matrix.compiler }} in gcc) echo ${{matrix.compiler}} ;; esac) \
-              libslang2 \
-              cairo \
-              libgd \
-              mariadb-connector-c \
-              postgresql16-client \
-              qt5-gui
+            source ./install_freebsd_deps.sh
 
-            # Dependencies for disabled contribs:
-            #  freeimage \
-
+            echo "::group::Build Harbour"
             set -ex
             source ~/work/.bashrc
             gmake -j$(nproc) \
               HB_BUILD_CONTRIBS=no \
               HB_COMPILER=${{matrix.compiler}}
 
+            echo "::group::Build contribs"
             set -ex
             source ~/work/.bashrc
             gmake -j$(nproc) \
               -C contrib \
               HB_COMPILER=${{matrix.compiler}}
 
+            echo "::group::Run tests"
             set -ex
-            bin/freebsd/${{matrix.compiler}}/hbtest
+            bin/bsd/${{matrix.compiler}}/hbtest
