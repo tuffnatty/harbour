@@ -78,19 +78,21 @@ jobs:
       - name: Configure build shell
         shell: msys2 {0}
         run: |
-          PATH="/$mingwxx/lib/ccache/bin:$PATH"
-
           case ${{matrix.compiler}} in
             (bcc)
               curl -LO "http://altd.embarcadero.com/download/bcppbuilder/freecommandLinetools.exe"
               ./freecommandLinetools.exe -s -verbose
               find /c/Borland -type d || exit 1
-              PATH="/c/Borland/BCC55/Bin:$PATH"
+              addpath="/c/Borland/BCC55/Bin:$addpath"
               echo HB_WITH_CURL="/$mingwxx/include" >> $GITHUB_ENV
               ;;
+            *)
+              addpath="/$mingwxx/lib/ccache/bin"
+              ;;
           esac
-          cat ~/.bash_profile
-          echo "export PATH='$PATH'" > ~/.bash_profile
+          tee > ~/.bashrc <<EOMSYSENV
+          export PATH="$addpath:\$PATH"
+          EOMSYSENV
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -110,6 +112,7 @@ jobs:
       - name: Compile Harbour
         shell: msys2 {0}
         run: |
+          cat ~/.bashrc
           mingw32-make.exe \
             HB_COMPILER=${{matrix.compiler}} \
             HB_CPU=${{matrix.cpu}} \
