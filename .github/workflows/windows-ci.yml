@@ -65,6 +65,7 @@ jobs:
         shell: msys2 {0}
         run: |
           set -x
+          rm ~/.bashrc
           HB_USER_CFLAGS=""
           HB_USER_LDFLAGS=""
           case ${{matrix.strictness}} in
