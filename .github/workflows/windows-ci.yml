@@ -78,7 +78,7 @@ jobs:
       - name: Configure build shell
         shell: msys2 {0}
         run: |
-          PATH=/$mingwxx/lib/ccache/bin:$PATH
+          PATH="/$mingwxx/lib/ccache/bin:$PATH"
 
           case ${{matrix.compiler}} in
             (bcc)
@@ -86,9 +86,10 @@ jobs:
               ./freecommandLinetools.exe -s -verbose
               find /c/Borland -type d || exit 1
               PATH="/c/Borland/BCC55/Bin:$PATH"
-              echo HB_WITH_CURL="/$mingwxx/include"
+              echo HB_WITH_CURL="/$mingwxx/include" >> $GITHUB_ENV
               ;;
           esac
+          cat ~/.bash_profile
           echo "export PATH='$PATH'" > ~/.bash_profile
 
       - name: Checkout code
