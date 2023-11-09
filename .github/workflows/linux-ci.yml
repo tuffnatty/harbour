@@ -36,10 +36,6 @@ jobs:
             echo HB_USER_CFLAGS="$HB_USER_CFLAGS"
             echo HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
           } >> $GITHUB_ENV
-          tee -a $GITHUB_PATH <<EOPATH
-          /usr/lib/ccache
-          /usr/local/opt/ccache/libexec
-          EOPATH
 
       - name: Install packages
         run: |
@@ -61,6 +57,13 @@ jobs:
             unixodbc-dev	\
             libpq-dev	\
             qtbase5-dev
+
+      - name: Configure build shell
+        run: |
+          tee -a $GITHUB_PATH <<EOPATH
+          /usr/lib/ccache
+          /usr/local/opt/ccache/libexec
+          EOPATH
 
       - name: Checkout code
         uses: actions/checkout@v3

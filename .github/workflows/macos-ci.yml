@@ -37,10 +37,6 @@ jobs:
             echo HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
             echo HB_BUILD_CONTRIBS="no hbfimage" # incompatible with freeimage 3.18+
           } >> $GITHUB_ENV
-          tee -a $GITHUB_PATH <<EOPATH
-          /usr/lib/ccache
-          /usr/local/opt/ccache/libexec
-          EOPATH
 
       - name: Install packages
         run: |
@@ -52,6 +48,13 @@ jobs:
             mysql \
             postgresql \
             qt5
+
+      - name: Configure build shell
+        run: |
+          tee -a $GITHUB_PATH <<EOPATH
+          /usr/lib/ccache
+          /usr/local/opt/ccache/libexec
+          EOPATH
 
       - name: Checkout code
         uses: actions/checkout@v3

@@ -50,9 +50,6 @@ jobs:
                        echo "msys_cpu=${{matrix.cpu}}" ;;
             esac
           } >> $GITHUB_ENV
-          tee -a $GITHUB_PATH <<EOPATH
-          /mingw64/lib/ccache/bin
-          EOPATH
 
       - name: Install packages
         uses: msys2/setup-msys2@v2
@@ -76,17 +73,20 @@ jobs:
             mingw-w64-${{ env.msys_cpu }}-postgresql
             mingw-w64-${{ env.msys_cpu }}-qt5-base
 
-      - name: Configure msys shell
+      - name: Configure build shell
         shell: msys2 {0}
         run: |
+          PATH=/mingw64/lib/ccache/bin:$PATH
+
           case ${{matrix.compiler}} in
             (bcc)
               curl -LO "http://altd.embarcadero.com/download/bcppbuilder/freecommandLinetools.exe"
               ./freecommandLinetools.exe -s -verbose
-              echo "/c/Borland/BCC55/Bin" >> $GITHUB_PATH
+              PATH="/c/Borland/BCC55/Bin:$PATH"
               find /c/Borland -type d || exit 1
               ;;
           esac
+          echo "export PATH='$PATH'" > ~/.bash_profile
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -97,6 +97,7 @@ jobs:
       - run: ls
 
       - name: Prepare ccache using action
+        if: matrix.compiler != 'bcc'
         uses: hendrikmuhs/ccache-action@v1.2.10
         with:
           key: ${{ matrix.os }}-${{ matrix.cpu }}-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
