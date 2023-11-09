@@ -32,7 +32,7 @@ jobs:
       - name: Configure build shell
         run: |
           set -ex
-          rm ~/.bashrc
+          rm -f ~/work/.bashrc
           HB_USER_CFLAGS="-arch arm64 -arch x86_64"
           HB_USER_LDFLAGS="-arch arm64 -arch x86_64"
           case ${{matrix.strictness}} in
@@ -41,7 +41,7 @@ jobs:
                       (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
                     esac ;;
           esac
-          tee -a ~/.bashrc <<EOENV
+          tee -a ~/work/.bashrc <<EOENV
           # These contribs do not build on any platform
           export HB_BUILD_CONTRIBS="no hbfimage"  # incompatible with freeimage 3.18+
 
@@ -91,13 +91,13 @@ jobs:
             #  freeimage \
 
             set -ex
-            source ~/.bashrc
+            source ~/work/.bashrc
             make -j$(sysctl -n hw.logicalcpu) \
               HB_BUILD_CONTRIBS=no \
               HB_COMPILER=${{matrix.compiler}}
 
             set -ex
-            source ~/.bashrc
+            source ~/work/.bashrc
             make -j$(sysctl -n hw.logicalcpu) \
               -C contrib \
               HB_COMPILER=${{matrix.compiler}}
