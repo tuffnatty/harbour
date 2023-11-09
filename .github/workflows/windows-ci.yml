@@ -87,14 +87,14 @@ jobs:
               ./freecommandLinetools.exe -s -verbose
               find /c/Borland -type d || exit 1
               tee -a ~/.bashrc <<EOMSYSENV
-              export PATH="/c/Borland/BCC55/Bin:\$PATH"
-              export HB_WITH_CURL="/$mingwxx/include"
-              EOMSYSENV
+          export PATH="/c/Borland/BCC55/Bin:\$PATH"
+          export HB_WITH_CURL="/$mingwxx/include"
+          EOMSYSENV
               ;;
             *)
               tee -a ~/.bashrc <<EOMSYSENV
-              export PATH="/\$mingwxx/lib/ccache/bin:\$PATH"
-              EOMSYSENV
+          export PATH="/\$mingwxx/lib/ccache/bin:\$PATH"
+          EOMSYSENV
               ;;
           esac
 
