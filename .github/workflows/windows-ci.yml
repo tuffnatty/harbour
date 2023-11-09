@@ -5,14 +5,12 @@ on:
   - pull_request
 
 jobs:
-  build-windows:
+  windows-ci:
     runs-on: windows-latest
 
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - windows
         compiler:
           - bcc
           - mingw64
@@ -86,24 +84,20 @@ jobs:
           export HB_BUILD_VERBOSE="yes"
           export HB_USER_CFLAGS="$HB_USER_CFLAGS"
           export HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
+          export HB_CCACHE=$(which ccache.exe)
           export mingwxx="$(echo "$MINGWxx" | tr A-Z a-z)"
           EOENV
 
           case ${{matrix.compiler}} in
-            (bcc)
+            bcc)
               curl -LO "http://altd.embarcadero.com/download/bcppbuilder/freecommandLinetools.exe"
               ./freecommandLinetools.exe -s -verbose
               find /c/Borland -type d || exit 1
               tee -a ~/.bashrc <<EOMSYSENV
           export PATH="/c/Borland/BCC55/Bin:\$PATH"
           export HB_WITH_CURL="/d/msys64/$mingwxx/include"
+          export HB_CCACHE=""
           EOMSYSENV
-              ;;
-
-            *)
-              tee -a ~/.bashrc <<EOENV
-          export HB_CCACHE=$(which ccache.exe)
-          EOENV
               ;;
           esac
 
@@ -119,15 +113,26 @@ jobs:
         if: matrix.compiler != 'bcc'
         uses: hendrikmuhs/ccache-action@v1.2.10
         with:
-          key: ${{ matrix.os }}-${{ matrix.cpu }}-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
+          key: windows-${{ matrix.cpu }}-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
           max-size: "32M"
 
-      - name: Compile Harbour
+      - name: Build Harbour
         shell: msys2 {0}
         run: |
           set -ex
           source ~/.bashrc
           mingw32-make.exe -j2 \
+            HB_CPU=${{matrix.cpu}} \
+            HB_BUILD_CONTRIBS=no \
+            HB_COMPILER=${{matrix.compiler}}
+
+      - name: Build contribs
+        shell: msys2 {0}
+        run: |
+          set -ex
+          source ~/.bashrc
+          mingw32-make.exe -j2 \
+            -C contrib \
             HB_CPU=${{matrix.cpu}} \
             HB_COMPILER=${{matrix.compiler}}
 
