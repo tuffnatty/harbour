@@ -77,21 +77,21 @@ jobs:
 
       - name: Build Harbour
         run: |
-          set -ex
-          source ~/.bashrc
-          make -j$(sysctl -n hw.logicalcpu) \
-            HB_BUILD_CONTRIBS=no \
-            HB_COMPILER=${{matrix.compiler}}
+            set -ex
+            source ~/.bashrc
+            make -j$(sysctl -n hw.logicalcpu) \
+              HB_BUILD_CONTRIBS=no \
+              HB_COMPILER=${{matrix.compiler}}
 
       - name: Build contribs
         run: |
-          set -ex
-          source ~/.bashrc
-          make -j$(sysctl -n hw.logicalcpu) \
-            -C contrib \
-            HB_COMPILER=${{matrix.compiler}}
+            set -ex
+            source ~/.bashrc
+            make -j$(sysctl -n hw.logicalcpu) \
+              -C contrib \
+              HB_COMPILER=${{matrix.compiler}}
 
       - name: Run tests
         run: |
-          set -ex
-          bin/darwin/${{matrix.compiler}}/hbtest
+            set -ex
+            bin/darwin/${{matrix.compiler}}/hbtest

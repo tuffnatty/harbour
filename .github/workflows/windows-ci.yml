@@ -119,25 +119,25 @@ jobs:
       - name: Build Harbour
         shell: msys2 {0}
         run: |
-          set -ex
-          source ~/.bashrc
-          mingw32-make.exe -j2 \
-            HB_CPU=${{matrix.cpu}} \
-            HB_BUILD_CONTRIBS=no \
-            HB_COMPILER=${{matrix.compiler}}
+            set -ex
+            source ~/.bashrc
+            mingw32-make.exe -j2 \
+              HB_CPU=${{matrix.cpu}} \
+              HB_BUILD_CONTRIBS=no \
+              HB_COMPILER=${{matrix.compiler}}
 
       - name: Build contribs
         shell: msys2 {0}
         run: |
-          set -ex
-          source ~/.bashrc
-          mingw32-make.exe -j2 \
-            -C contrib \
-            HB_CPU=${{matrix.cpu}} \
-            HB_COMPILER=${{matrix.compiler}}
+            set -ex
+            source ~/.bashrc
+            mingw32-make.exe -j2 \
+              -C contrib \
+              HB_CPU=${{matrix.cpu}} \
+              HB_COMPILER=${{matrix.compiler}}
 
       - name: Run tests
         shell: msys2 {0}
         run: |
-          set -ex
-          bin/win/${{matrix.compiler}}/hbtest.exe
+            set -ex
+            bin/win/${{matrix.compiler}}/hbtest.exe
