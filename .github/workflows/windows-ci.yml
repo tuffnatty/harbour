@@ -44,8 +44,8 @@ jobs:
         with:
           msystem: ${{ env.MINGWxx }}
           location: d:/
+            #mingw-w64-${{ env.msys_cpu }}-ccache
           install: >
-            mingw-w64-${{ env.msys_cpu }}-ccache
             mingw-w64-${{ env.msys_cpu }}-gcc
             mingw-w64-${{ env.msys_cpu }}-make
             mingw-w64-${{ env.msys_cpu }}-allegro
