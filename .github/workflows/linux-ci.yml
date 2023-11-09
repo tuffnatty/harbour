@@ -22,6 +22,11 @@ jobs:
 
     steps:
 
+      - name: Configure environment
+        shell: bash
+        run: |
+          echo "Nothing to do for Linux"
+
       - name: Install packages
         run: |
           sudo apt-get install -qq \
@@ -34,7 +39,6 @@ jobs:
             libcups2-dev	\
             libcurl4-openssl-dev	\
             firebird-dev	\
-            libfreeimage-dev	\
             libgd-dev	\
             libgs-dev	\
             libmagic-dev	\
@@ -42,6 +46,8 @@ jobs:
             unixodbc-dev	\
             libpq-dev	\
             qtbase5-dev
+
+          #  libfreeimage-dev	\
 
       - name: Configure build shell
         run: |
@@ -56,6 +62,9 @@ jobs:
                     esac ;;
           esac
           tee -a ~/.bashrc <<EOENV
+          # These contribs do not build on any platform
+          export HB_BUILD_CONTRIBS="no hbfimage"
+
           export HB_BUILD_VERBOSE="yes"
           export HB_USER_CFLAGS="$HB_USER_CFLAGS"
           export HB_USER_LDFLAGS="$HB_USER_LDFLAGS"

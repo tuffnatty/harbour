@@ -27,6 +27,7 @@ jobs:
           - "strict"
 
     steps:
+
       - name: Configure environment
         shell: bash
         run: |
@@ -54,13 +55,14 @@ jobs:
             mingw-w64-${{ env.msys_cpu }}-cairo
             mingw-w64-${{ env.msys_cpu }}-curl
             mingw-w64-${{ env.msys_cpu }}-firebird2-git
-            mingw-w64-${{ env.msys_cpu }}-freeimage
             mingw-w64-${{ env.msys_cpu }}-libgd
             mingw-w64-${{ env.msys_cpu }}-ghostscript
             mingw-w64-${{ env.msys_cpu }}-libmariadbclient
             mingw-w64-${{ env.msys_cpu }}-openssl
             mingw-w64-${{ env.msys_cpu }}-postgresql
             mingw-w64-${{ env.msys_cpu }}-qt5-base
+
+            #  mingw-w64-${{ env.msys_cpu }}-freeimage
 
       - name: Configure build shell
         shell: msys2 {0}
@@ -77,6 +79,9 @@ jobs:
                     esac ;;
           esac
           tee -a ~/.bashrc <<EOENV
+          # These contribs do not build on any platform
+          export HB_BUILD_CONTRIBS="no hbfimage"
+
           export HB_BUILD_VERBOSE="yes"
           export HB_USER_CFLAGS="$HB_USER_CFLAGS"
           export HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
@@ -93,6 +98,7 @@ jobs:
           export HB_WITH_CURL="/d/msys64/$mingwxx/include"
           EOMSYSENV
               ;;
+
             *)
               tee -a ~/.bashrc <<EOENV
           export HB_CCACHE=$(which ccache.exe)
