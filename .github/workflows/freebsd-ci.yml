@@ -81,7 +81,8 @@ jobs:
           sync_files: "true"
           run: |
             set -ex
-            pkg install -y bison ccache gmake \
+            sudo pkg install -y \
+              bison ccache gmake \
               slang \
               cairo \
               libgd \
