@@ -33,8 +33,8 @@ jobs:
         run: |
           set -ex
           rm -f ~/work/.bashrc
-          HB_USER_CFLAGS="-arch arm64 -arch x86_64"
-          HB_USER_LDFLAGS="-arch arm64 -arch x86_64"
+          HB_USER_CFLAGS=""
+          HB_USER_LDFLAGS=""
           case ${{matrix.strictness}} in
             normal) ;;
             strict) case ${{matrix.compiler}} in
@@ -80,6 +80,7 @@ jobs:
             set -ex
             sudo pkg install -y \
               bison ccache gmake \
+              $(case ${{matrix.compiler }} in gcc) echo ${{matrix.compiler}} ;; esac) \
               libslang2 \
               cairo \
               libgd \
