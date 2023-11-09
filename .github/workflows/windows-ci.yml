@@ -95,7 +95,9 @@ jobs:
             *)
               tee -a ~/.bashrc <<EOMSYSENV
           #export PATH="/\$mingwxx/lib/ccache/bin:\$PATH"
+          export PATH="\$PATH"
           EOMSYSENV
+          ls /d
               ;;
           esac
 
