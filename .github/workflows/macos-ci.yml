@@ -35,7 +35,7 @@ jobs:
 
       - name: Configure build shell
         run: |
-          set -x
+          set -ex
           rm ~/.bashrc
           HB_USER_CFLAGS="-arch arm64 -arch x86_64"
           HB_USER_LDFLAGS="-arch arm64 -arch x86_64"
@@ -69,10 +69,12 @@ jobs:
 
       - name: Compile Harbour
         run: |
-          make \
-            HB_COMPILER=${{matrix.compiler}} \
-            -j$(nproc)
+          set -ex
+          source ~/.bashrc
+          make -j$(sysctl -n hw.logicalcpu) \
+            HB_COMPILER=${{matrix.compiler}}
 
       - name: Run tests
         run: |
+          set -ex
           bin/darwin/${{matrix.compiler}}/hbtest
