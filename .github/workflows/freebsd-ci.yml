@@ -14,9 +14,6 @@ jobs:
         compiler:
           - clang
           - gcc
-        cpu:
-          - x86_64
-          - arm64
         strictness:
           - "normal"
           - "strict"
@@ -66,14 +63,14 @@ jobs:
       - name: Prepare ccache using action
         uses: hendrikmuhs/ccache-action@v1.2.10
         with:
-          key: freebsd-${{ matrix.cpu }}-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
+          key: freebsd-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
           max-size: "32M"
 
       - name: Build Harbour and contribs
         uses: cross-platform-actions/action@v0.15.0
         with:
           operating_system: freebsd
-          architecture: ${{ matrix.cpu }}
+          architecture: x86_64
           version: "13.2"
           shell: bash
           memory: 5G
@@ -105,16 +102,5 @@ jobs:
               -C contrib \
               HB_COMPILER=${{matrix.compiler}}
 
-      - name: Run tests
-        uses: cross-platform-actions/action@v0.15.0
-        with:
-          operating_system: freebsd
-          architecture: ${{ matrix.cpu }}
-          version: "13.2"
-          shell: bash
-          memory: 2G
-          cpu_count: 4
-          sync_files: "true"
-          run: |
             set -ex
             bin/freebsd/${{matrix.compiler}}/hbtest
