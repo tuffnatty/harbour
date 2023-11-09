@@ -31,24 +31,10 @@ jobs:
         shell: bash
         run: |
           {
-            HB_USER_CFLAGS=""
-            HB_USER_LDFLAGS=""
-            case ${{matrix.strictness}} in
-              normal) ;;
-              strict) case ${{matrix.compiler}} in
-                        (bcc) HB_USER_CFLAGS="$HB_USER_CFLAGS -w!" ;;
-                        (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
-                      esac ;;
-            esac
-            echo HB_BUILD_VERBOSE="yes"
-            echo HB_USER_CFLAGS="$HB_USER_CFLAGS"
-            echo HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
             case ${{matrix.cpu}} in
               (x86)    echo MINGWxx="MINGW32"
-                       echo mingwxx="mingw32"
                        echo "msys_cpu=i686" ;;
               (x86_64) echo MINGWxx="MINGW64"
-                       echo mingwxx="mingw64"
                        echo "msys_cpu=${{matrix.cpu}}" ;;
             esac
           } >> $GITHUB_ENV
@@ -78,21 +64,39 @@ jobs:
       - name: Configure build shell
         shell: msys2 {0}
         run: |
+          set -x
+          HB_USER_CFLAGS=""
+          HB_USER_LDFLAGS=""
+          case ${{matrix.strictness}} in
+            normal) ;;
+            strict) case ${{matrix.compiler}} in
+                      (bcc) HB_USER_CFLAGS="$HB_USER_CFLAGS -w!" ;;
+                      (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+                    esac ;;
+          esac
+          tee -a ~/.bashrc <<EOMSYSENV
+          export HB_BUILD_VERBOSE="yes"
+          export HB_USER_CFLAGS="$HB_USER_CFLAGS"
+          export HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
+          export mingwxx="$(echo "$MINGWxx" | tr A-Z a-z)"
+          EOMSYSENV
+
           case ${{matrix.compiler}} in
             (bcc)
               curl -LO "http://altd.embarcadero.com/download/bcppbuilder/freecommandLinetools.exe"
               ./freecommandLinetools.exe -s -verbose
               find /c/Borland -type d || exit 1
-              addpath="/c/Borland/BCC55/Bin:$addpath"
-              echo HB_WITH_CURL="/$mingwxx/include" >> $GITHUB_ENV
+              tee -a ~/.bashrc <<EOMSYSENV
+              export PATH="/c/Borland/BCC55/Bin:\$PATH"
+              export HB_WITH_CURL="/$mingwxx/include"
+              EOMSYSENV
               ;;
             *)
-              addpath="/$mingwxx/lib/ccache/bin"
+              tee -a ~/.bashrc <<EOMSYSENV
+              export PATH="/\$mingwxx/lib/ccache/bin:\$PATH"
+              EOMSYSENV
               ;;
           esac
-          tee > ~/.bashrc <<EOMSYSENV
-          export PATH="$addpath:\$PATH"
-          EOMSYSENV
 
       - name: Checkout code
         uses: actions/checkout@v3
