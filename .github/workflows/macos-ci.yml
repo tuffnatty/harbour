@@ -28,7 +28,9 @@ jobs:
             HB_USER_LDFLAGS="-arch arm64 -arch x86_64"
             case ${{matrix.strictness}} in
               normal) ;;
-              strict) HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+              strict) case {{matrix.compiler}} in
+                        *)     HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+                      esac ;;
             esac
             echo HB_BUILD_VERBOSE="yes"
             echo HB_USER_CFLAGS="$HB_USER_CFLAGS"

@@ -14,10 +14,14 @@ jobs:
         os:
           - windows
         compiler:
+          - bcc32
           - mingw64
         cpu:
           - x86
           - x86_64
+        exclude:
+          - compiler: bcc32
+            cpu: x86_64
         strictness:
           - "normal"
           - "strict"
@@ -31,7 +35,10 @@ jobs:
             HB_USER_LDFLAGS=""
             case ${{matrix.strictness}} in
               normal) ;;
-              strict) HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+              strict) case {{matrix.compiler}} in
+                        (bcc32) HB_USER_CFLAGS="$HB_USER_CFLAGS -w!" ;;
+                        (*)     HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+                      esac ;;
             esac
             echo HB_BUILD_VERBOSE="yes"
             echo HB_USER_CFLAGS="$HB_USER_CFLAGS"
@@ -46,6 +53,13 @@ jobs:
           tee -a $GITHUB_PATH <<EOPATH
           /mingw64/lib/ccache/bin
           EOPATH
+          case ${{matrix.compiler}} in
+            (bcc32)
+              curl -LO "http://altd.embarcadero.com/download/bcppbuilder/freecommandLinetools.exe"
+              ./freecommandLinetools.exe -s -verbose
+              echo "/c/Borland/BCC55/Bin" >> $GITHUB_PATH
+              ;;
+          esac
 
       - name: Install packages
         uses: msys2/setup-msys2@v2
