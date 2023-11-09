@@ -94,7 +94,7 @@ jobs:
               ;;
             *)
               tee -a ~/.bashrc <<EOENV
-          export HB_CCACHE=ccache
+          export HB_CCACHE=$(which ccache.exe)
           EOENV
               ;;
           esac
