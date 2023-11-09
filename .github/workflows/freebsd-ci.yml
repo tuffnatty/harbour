@@ -92,7 +92,7 @@ jobs:
 
             set -ex
             source ~/work/.bashrc
-            make -j$(nproc) \
+            gmake -j$(nproc) \
               HB_BUILD_CONTRIBS=no \
               HB_COMPILER=${{matrix.compiler}}
 
