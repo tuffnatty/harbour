@@ -105,7 +105,6 @@ jobs:
               HB_COMPILER=${{matrix.compiler}}
 
       - name: Run tests
-        run: |
         uses: cross-platform-actions/action@v0.15.0
         with:
           operating_system: freebsd
