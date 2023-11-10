@@ -78,11 +78,8 @@ jobs:
             cycles=max
             turbo=true
           run: |
-            echo "Starting"
-            dir
-            echo "Starting" > c:\src\build.log
-            dir >> c:\src\build.log
-            cd \src >> c:\src\build.log
+            c:
+            cd \src
             runbuild.bat >> c:\src\build.log
 
       - name: Build log
