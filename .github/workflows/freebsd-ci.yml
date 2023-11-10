@@ -101,14 +101,14 @@ jobs:
 
             echo "::group::Build Harbour"
             set -ex
-            source ~/work/.bashrc
+            . ~/work/.bashrc
             gmake -j$(nproc) \
               HB_BUILD_CONTRIBS=no \
               HB_COMPILER=${{matrix.compiler}}
 
             echo "::group::Build contribs"
             set -ex
-            source ~/work/.bashrc
+            . ~/work/.bashrc
             gmake -j$(nproc) \
               -C contrib \
               HB_COMPILER=${{matrix.compiler}}
