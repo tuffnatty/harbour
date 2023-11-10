@@ -29,6 +29,7 @@ jobs:
         run: |
           echo "The actual install takes place in the VM in the build step"
           tee ~/work/install_freebsd_deps.sh <<EOF
+          #!/bin/sh
           sudo pkg install -y \
             bison ccache gmake \
             $(case ${{matrix.compiler }} in
@@ -40,6 +41,7 @@ jobs:
             postgresql16-client \
             qt5-gui
           EOF
+          chmod a+x ~/work/install_freebsd_deps.sh
 
           # Dependencies for disabled contribs:
           #  freeimage \
@@ -95,7 +97,7 @@ jobs:
           run: |
             echo "::group::Install dependencies"
             set -ex
-            source ~/work/install_freebsd_deps.sh
+            ~/work/install_freebsd_deps.sh
 
             echo "::group::Build Harbour"
             set -ex
