@@ -84,6 +84,8 @@ jobs:
 
       - name: Build log
         run: |
+          set -x
           pwd
+          ls -ltr | tail
           find . -iname build.log
-          ls -ltr harbour
+          ls -ltr harbour | tail
