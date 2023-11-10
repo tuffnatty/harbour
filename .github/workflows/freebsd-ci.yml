@@ -31,7 +31,8 @@ jobs:
           tee ~/work/install_freebsd_deps.sh <<EOF
           sudo pkg install -y \
             bison ccache gmake \
-            $(case ${{matrix.compiler }} in gcc) echo ${{matrix.compiler}} ;; esac) \
+            $(case ${{matrix.compiler }} in
+              (gcc) echo ${{matrix.compiler}} ;; esac) \
             libslang2 \
             cairo \
             libgd \
