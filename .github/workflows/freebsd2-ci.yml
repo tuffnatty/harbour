@@ -28,7 +28,7 @@ jobs:
       - name: Install packages
         run: |
           echo "The actual install takes place in the VM in the build step"
-          tee install_freebsd_deps.sh <<EOF
+          tee ~/work/install_freebsd_deps.sh <<EOF
           pkg install -y \
             bison ccache gmake \
             $(case ${{matrix.compiler }} in gcc) echo ${{matrix.compiler}} ;; esac) \
@@ -89,8 +89,7 @@ jobs:
           prepare: |
             echo "::group::Install dependencies"
             set -ex
-            cd work
-            source ./install_freebsd_deps.sh
+            source ~/work/install_freebsd_deps.sh
           run: |
             echo "::group::Build Harbour"
             set -ex
