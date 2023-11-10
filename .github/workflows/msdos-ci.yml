@@ -79,4 +79,5 @@ jobs:
             turbo=true
 
       - name: Build log
-        cat harbour/build.log
+        run: |
+          cat harbour/build.log
