@@ -55,10 +55,10 @@ jobs:
             echo "::group::Build Harbour"
             set PATH=c:\djgpp\bin;%PATH%
             set DJGPP=c:\djgpp\djgpp.env
-            make HB_BUILD_CONTRIBS=no HB_COMPILER=${{matrix.compiler}}
+            dos-make HB_BUILD_CONTRIBS=no HB_COMPILER=${{matrix.compiler}}
 
             echo "::group::Build contribs"
-            make -C contrib HB_COMPILER=${{matrix.compiler}}
+            dos-make -C contrib HB_COMPILER=${{matrix.compiler}}
 
             echo "::group::Run tests"
             bin\dos\${{matrix.compiler}}\hbtest
