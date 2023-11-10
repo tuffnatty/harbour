@@ -72,6 +72,7 @@ jobs:
       - name: Build Harbour and contribs
         run: |
           ln -s ../harbour ~/.dosemu/drive_c/src
-          dosemu -dumb -exec 'dir'
-          dosemu -dumb -exec 'dir c:\src'
-          dosemu -dumb -exec 'c:\src\runbuild.bat'
+          dosemu -dumb -d . -exec 'dir'
+          dosemu -dumb -d . -exec 'dir d:'
+          dosemu -dumb -d . -exec 'dir d:/src'
+          dosemu -dumb -d . -exec 'c:\src\runbuild.bat'
