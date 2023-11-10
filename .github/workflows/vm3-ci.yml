@@ -39,6 +39,8 @@ jobs:
           tee ~/.dosemu/dosemurc <<'EOF'
           $_cpu_vm = "emulated"
           $_cpu_vm_dpmi = "emulated"
+          $_speaker = "native"
+          $_sound = "off"
           EOF
 
           cd ~/.dosemu/drive_c/djgpp
