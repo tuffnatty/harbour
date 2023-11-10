@@ -84,7 +84,7 @@ jobs:
             EOF
                 ;;
             esac
-            tee -a runbuild.bat '<<EOF'
+            tee -a runbuild.bat <<'EOF'
             cd \src
             echo ::group::Build Harbour
             set PATH=c:\djgpp\bin;%PATH%
