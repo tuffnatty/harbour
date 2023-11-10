@@ -75,5 +75,8 @@ jobs:
             cycles=max
           run: |
             cd \src
-            runbuild.bat
+            runbuild.bat > build.log
             turbo=true
+
+      - name: Build log
+        cat harbour/build.log
