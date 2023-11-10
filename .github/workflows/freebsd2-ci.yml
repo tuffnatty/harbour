@@ -89,6 +89,7 @@ jobs:
           prepare: |
             echo "::group::Install dependencies"
             set -ex
+            ls work
             source ~/work/install_freebsd_deps.sh
           run: |
             echo "::group::Build Harbour"
