@@ -74,10 +74,13 @@ jobs:
             [cpu]
             cycles=max
           run: |
-            cd \src
-            runbuild.bat > build.log
+            echo "Starting" > build.log
+            dir >> build.log
+            cd \src >> build.log
+            runbuild.bat >> build.log
             turbo=true
 
       - name: Build log
         run: |
+          find . -iname build.log
           cat harbour/build.log
