@@ -65,15 +65,15 @@ jobs:
             tee runbuild.bat <<'EOF'
             c:
             cd \src
-            echo "::group::Build Harbour"
+            echo ::group::Build Harbour
             set PATH=c:\djgpp\bin;%PATH%
             set DJGPP=c:\djgpp\djgpp.env
             make HB_BUILD_CONTRIBS=no HB_COMPILER=${{matrix.compiler}}
 
-            echo "::group::Build contribs"
+            echo ::group::Build contribs
             make -C contrib HB_COMPILER=${{matrix.compiler}}
 
-            echo "::group::Run tests"
+            echo ::group::Run tests
             bin\dos\${{matrix.compiler}}\hbtest
             EOF
 
