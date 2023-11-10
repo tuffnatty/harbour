@@ -27,9 +27,8 @@ jobs:
         run: |
           echo "The actual install takes place in the VM in the build step"
           sudo snap install dosbox-x
-          mkdir djgpp
-          cd djgpp
-          pwd
+          mkdir ~/djgpp
+          cd ~/djgpp
           root_url="ftp://ftp.fu-berlin.de/pc/languages/djgpp/current/"
           curl -LO "$root_url/v2gnu/mak44b.zip"
           curl -LO "$root_url/v2gnu/bnu2351b.zip"
@@ -39,6 +38,7 @@ jobs:
           unzip bnu2351b.zip
           unzip gcc930b.zip
           unzip djdev205.zip
+
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -66,8 +66,8 @@ jobs:
         uses: joncloud/dos-build-action@v1
         with:
           programs: |
-            djgpp:C:\DJGPP
-            harbour:C:\SRC
+            ${{env.HOME}}/djgpp:C:\DJGPP
+            .:C:\SRC
           conf: |
             [dosbox]
             memsize=256
@@ -89,4 +89,4 @@ jobs:
           pwd
           ls -ltr | tail
           find . -iname build.log
-          ls -ltr harbour | tail
+          find . -iname build.log | xargs -rtn1 cat
