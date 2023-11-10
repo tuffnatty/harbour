@@ -65,6 +65,7 @@ jobs:
             EOF
 
       - name: Build Harbour and contribs
+        timeout-minutes: 5
         uses: joncloud/dos-build-action@v1
         with:
           programs: |
@@ -83,6 +84,7 @@ jobs:
             runbuild.bat >> c:\src\build.log
 
       - name: Build log
+        if: always()
         run: |
           set -x
           pwd
