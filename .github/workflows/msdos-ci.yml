@@ -51,7 +51,7 @@ jobs:
 
       - name: Generate build script
         run: |
-            tee ~/work/runbuild.bat <<'EOF'
+            tee ${{env.default_dir}}/runbuild.bat <<'EOF'
             echo "::group::Build Harbour"
             set PATH=c:\djgpp\bin;%PATH%
             set DJGPP=c:\djgpp\djgpp.env
