@@ -61,7 +61,7 @@ jobs:
             watcom)
               mkdir -p ~/.dosemu/drive_c/watcom
               cd ~/.dosemu/drive_c/watcom
-              curl -LO http://openwatcom.org/ftp/install/open-watcom-c-dos-1.9.exe
+              curl -Lo install.exe http://openwatcom.org/ftp/install/open-watcom-c-dos-1.9.exe
               ;;
           esac
 
@@ -80,7 +80,7 @@ jobs:
                 tee runbuild.bat <<'EOF'
             c:
             cd \watcom
-            open-watcom-c-dos-1.9.exe
+            install.exe
             EOF
                 ;;
             esac
@@ -91,10 +91,10 @@ jobs:
             set DJGPP=c:\djgpp\djgpp.env
             set WATCOM=c:\watcom
             set PATH=%WATCOM%\BINW;%PATH%
-            make HB_BUILD_CONTRIBS=no HB_COMPILER=${{matrix.compiler}}
+            dos-make.exe HB_BUILD_CONTRIBS=no HB_COMPILER=${{matrix.compiler}}
 
             echo ::group::Build contribs
-            make -C contrib HB_COMPILER=${{matrix.compiler}}
+            dos-make.exe -C contrib HB_COMPILER=${{matrix.compiler}}
 
             echo ::group::Run tests
             bin\dos\${{matrix.compiler}}\hbtest
