@@ -39,7 +39,7 @@ jobs:
             libgd \
             mariadb-connector-c \
             postgresql16-client \
-            qt5-gui
+            qt5-buildtools qt5-gui
           EOF
           chmod a+x ~/work/install_freebsd_deps.sh
 
@@ -84,18 +84,9 @@ jobs:
           key: freebsd-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
           max-size: "32M"
 
-      - name: Build Harbour and contribs
-        uses: vmactions/freebsd-vm@v1
-        with:
-          usesh: true
-          mem: 2048
-          prepare: |
-            echo "::group::Install dependencies"
-            set -ex
-            ls work
-            ls ~/work
-            ~/work/install_freebsd_deps.sh
-          run: |
+      - name: Generate build script
+        run: |
+            tee ~/work/run_build.sh <<'EOF'
             echo "::group::Build Harbour"
             set -ex
             . ~/work/.bashrc
@@ -113,3 +104,16 @@ jobs:
             echo "::group::Run tests"
             set -ex
             bin/bsd/${{matrix.compiler}}/hbtest
+            EOF
+
+      - name: Build Harbour and contribs
+        uses: vmactions/freebsd-vm@v1
+        with:
+          usesh: true
+          mem: 2048
+          prepare: |
+            echo "::group::Install dependencies"
+            set -ex
+            ~/work/install_freebsd_deps.sh
+          run: |
+            . ~/work/run_build.sh
