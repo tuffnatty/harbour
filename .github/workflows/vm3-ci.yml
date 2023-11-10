@@ -15,6 +15,7 @@ jobs:
           - name: dosemu
         compiler:
           - djgpp
+          - watcom
         strictness:
           - "normal"
           - "strict"
@@ -34,7 +35,7 @@ jobs:
           sudo apt -y install dosemu2
           cat /etc/dosemu/dosemu.conf
 
-          mkdir -p ~/.dosemu/drive_c/djgpp
+          mkdir -p ~/.dosemu
 
           tee ~/.dosemu/dosemurc <<'EOF'
           $_cpu_vm = "emulated"
@@ -43,16 +44,26 @@ jobs:
           $_sound = "off"
           EOF
 
-          cd ~/.dosemu/drive_c/djgpp
-          root_url="ftp://ftp.fu-berlin.de/pc/languages/djgpp/current/"
-          curl -LO "$root_url/v2gnu/mak44b.zip"
-          curl -LO "$root_url/v2gnu/bnu2351b.zip"
-          curl -LO "$root_url/v2gnu/gcc930b.zip"
-          curl -LO "$root_url/v2/djdev205.zip"
-          unzip mak44b.zip
-          unzip bnu2351b.zip
-          unzip gcc930b.zip
-          unzip djdev205.zip
+          case ${{ matrix.compiler }} in
+            djgpp)
+              mkdir -p ~/.dosemu/drive_c/djgpp
+              cd ~/.dosemu/drive_c/djgpp
+              root_url="ftp://ftp.fu-berlin.de/pc/languages/djgpp/current/"
+              curl -LO "$root_url/v2gnu/mak44b.zip"
+              curl -LO "$root_url/v2gnu/bnu2351b.zip"
+              curl -LO "$root_url/v2gnu/gcc930b.zip"
+              curl -LO "$root_url/v2/djdev205.zip"
+              unzip mak44b.zip
+              unzip bnu2351b.zip
+              unzip gcc930b.zip
+              unzip djdev205.zip
+              ;;
+            watcom)
+              mkdir -p ~/.dosemu/drive_c/watcom
+              cd ~/.dosemu/drive_c/watcom
+              curl -LO http://openwatcom.org/ftp/install/open-watcom-c-dos-1.9.exe
+              ;;
+          esac
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -64,12 +75,22 @@ jobs:
 
       - name: Generate build script
         run: |
-            tee runbuild.bat <<'EOF'
+            case ${{ matrix.compiler }} in
+              watcom)
+                tee runbuild.bat <<'EOF'
             c:
+            cd \watcom
+            open-watcom-c-dos-1.9.exe
+            EOF
+                ;;
+            esac
+            tee -a runbuild.bat '<<EOF'
             cd \src
             echo ::group::Build Harbour
             set PATH=c:\djgpp\bin;%PATH%
             set DJGPP=c:\djgpp\djgpp.env
+            set WATCOM=c:\watcom
+            set PATH=%WATCOM%\BINW;%PATH%
             make HB_BUILD_CONTRIBS=no HB_COMPILER=${{matrix.compiler}}
 
             echo ::group::Build contribs
