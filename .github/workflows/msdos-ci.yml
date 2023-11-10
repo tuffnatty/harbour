@@ -1,0 +1,89 @@
+name: msdos-ci
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  msdos-ci:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler:
+          - djgpp
+        strictness:
+          - "normal"
+          - "strict"
+
+    steps:
+
+      - name: Configure environment
+        run: |
+          echo "Nothing to do for MS-DOS"
+
+      - name: Install packages
+        run: |
+          echo "The actual install takes place in the VM in the build step"
+          sudo snap install dosbox-x
+          mkdir djgpp
+          cd djgpp
+          root_url="ftp://ftp.fu-berlin.de/pc/languages/djgpp/current/"
+          curl -LO "$root_url/v2gnu/mak44b.zip"
+          curl -LO "$root_url/v2gnu/bnu2351b.zip"
+          curl -LO "$root_url/v2gnu/gcc930b.zip"
+          curl -LO "$root_url/v2/djdev205.zip"
+          unzip mak44b.zip
+          unzip bnu2351b.zip
+          unzip gcc930b.zip
+          unzip djdev205.zip
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.branch }}
+
+      - run: pwd
+      - run: ls
+
+      - name: Generate build script
+        run: |
+            tee ~/work/runbuild.bat <<'EOF'
+            echo "::group::Build Harbour"
+            set PATH=c:\djgpp\bin;%PATH%
+            set DJGPP=c:\djgpp\djgpp.env
+            make HB_BUILD_CONTRIBS=no HB_COMPILER=${{matrix.compiler}}
+
+            echo "::group::Build contribs"
+            make -C contrib HB_COMPILER=${{matrix.compiler}}
+
+            echo "::group::Run tests"
+            bin\dos\${{matrix.compiler}}\hbtest
+            EOF
+
+      - name: Build Harbour and contribs
+        uses: joncloud/dos-build-action@v1
+        with:
+          programs: |
+            djgpp:C:\DJGPP
+            harbour:C:\SRC
+          conf: |
+            [dosbox]
+            memsize=256
+
+            [cpu]
+            cycles=max
+            turbo=true
+          run: |
+            echo "Starting"
+            dir
+            echo "Starting" > build.log
+            dir >> build.log
+            cd \src >> build.log
+            runbuild.bat >> build.log
+
+      - name: Build log
+        run: |
+          pwd
+          find . -iname build.log
+          cat harbour/build.log
