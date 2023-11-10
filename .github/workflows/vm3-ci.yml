@@ -80,4 +80,4 @@ jobs:
       - name: Build Harbour and contribs
         run: |
           rsync -a . ~/.dosemu/drive_c/src
-          dosemu -exec 'c:\src\runbuild.bat'
+          dosemu -dumb -exec 'c:\src\runbuild.bat'
