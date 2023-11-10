@@ -29,6 +29,7 @@ jobs:
           sudo snap install dosbox-x
           mkdir djgpp
           cd djgpp
+          pwd
           root_url="ftp://ftp.fu-berlin.de/pc/languages/djgpp/current/"
           curl -LO "$root_url/v2gnu/mak44b.zip"
           curl -LO "$root_url/v2gnu/bnu2351b.zip"
