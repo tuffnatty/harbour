@@ -5,7 +5,7 @@ on:
   - pull_request
 
 jobs:
-  vm2-ci:
+  vm3-ci:
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,10 +27,12 @@ jobs:
 
       - name: Install packages
         run: |
+          set -ex
           echo "The actual install takes place in the VM in the build step"
           sudo add-apt-repository -y ppa:dosemu2/ppa
           sudo apt -y update
           sudo apt -y install dosemu2
+          cat /etc/dosemu/dosemu.conf
 
           mkdir -p ~/.dosemu/drive_c/djgpp
           cd ~/.dosemu/drive_c/djgpp
