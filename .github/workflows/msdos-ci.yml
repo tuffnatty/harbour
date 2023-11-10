@@ -28,11 +28,11 @@ jobs:
           echo "The actual install takes place in the VM in the build step"
           mkdir djgpp
           cd djgpp
-          root_url="ftp://ftp.fu-berlin.de/pc/languages/djgpp/current/v2gnu/"
-          curl -LO "$root_url/mak44b.zip"
-          curl -LO "$root_url/bnu2351b.zip"
-          curl -LO "$root_url/gcc930b.zip"
-          curl -LO "$root_url/djdev205.zip"
+          root_url="ftp://ftp.fu-berlin.de/pc/languages/djgpp/current/"
+          curl -LO "$root_url/v2gnu/mak44b.zip"
+          curl -LO "$root_url/v2gnu/bnu2351b.zip"
+          curl -LO "$root_url/v2gnu/gcc930b.zip"
+          curl -LO "$root_url/v2/djdev205.zip"
           unzip mak44b.zip
           unzip bnu2351b.zip
           unzip gcc930b.zip
