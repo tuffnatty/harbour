@@ -1,0 +1,72 @@
+name: vm3-ci
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  vm2-ci:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - name: dosemu
+        compiler:
+          - djgpp
+        strictness:
+          - "normal"
+          - "strict"
+
+    steps:
+
+      - name: Configure environment
+        run: |
+          echo "Nothing to do for MS-DOS"
+
+      - name: Install packages
+        run: |
+          echo "The actual install takes place in the VM in the build step"
+          sudo apt install dosemu2
+          mkdir -p ~/.dosemu/drive_c/djgpp
+          cd ~/.dosemu/drive_c/djgpp
+          root_url="ftp://ftp.fu-berlin.de/pc/languages/djgpp/current/"
+          curl -LO "$root_url/v2gnu/mak44b.zip"
+          curl -LO "$root_url/v2gnu/bnu2351b.zip"
+          curl -LO "$root_url/v2gnu/gcc930b.zip"
+          curl -LO "$root_url/v2/djdev205.zip"
+          unzip mak44b.zip
+          unzip bnu2351b.zip
+          unzip gcc930b.zip
+          unzip djdev205.zip
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.branch }}
+
+      - run: pwd
+      - run: ls
+
+      - name: Generate build script
+        run: |
+            tee runbuild.bat <<'EOF'
+            c:
+            cd \src
+            echo "::group::Build Harbour"
+            set PATH=c:\djgpp\bin;%PATH%
+            set DJGPP=c:\djgpp\djgpp.env
+            make HB_BUILD_CONTRIBS=no HB_COMPILER=${{matrix.compiler}}
+
+            echo "::group::Build contribs"
+            make -C contrib HB_COMPILER=${{matrix.compiler}}
+
+            echo "::group::Run tests"
+            bin\dos\${{matrix.compiler}}\hbtest
+            EOF
+
+      - name: Build Harbour and contribs
+        run: |
+          ln ../harbour ~/.dosemu/drive_c/src
+          dosemu -dumb -exec 'c:\src\runbuild.bat'
