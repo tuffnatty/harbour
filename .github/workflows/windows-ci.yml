@@ -1,7 +1,7 @@
 name: windows-ci
 
 on:
-  - workflow_dispatch
+  - push
 
 jobs:
   windows-ci:
@@ -19,6 +19,7 @@ jobs:
         exclude:
           - compiler: bcc
             cpu: x86_64
+          - compiler: mingw64
         strictness:
           - "normal"
           - "strict"
