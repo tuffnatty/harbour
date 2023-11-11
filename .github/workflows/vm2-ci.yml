@@ -49,29 +49,6 @@ jobs:
 
           chmod a+x ~/work/install_*_deps.sh
 
-      - name: Configure build shell
-        run: |
-          set -ex
-          rm -f ~/work/.bashrc
-          HB_USER_CFLAGS=""
-          HB_USER_LDFLAGS=""
-          case ${{matrix.strictness}} in
-            normal) ;;
-            strict) case ${{matrix.compiler}} in
-                      (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
-                    esac ;;
-          esac
-          tee -a ~/work/.bashrc <<EOENV
-          # These contribs do not build on any platform
-          export HB_BUILD_CONTRIBS="no hbfimage"  # incompatible with freeimage 3.18+
-
-          export HB_BUILD_VERBOSE="yes"
-          export HB_USER_CFLAGS="$HB_USER_CFLAGS"
-          export HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
-          export HB_CCACHE=ccache
-          EOENV
-
-
       - name: Checkout code
         uses: actions/checkout@v3
         with:
@@ -86,6 +63,28 @@ jobs:
           key: ${{ matrix.os.name }}-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
           max-size: "32M"
 
+      - name: Configure build shell
+        run: |
+          set -ex
+          HB_USER_CFLAGS=""
+          HB_USER_LDFLAGS=""
+          case ${{matrix.strictness}} in
+            normal) ;;
+            strict) case ${{matrix.compiler}} in
+                      (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+                    esac ;;
+          esac
+          tee ./.bashrc <<EOENV
+          # These contribs do not build on any platform
+          export HB_BUILD_CONTRIBS="no hbfimage"  # incompatible with freeimage 3.18+
+
+          export HB_BUILD_VERBOSE="yes"
+          export HB_USER_CFLAGS="$HB_USER_CFLAGS"
+          export HB_USER_LDFLAGS="$HB_USER_LDFLAGS"
+          export HB_CCACHE=ccache
+          EOENV
+
+
       - name: Generate build script
         run: |
             tee ~/work/run_build.sh <<'EOF'
@@ -96,16 +95,16 @@ jobs:
             ccache --set-config=compression=true
             ccache -p
 
-            echo "::group::Build Harbour"
+            echo"::group::Build Harbour
             set -ex
-            . ~/work/.bashrc
+            . ./.bashrc
             gmake -j$(sysctl -n hw.ncpu) \
               HB_BUILD_CONTRIBS=no \
               HB_COMPILER=${{matrix.compiler}}
 
-            echo "::group::Build contribs"
+            echo ::group::Build contribs
             set -ex
-            . ~/work/.bashrc
+            . ./.bashrc
             gmake -j$(sysctl -n hw.ncpu) \
               -C contrib \
               HB_COMPILER=${{matrix.compiler}}

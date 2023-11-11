@@ -7,6 +7,15 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2023-11-11 13:07 UTC+0100 Phil Krylov (phil a t krylov.eu)
+  * .github/workflows/linux-ci.yml
+  * .github/workflows/macos-ci.yml
+  + .github/workflows/vm1-ci.yml
+  * .github/workflows/windows-ci.yml
+    + Added bcc (32-bit) Windows CI build.
+    + Added FreeBSD, NetBSD, and OpenBSD CI builds.
+    * Cosmetic changes to keep different workflows easily diffable.
+
 2023-11-09 15:07 UTC+0100 Phil Krylov (phil a t krylov.eu)
   * .github/workflows/linux-ci.yml
   * .github/workflows/macos-ci.yml
