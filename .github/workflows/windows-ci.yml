@@ -118,7 +118,7 @@ jobs:
           EOMSYSENV
               ;;
             *)
-              tee -a ./.bashrc <<EOCCACHE
+              tee -a ./.bashrc <<'EOCCACHE'
           echo "::group::Configure ccache in VM"
           ccache --set-config="cache_dir=$(pwd)/.ccache"
           ccache --set-config=max_size=32M
