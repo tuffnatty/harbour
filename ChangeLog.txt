@@ -7,6 +7,14 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2023-11-12 01:24 UTC+0100 Phil Krylov (phil a t krylov.eu)
+  * src/3rd/Makefile
+  - src/3rd/tiff/
+  * package/harbour.spec
+  * README.md
+    - Removed third-party TIFF library. It's not clear why it was even
+      included, it's not C90 compatible anymore, and a major pain to maintain.
+
 2023-11-11 21:41 UTC+0100 Phil Krylov (phil a t krylov.eu)
   * contrib/hbwin/win_bmp.c
     ! Fixed dangling pointer access (introduced in commit 64dba82) in
