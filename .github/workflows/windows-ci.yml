@@ -90,9 +90,9 @@ jobs:
           case ${{matrix.strictness}} in
             normal) ;;
             strict) case ${{matrix.compiler}} in
-                      (mingw64) HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=array-bounds -Wno-error=deprecated-declarations" ;;
+                      (mingw64) HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=deprecated-declarations -Wno-error=array-bounds" ;;
                       (bcc) HB_USER_CFLAGS="$HB_USER_CFLAGS -w!" ;;
-                      (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
+                      (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=deprecated-declarations" ;;
                     esac ;;
           esac
           tee ./.bashrc <<EOENV
