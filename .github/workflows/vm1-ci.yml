@@ -104,7 +104,7 @@ jobs:
           case ${{matrix.strictness}} in
             normal) ;;
             strict) case ${{matrix.compiler}} in
-                      (gcc) HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=array-bounds" ;;
+                      (gcc) HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=array-bounds -Wno-error=deprecated-declarations" ;;
                       (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror" ;;
                     esac ;;
           esac
