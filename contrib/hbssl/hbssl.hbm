@@ -34,6 +34,7 @@
 # to suppress deprecation warnings that apply to
 # the complete OpenSSL 1 API, starting with OS X Lion 10.7
 -cflag={allgcc}-Wno-deprecated
+-cflag={allgcc}-Wno-error=deprecated-declarations
 
 # For _fileno() in openssl/applink.c
 -c=gnu90
