@@ -99,6 +99,7 @@ typedef struct _HB_CURL
    struct curl_slist *    pTELNETOPTIONS;
    struct curl_slist *    pMAIL_RCPT;
    struct curl_slist *    pRESOLVE;
+   struct curl_slist *    pPROXYHEADER;
 
    char *     ul_name;
    HB_FHANDLE ul_handle;
@@ -513,6 +514,9 @@ static void PHB_CURL_free( PHB_CURL hb_curl, HB_BOOL bFree )
 #if LIBCURL_VERSION_NUM >= 0x071503
    curl_easy_setopt( hb_curl->curl, CURLOPT_RESOLVE, NULL );
 #endif
+#if LIBCURL_VERSION_NUM >= 0x072500
+   curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYHEADER, NULL );
+#endif
 
    hb_curl_form_free( &hb_curl->pHTTPPOST_First );
    hb_curl->pHTTPPOST_Last = NULL;
@@ -524,6 +528,7 @@ static void PHB_CURL_free( PHB_CURL hb_curl, HB_BOOL bFree )
    hb_curl_slist_free( &hb_curl->pTELNETOPTIONS );
    hb_curl_slist_free( &hb_curl->pMAIL_RCPT );
    hb_curl_slist_free( &hb_curl->pRESOLVE );
+   hb_curl_slist_free( &hb_curl->pPROXYHEADER );
 
    hb_curl_file_ul_free( hb_curl );
    hb_curl_file_dl_free( hb_curl );
@@ -1086,8 +1091,32 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTPHEADER, hb_curl->pHTTPHEADER );
                }
+               break;
             }
-            break;
+#if LIBCURL_VERSION_NUM >= 0x072500
+            case HB_CURLOPT_HEADEROPT:
+               res = curl_easy_setopt( hb_curl->curl, CURLOPT_HEADEROPT, hb_parnl( 3 ) );
+               break;
+            case HB_CURLOPT_PROXYHEADER:
+            {
+               PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
+
+               curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYHEADER, NULL );
+               hb_curl_slist_free( &hb_curl->pPROXYHEADER );
+
+               if( pArray )
+               {
+                  HB_SIZE ulPos;
+                  HB_SIZE ulArrayLen = hb_arrayLen( pArray );
+
+                  for( ulPos = 0; ulPos < ulArrayLen; ++ulPos )
+                     hb_curl->pPROXYHEADER = curl_slist_append( hb_curl->pPROXYHEADER, hb_arrayGetCPtr( pArray, ulPos + 1 ) );
+
+                  res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROXYHEADER, hb_curl->pPROXYHEADER );
+               }
+               break;
+            }
+#endif
 #if LIBCURL_VERSION_NUM >= 0x070A03
             case HB_CURLOPT_HTTP200ALIASES:
             {
@@ -1106,8 +1135,8 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_HTTP200ALIASES, hb_curl->pHTTP200ALIASES );
                }
+               break;
             }
-            break;
 #endif
             case HB_CURLOPT_COOKIE:
                res = curl_easy_setopt( hb_curl->curl, CURLOPT_COOKIE, hb_curl_StrHash( hb_curl, hb_parc( 3 ) ) );
@@ -1213,8 +1242,8 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_QUOTE, hb_curl->pQUOTE );
                }
+               break;
             }
-            break;
             case HB_CURLOPT_POSTQUOTE:
             {
                PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
@@ -1232,8 +1261,8 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_POSTQUOTE, hb_curl->pPOSTQUOTE );
                }
+               break;
             }
-            break;
             case HB_CURLOPT_PREQUOTE:
             {
                PHB_ITEM pArray = hb_param( 3, HB_IT_ARRAY );
@@ -1251,8 +1280,8 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_PREQUOTE, hb_curl->pPREQUOTE );
                }
+               break;
             }
-            break;
             case HB_CURLOPT_DIRLISTONLY: /* HB_CURLOPT_FTPLISTONLY */
 #if LIBCURL_VERSION_NUM > 0x071004
                res = curl_easy_setopt( hb_curl->curl, CURLOPT_DIRLISTONLY, HB_CURL_OPT_BOOL( 3 ) );
@@ -1487,8 +1516,8 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_RESOLVE, hb_curl->pRESOLVE );
                }
+               break;
             }
-            break;
 #endif
 #if LIBCURL_VERSION_NUM >= 0x071800
             case HB_CURLOPT_DNS_SERVERS:
@@ -1660,8 +1689,8 @@ HB_FUNC( CURL_EASY_SETOPT )
 
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_TELNETOPTIONS, hb_curl->pTELNETOPTIONS );
                }
+               break;
             }
-            break;
 
             /* Undocumented */
 
@@ -1701,8 +1730,8 @@ HB_FUNC( CURL_EASY_SETOPT )
                   res = curl_easy_setopt( hb_curl->curl, CURLOPT_PROGRESSDATA, hb_curl->pXferInfoCallback );
 #endif
                }
+               break;
             }
-            break;
 
             case HB_CURLOPT_UL_FILE_SETUP:
                hb_curl_file_ul_free( hb_curl );

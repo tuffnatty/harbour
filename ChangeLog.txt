@@ -7,6 +7,20 @@
    Entries may not always be in chronological/commit order.
    See license at the end of file. */
 
+2014-05-26 09:59 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+    ! added missing bits for libcurl 7.37.0
+  ; origin: https://github.com/vszakats/hb/commit/4c11a8fa044cbb301f4c236b57ea46056eab2981
+2014-05-26 10:40 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+    ! some missing safety cleanups in PHB_CURL_free()
+  ; origin: https://github.com/vszakats/hb/commit/1b3691e149a034e4198e24cfb9db7269cd30074f
+2014-04-09 20:41 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
+  * contrib/hbcurl/core.c
+  * contrib/hbcurl/hbcurl.ch
+    + added upcoming 7.37.0 features
+  ; origin: https://github.com/vszakats/hb/commit/9acd9ddd9a2f5a5bc966b69bd5463734408def4d
+
 2014-06-20 23:54 UTC+0200 Viktor Szakats (vszakats users.noreply.github.com)
   * contrib/hbcurl/*
     * converted internal PP directive indenting to external
