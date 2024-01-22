@@ -6,11 +6,22 @@ on:
 
 jobs:
   ubuntu-ci:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os.runner }}
+    container: ${{ matrix.os.name }}:${{ matrix.os.version }}
 
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - name: ubuntu
+            version: "22.04"
+            runner: "ubuntu-22.04"
+          - name: debian
+            version: "11"
+            runner: "ubuntu-22.04"
+          - name: debian
+            version: "12"
+            runner: "ubuntu-22.04"
         compiler:
           - clang
           - gcc
@@ -21,16 +32,16 @@ jobs:
     steps:
 
       - name: Configure environment
-        shell: bash
         run: |
-          echo "Nothing to do for Linux"
+          echo "Nothing to do for ${{ matrix.os.name }}"
 
       - name: Install packages
         run: |
           export DEBIAN_FRONTEND=noninteractive
-          sudo apt-get update
-          sudo apt-get install -qq \
-            valgrind \
+          apt-get update
+          apt-get install -qq \
+            valgrind	\
+            ${{ matrix.compiler }}	\
             libncurses-dev	\
             libslang2-dev	\
             libx11-dev	\
@@ -43,7 +54,7 @@ jobs:
             libgd-dev	\
             libgs-dev	\
             libmagic-dev	\
-            libmysqlclient-dev	\
+            default-libmysqlclient-dev	\
             unixodbc-dev	\
             libpq-dev	\
             qtbase5-dev
@@ -63,7 +74,7 @@ jobs:
       - name: Prepare ccache using action
         uses: hendrikmuhs/ccache-action@v1.2.10
         with:
-          key: linux-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
+          key: ${{ matrix.os.name }}-${{ matrix.compiler }}-${{ matrix.strictness }}-ci
           max-size: "32M"
 
       - name: Configure build shell
@@ -116,5 +127,5 @@ jobs:
           $VALGRIND bin/linux/${{matrix.compiler}}/hbtest
 
           cd contrib/hbsqlit3/tests
-          ../../../bin/linux/${{matrix.compiler}}/hbmk2 backup.prg
+          ../../../bin/linux/${{matrix.compiler}}/hbmk2 -mt backup.prg
           $VALGRIND ./backup
