@@ -35,7 +35,6 @@ jobs:
         shell: bash
         run: |
           set -ex
-          find "/c/Program Files (x86)/Microsoft Visual Studio/2019/" -iname "cl.exe"
           {
             case ${{matrix.cpu}} in
               (x86)    echo MINGWxx="MINGW32"
@@ -125,10 +124,15 @@ jobs:
           export HB_CCACHE=""
           EOMSYSENV
               ;;
-            msvc64)
-              ls -l "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/Bin" || exit 1
+            msvc|msvc64)
+              case ${{matrix.compiler}} in
+                msvc)   target_dir="x86" ;;
+                msvc64) target_dir="x64" ;;
+              esac
+              cl_exe="$(find "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC" -iname "cl.exe" | grep -i "Hostx64/$target_dir")"
+              path_to_cl_exe="${cl_exe%/*}"
               tee -a ./.bashrc <<EOMSYSENV
-          export PATH="/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/Bin:\$PATH"
+          export PATH="$path_to_cl_exe:\$PATH"
           export HB_WITH_CURL="/d/msys64/$mingwxx/include"
           EOMSYSENV
               ;;
