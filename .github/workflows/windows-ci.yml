@@ -18,6 +18,7 @@ jobs:
         compiler:
           - bcc
           - mingw64
+          - msvc
           - msvc64
         cpu:
           - x86
@@ -25,6 +26,10 @@ jobs:
         exclude:
           - compiler: bcc
             cpu: x86_64
+          - compiler: msvc
+            cpu: x86_64
+          - compiler: msvc64
+            cpu: x86
         strictness:
           - "normal"
           - "strict"
@@ -129,7 +134,7 @@ jobs:
                 msvc)   target_dir="x86" ;;
                 msvc64) target_dir="x64" ;;
               esac
-              cl_exe="$(find "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC" -iname "cl.exe" | grep -i "Hostx64/$target_dir")"
+              cl_exe="$(find "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC" -iname "cl.exe" | grep -i "Hostx64/$target_dir" | tail -1)"
               path_to_cl_exe="${cl_exe%/*}"
               tee -a ./.bashrc <<EOMSYSENV
           export PATH="$path_to_cl_exe:\$PATH"
