@@ -131,16 +131,21 @@ jobs:
               ;;
             msvc|msvc64)
               case ${{matrix.compiler}} in
-                msvc)   target_dir="x86" ;;
-                msvc64) target_dir="x64" ;;
+                msvc)   target_dir="x86" vcvarsall_target="x86" ;;
+                msvc64) target_dir="x64" vcvarsall_target="amd64" ;;
               esac
               cl_exe="$(find "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC" -iname "cl.exe" | grep -i "Hostx64/$target_dir" | tail -1)"
               cat "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvarsall.bat"
+              query_vcvarsall() {
+                local envars=$*
+                (cd '/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build' &&
+                 cmd.exe /c "VcVarsAll.bat $vcvarsall_target && bash.exe -c 'printenv $envars'")
+              }
               path_to_cl_exe="${cl_exe%/*}"
               path_to_crt_includes="$(echo "${path_to_cl_exe%/bin/Hostx64/$target_dir}/include" | sed 's,^/c,c:,;s,/,\\,g')"
               tee -a ./.bashrc <<EOMSYSENV
           export PATH="$path_to_cl_exe:\$PATH"
-          export INCLUDE='$path_to_crt_includes'
+          export INCLUDE='$(query_vcvarsall INCLUDE)'
           export HB_WITH_CURL="/d/msys64/$mingwxx/include"
           EOMSYSENV
               ;;
