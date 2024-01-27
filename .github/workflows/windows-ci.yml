@@ -137,7 +137,6 @@ jobs:
               cl_exe="$(find "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC" -iname "cl.exe" | grep -i "Hostx64/$target_dir" | tail -1)"
               cat "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvarsall.bat"
               path_to_cl_exe="${cl_exe%/*}"
-              /c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x86'
               path_to_crt_includes="$(echo "${path_to_cl_exe%/bin/Hostx64/$target_dir}/include" | sed 's,^/c,c:,;s,/,\\,g')"
               tee -a ./.bashrc <<EOMSYSENV
           export PATH="$path_to_cl_exe:\$PATH"
