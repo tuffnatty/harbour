@@ -139,7 +139,9 @@ jobs:
               query_vcvarsall() {
                 local envars=$*
                 (cd '/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/Common7/Tools' &&
-                 cmd.exe /c "VsDevCmd.bat -no_logo -arch=$vcvarsall_target && bash.exe -c 'printenv $envars'")
+                 cmd.exe /c "@echo off & VsDevCmd.bat -no_logo -arch=$vcvarsall_target & echo qqq%$envars%ppp")
+                #(cd '/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/Common7/Tools' &&
+                # cmd.exe /c "VsDevCmd.bat -no_logo -arch=$vcvarsall_target && bash.exe -c 'printenv $envars'")
                 #(cd '/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build' &&
                 #cmd.exe /c "VcVarsAll.bat -nologo $vcvarsall_target && bash.exe -c 'printenv $envars'")
               }
