@@ -102,7 +102,7 @@ jobs:
             strict) case ${{matrix.compiler}} in
                       (mingw64) HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=deprecated-declarations -Wno-error=array-bounds" ;;
                       (bcc)     HB_USER_CFLAGS="$HB_USER_CFLAGS -w!" ;;
-                      (msvc64)  HB_USER_CFLAGS="$HB_USER_CFLAGS -WX" ;;
+                      (msvc*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -WX" ;;
                       (*)       HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=deprecated-declarations" ;;
                     esac ;;
           esac
@@ -135,6 +135,7 @@ jobs:
                 msvc64) target_dir="x64" ;;
               esac
               cl_exe="$(find "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC" -iname "cl.exe" | grep -i "Hostx64/$target_dir" | tail -1)"
+              cat "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvarsall.bat"
               path_to_cl_exe="${cl_exe%/*}"
               tee -a ./.bashrc <<EOMSYSENV
           export PATH="$path_to_cl_exe:\$PATH"
