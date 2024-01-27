@@ -35,6 +35,7 @@ jobs:
         shell: bash
         run: |
           set -ex
+          find /c -name 'Microsoft Visual Studio'
           {
             case ${{matrix.cpu}} in
               (x86)    echo MINGWxx="MINGW32"
