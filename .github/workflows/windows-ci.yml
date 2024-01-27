@@ -35,7 +35,7 @@ jobs:
         shell: bash
         run: |
           set -ex
-          ls -Rl "/c/Program Files (x86)/Microsoft Visual Studio"
+          find "/c/Program Files (x86)/Microsoft Visual Studio/2019/" -iname "cl.exe"
           {
             case ${{matrix.cpu}} in
               (x86)    echo MINGWxx="MINGW32"
