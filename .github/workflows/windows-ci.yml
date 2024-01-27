@@ -35,8 +35,7 @@ jobs:
         shell: bash
         run: |
           set -ex
-          ls -l "/c/Program Files (x86)"
-          ls -l "/c/Program Files"
+          ls -Rl "/c/Program Files (x86)/Microsoft Visual Studio"
           {
             case ${{matrix.cpu}} in
               (x86)    echo MINGWxx="MINGW32"
