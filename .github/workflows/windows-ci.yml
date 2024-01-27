@@ -6,14 +6,19 @@ on:
 
 jobs:
   windows-ci:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os.runner }}
 
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - name: windows
+            version: "2019"
+            runner: "windows-2019"
         compiler:
           - bcc
           - mingw64
+          - msvc64
         cpu:
           - x86
           - x86_64
@@ -91,8 +96,9 @@ jobs:
             normal) ;;
             strict) case ${{matrix.compiler}} in
                       (mingw64) HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=deprecated-declarations -Wno-error=array-bounds" ;;
-                      (bcc) HB_USER_CFLAGS="$HB_USER_CFLAGS -w!" ;;
-                      (*)   HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=deprecated-declarations" ;;
+                      (bcc)     HB_USER_CFLAGS="$HB_USER_CFLAGS -w!" ;;
+                      (msvc64)  HB_USER_CFLAGS="$HB_USER_CFLAGS -WX" ;;
+                      (*)       HB_USER_CFLAGS="$HB_USER_CFLAGS -Werror -Wno-error=deprecated-declarations" ;;
                     esac ;;
           esac
           tee ./.bashrc <<EOENV
@@ -118,6 +124,13 @@ jobs:
           export HB_CCACHE=""
           EOMSYSENV
               ;;
+            msvc64)
+              ls -l "/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/Bin" || exit 1
+              tee -a ./.bashrc <<EOMSYSENV
+          export PATH="/c/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/Bin:\$PATH"
+          export HB_WITH_CURL="/d/msys64/$mingwxx/include"
+          EOMSYSENV
+              ;;
             *)
               tee -a ./.bashrc <<'EOCCACHE'
           # Reconfigure ccache in msys2
@@ -128,7 +141,6 @@ jobs:
           EOCCACHE
               ;;
           esac
-
 
       - name: Build Harbour
         shell: msys2 {0}
