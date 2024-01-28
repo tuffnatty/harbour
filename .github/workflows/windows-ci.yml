@@ -130,6 +130,7 @@ jobs:
           EOMSYSENV
               ;;
             msvc|msvc64)
+              rm -f /usr/bin/link.exe  # To not interact with MS LINK.EXE
               case ${{matrix.compiler}} in
                 msvc)   target_dir="x86" vcvarsall_target="x86" ;;
                 msvc64) target_dir="x64" vcvarsall_target="amd64" ;;
@@ -163,6 +164,15 @@ jobs:
           EOCCACHE
               ;;
           esac
+
+        - if: matrix.compiler == 'msvc64'
+          uses: ilammy/msvc-dev-cmd@v1
+          with:
+            arch: amd64
+        - if: matrix.compiler == 'msvc'
+          uses: ilammy/msvc-dev-cmd@v1
+          with:
+            arch: amd64_x86
 
       - name: Build Harbour
         shell: msys2 {0}
